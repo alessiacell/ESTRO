@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chi Siamo | Love Sun Beauty</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f0f0f0; color: #222; }
+
+    .wf-note { display: inline-block; background: #fffbe6; border: 1px dashed #ED1E88; border-radius: 4px; font-size: 11px; color: #856404; padding: 3px 8px; margin-top: 6px; }
+    .section-tag { display: inline-block; background: #222; color: #fff; font-size: 10px; font-weight: 700; letter-spacing: .1em; padding: 3px 10px; border-radius: 3px; margin-bottom: 20px; }
+    .section-divider { background: #e8e8e8; text-align: center; padding: 6px; font-size: 10px; font-weight: 700; letter-spacing: .12em; color: #999; text-transform: uppercase; }
+
+    h2.wf { font-size: 26px; font-weight: 700; color: #111; margin-bottom: 10px; }
+    p.wf  { font-size: 15px; color: #555; line-height: 1.6; margin-bottom: 16px; }
+
+    /* HEADER */
+    header { position: sticky; top: 0; z-index: 100; background: #fff; border-bottom: 2px solid #e0e0e0; padding: 14px 40px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .header-logo { background: #d9d9d9; border: 2px dashed #bbb; border-radius: 4px; width: 120px; height: 36px; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #888; font-weight: 700; flex-shrink: 0; }
+    nav { display: flex; gap: 24px; font-size: 14px; font-weight: 500; color: #444; align-items: center; }
+    nav span { cursor: pointer; border-bottom: 1px dashed #bbb; padding-bottom: 2px; }
+    nav span.active { border-bottom: 2px solid #222; color: #111; font-weight: 700; }
+    .nav-dropdown { position: relative; }
+    .nav-dropdown > span { display: flex; align-items: center; gap: 4px; cursor: pointer; border-bottom: 1px dashed #bbb; padding-bottom: 2px; }
+    .dropdown-menu { display: none; position: absolute; top: calc(100% + 8px); left: -20px; background: #fff; border: 1.5px solid #e0e0e0; border-radius: 10px; box-shadow: 0 8px 32px rgba(0,0,0,.1); min-width: 240px; z-index: 999; padding: 8px 0; }
+    .dropdown-menu::before { content: ''; position: absolute; top: -12px; left: 0; right: 0; height: 12px; }
+    .nav-dropdown:hover .dropdown-menu, .nav-dropdown.open .dropdown-menu { display: block; }
+    .dropdown-menu a { display: flex; align-items: center; gap: 10px; padding: 10px 20px; font-size: 14px; color: #222; text-decoration: none; font-weight: 500; }
+    .dropdown-menu a:hover { background: #f5f5f5; }
+    .dropdown-menu a.active { background: #f0f0f0; font-weight: 700; }
+    .dm-icon { font-size: 16px; width: 22px; text-align: center; }
+    .dropdown-divider { height: 1px; background: #f0f0f0; margin: 6px 0; }
+    .dropdown-submenu { position: relative; }
+    .submenu { display: none; position: absolute; left: 100%; top: -8px; background: #fff; border: 1.5px solid #e0e0e0; border-radius: 10px; box-shadow: 0 8px 32px rgba(0,0,0,.1); min-width: 200px; padding: 8px 0; z-index: 1000; }
+    .dropdown-submenu:hover .submenu { display: block; }
+    .header-actions { display: flex; gap: 10px; align-items: center; flex-shrink: 0; }
+    .btn-ghost { border: 1.5px solid #999; background: transparent; border-radius: 6px; padding: 7px 14px; font-size: 13px; font-weight: 500; color: #444; cursor: pointer; }
+    .btn-primary { background: #222; color: #fff; border: none; border-radius: 6px; padding: 8px 18px; font-size: 13px; font-weight: 700; cursor: pointer; }
+
+    /* BREADCRUMB */
+    .breadcrumb { background: #fff; border-bottom: 1px solid #eee; padding: 10px 40px; font-size: 13px; color: #999; }
+    .breadcrumb a { color: #999; text-decoration: none; }
+    .breadcrumb span { margin: 0 6px; }
+
+    /* HERO */
+    .hero { background: #b8b0a8; min-height: 420px; position: relative; display: flex; align-items: center; }
+    .hero-overlay { position: absolute; inset: 0; background: rgba(0,0,0,.40); }
+    .hero-inner { max-width: 1200px; margin: 0 auto; padding: 80px 40px; position: relative; z-index: 2; }
+
+    /* STORIA */
+    .storia-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; max-width: 1200px; margin: 0 auto; padding: 80px 40px; }
+    .storia-img { background: #d9d9d9; border: 2px dashed #bbb; border-radius: 14px; height: 380px; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 8px; color: #999; font-size: 12px; font-weight: 600; text-align: center; }
+
+    /* NUMERI */
+    .numeri-bg { background: #111; padding: 60px 40px; }
+    .numeri-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: center; }
+    .numero-valore { font-size: 48px; font-weight: 800; color: #fff; line-height: 1; margin-bottom: 8px; }
+    .numero-label { font-size: 14px; color: #aaa; line-height: 1.4; }
+
+    /* VALORI */
+    .valori-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px; }
+    .valore-card { background: #fff; border: 1.5px solid #e0e0e0; border-radius: 16px; padding: 32px 28px; }
+    .valore-icon { font-size: 36px; margin-bottom: 16px; }
+    .valore-titolo { font-size: 17px; font-weight: 700; color: #111; margin-bottom: 10px; }
+    .valore-desc { font-size: 14px; color: #666; line-height: 1.7; }
+
+    /* TEAM */
+    .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 40px; }
+    .team-card { background: #fff; border: 1.5px solid #e0e0e0; border-radius: 14px; overflow: hidden; text-align: center; }
+    .team-foto { background: #d9d9d9; height: 200px; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 6px; color: #999; font-size: 11px; font-weight: 600; }
+    .team-body { padding: 18px 16px; }
+    .team-nome { font-size: 15px; font-weight: 700; color: #111; margin-bottom: 4px; }
+    .team-ruolo { font-size: 12px; color: #888; margin-bottom: 8px; }
+    .team-sede { display: inline-block; font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; background: #f5f5f5; color: #666; }
+
+    /* SEDI */
+    .sedi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 40px; }
+    .sede-card { background: #fff; border: 1.5px solid #e0e0e0; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; }
+    .sede-img { background: #d9d9d9; border-bottom: 1px solid #e8e8e8; height: 180px; display: flex; align-items: center; justify-content: center; color: #999; font-size: 12px; font-weight: 600; flex-direction: column; gap: 6px; }
+    .sede-body { padding: 24px; flex: 1; }
+    .sede-nome { font-size: 18px; font-weight: 800; color: #111; margin-bottom: 6px; }
+    .sede-indirizzo { font-size: 13px; color: #888; margin-bottom: 12px; }
+    .sede-orari { font-size: 13px; color: #555; line-height: 1.8; margin-bottom: 16px; }
+    .sede-info { display: flex; flex-direction: column; gap: 6px; margin-bottom: 20px; }
+    .sede-info-row { font-size: 13px; color: #555; display: flex; gap: 8px; align-items: center; }
+    .btn-sede { display: block; width: 100%; padding: 12px; text-align: center; background: #222; color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; text-decoration: none; }
+
+    /* RECENSIONI */
+    .recensioni-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 40px; }
+    .recensione-card { background: #fff; border: 1.5px solid #e0e0e0; border-radius: 12px; padding: 24px; }
+    .rec-stelle { color: #ED1E88; font-size: 15px; margin-bottom: 10px; }
+    .rec-testo { font-size: 14px; color: #444; line-height: 1.7; margin-bottom: 14px; font-style: italic; }
+    .rec-autore { font-size: 12px; font-weight: 700; color: #999; }
+
+    /* TRUST BAR */
+    .trust-bar { background: #fff; border-top: 1px solid #e8e8e8; border-bottom: 1px solid #e8e8e8; padding: 28px 40px; }
+    .trust-bar-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: center; }
+    .trust-icon { font-size: 24px; margin-bottom: 6px; }
+    .trust-title { font-size: 14px; font-weight: 700; color: #111; margin-bottom: 3px; }
+    .trust-sub { font-size: 12px; color: #777; }
+
+    /* CTA FINALE */
+    .cta-finale-bg { background: #111; color: #fff; padding: 72px 40px; text-align: center; }
+    .cta-finale-bg h2 { font-size: 30px; font-weight: 700; color: #fff; margin-bottom: 12px; }
+    .cta-finale-bg p { font-size: 15px; color: #bbb; max-width: 520px; margin: 0 auto 36px; line-height: 1.6; }
+    .cta-finale-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-finale-primary { background: #fff; color: #111; border: none; border-radius: 8px; padding: 14px 28px; font-size: 15px; font-weight: 700; cursor: pointer; }
+    .btn-finale-secondary { background: transparent; color: #fff; border: 2px solid #fff; border-radius: 8px; padding: 13px 28px; font-size: 15px; font-weight: 600; cursor: pointer; }
+
+    /* FOOTER */
+    footer { background: #1a1a1a; color: #aaa; padding: 48px 40px 24px; }
+    .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+    .footer-col-title { color: #fff; font-size: 13px; font-weight: 700; margin-bottom: 14px; letter-spacing: .05em; text-transform: uppercase; }
+    .footer-col p, .footer-col a { font-size: 13px; color: #999; line-height: 2; display: block; text-decoration: none; }
+    .footer-col .social-icon { display: flex; flex-shrink: 0; line-height: 1; }
+    .footer-logo { background: #333; border: 2px dashed #555; border-radius: 4px; width: 100px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #777; font-weight: 700; margin-bottom: 16px; }
+    .footer-tagline { font-size: 13px; color: #777; margin-bottom: 16px; line-height: 1.5; }
+    .footer-social { display: flex; flex-direction: row; gap: 8px; margin-top: 8px; }
+    .social-icon { background: #333; border-radius: 6px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+    .footer-bottom { max-width: 1200px; margin: 0 auto; border-top: 1px solid #333; padding-top: 20px; font-size: 12px; color: #666; display: flex; justify-content: space-between; }
+
+    .wa-float { position: fixed; bottom: 28px; right: 28px; background: #25d366; color: #fff; border-radius: 50%; width: 54px; height: 54px; display: flex; align-items: center; justify-content: center; font-size: 26px; box-shadow: 0 4px 16px rgba(0,0,0,.2); cursor: pointer; z-index: 200; }
+  </style>
+  <link rel="stylesheet" href="brand.css">
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header>
+  <a href="home.html" style="text-decoration:none;"><img src="img/logo-nero-rosa.webp" alt="Love Sun Beauty" class="header-logo-img"></a>
+  <nav>
+    <div class="nav-dropdown" onclick="this.classList.toggle('open')">
+      <span>Servizi ▾</span>
+      <div class="dropdown-menu">
+        <a href="epilazione-laser.html"><span class="dm-icon">✨</span> Epilazione Laser</a>
+        <a href="trattamenti-corpo.html"><span class="dm-icon">💆</span> Trattamenti T-Shape</a>
+        <a href="pressoterapia.html"><span class="dm-icon">💧</span> Pressoterapia</a>
+        <div class="dropdown-divider"></div>
+        <a href="nail-center.html"><span class="dm-icon">💅</span> Nail Center</a>
+        <a href="solarium.html"><span class="dm-icon">☀️</span> Solarium</a>
+        <div class="dropdown-divider"></div>
+        <div class="dropdown-submenu">
+          <a href="#"><span class="dm-icon">🌸</span> Estetica Base <span style="margin-left:auto;font-size:10px;color:#aaa;">▶</span></a>
+          <div class="submenu">
+            <a href="cerette.html"><span class="dm-icon">🪒</span> Cerette</a>
+            <a href="pedicure.html"><span class="dm-icon">🦶</span> Pedicure</a>
+            <a href="pulizia-viso.html"><span class="dm-icon">✨</span> Pulizia Viso</a>
+            <a href="massaggi.html"><span class="dm-icon">🤲</span> Massaggi</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <span><a href="offerte.html" style="color:inherit;text-decoration:none;">Offerte</a></span>
+    <div class="nav-dropdown" onclick="this.classList.toggle('open')">
+      <span>Le nostre Sedi ▾</span>
+      <div class="dropdown-menu">
+        <a href="sede-bregnano.html"><span class="dm-icon">📍</span> Centro Love Sun Beauty Bregnano</a>
+        <a href="sede-carugate.html"><span class="dm-icon">📍</span> Centro Love Sun Beauty Carugate</a>
+      </div>
+    </div>
+    <span class="active">Chi Siamo</span>
+    <span><a href="faq.html" style="color:inherit;text-decoration:none;">FAQ</a></span>
+    <span><a href="contatti.html" style="color:inherit;text-decoration:none;">Contatti</a></span>
+  </nav>
+  <div class="header-actions">
+    <button class="btn-ghost">📞 Chiama</button>
+    <button class="btn-ghost">💬 WhatsApp</button>
+    <a href="contatti.html" style="text-decoration:none;"><button class="btn-primary">Prenota Ora</button></a>
+  </div>
+</header>
+<div class="section-divider">SEZIONE 1 — HERO</div>
+
+<!-- ══ HERO ══ -->
+<div class="hero">
+  <div class="hero-parallax" role="img" aria-label="Love Sun Beauty" style="background-image:url('img/chi%20siamo/hero.webp');"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-inner">
+    <div style="max-width:680px;">
+      <div style="display:inline-block; background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.3); color:#fff; font-size:11px; font-weight:700; letter-spacing:.12em; padding:5px 14px; border-radius:20px; margin-bottom:20px; text-transform:uppercase;">Chi Siamo</div>
+      <h1 style="font-size:44px; font-weight:800; color:#fff; line-height:1.15; margin-bottom:20px;">Bellezza e benessere,<br>con cura vera.</h1>
+      <p style="font-size:18px; color:rgba(255,255,255,.85); line-height:1.7; max-width:560px;">Love Sun Beauty nasce dalla passione per l'estetica professionale e dalla voglia di offrire a ogni cliente un'esperienza autentica — non solo un trattamento.</p>
+    </div>
+  </div>
+</div>
+<div class="section-divider">SEZIONE 2 — LA NOSTRA STORIA</div>
+
+<!-- ══ STORIA ══ -->
+<div class="storia-grid">
+  <div>
+    <div class="section-tag">La nostra storia</div>
+    <h2 style="font-size:32px; font-weight:800; color:#111; line-height:1.2; margin-bottom:20px;">Nati a Bregnano,<br>cresciuti in Lombardia.</h2>
+    <p style="font-size:16px; color:#555; line-height:1.8; margin-bottom:20px;">Love Sun Beauty nasce dalla visione di <strong style="color:#111;">Alessandro Visciglia</strong>, che ha aperto il primo centro a Bregnano con un'idea semplice: offrire trattamenti estetici professionali in un ambiente accogliente, con personale formato e prodotti selezionati. Nel tempo, la fiducia delle clienti ha permesso di crescere e aprire la seconda sede a Carugate, portando la stessa qualità anche nell'hinterland milanese.</p>
+    <p style="font-size:16px; color:#555; line-height:1.8; margin-bottom:28px;">Oggi Love Sun Beauty è un punto di riferimento per l'epilazione laser, i trattamenti corpo, il nail center e l'estetica di base — con due centri moderni, un team di professioniste e migliaia di clienti soddisfatte ogni anno.</p>
+    <div style="display:flex; flex-wrap:wrap; gap:12px;">
+      <div style="background:#f5f5f5; border-radius:8px; padding:12px 18px; font-size:14px; font-weight:600; color:#333;">📍 2 sedi in Lombardia</div>
+      <div style="background:#f5f5f5; border-radius:8px; padding:12px 18px; font-size:14px; font-weight:600; color:#333;">👩‍⚕️ Team di professioniste</div>
+      <div style="background:#f5f5f5; border-radius:8px; padding:12px 18px; font-size:14px; font-weight:600; color:#333;">⭐ 4,9/5 · Valutazione media</div>
+    </div>
+  </div>
+  <div class="storia-img" style="padding:0; border:none; overflow:hidden;"><img src="img/stanzab.webp" alt="Gli interni di Love Sun Beauty" style="width:100%;height:100%;object-fit:cover;"></div>
+</div>
+<div class="section-divider">SEZIONE 3 — I NUMERI</div>
+
+<!-- ══ NUMERI ══ -->
+<div class="numeri-bg">
+  <div class="numeri-inner">
+    <div>
+      <div class="numero-valore">2</div>
+      <div class="numero-label">Sedi in Lombardia<br>Bregnano · Carugate</div>
+    </div>
+    <div>
+      <div class="numero-valore">419</div>
+      <div class="numero-label">Recensioni verificate</div>
+    </div>
+    <div>
+      <div class="numero-valore">4,9</div>
+      <div class="numero-label">Valutazione media<br>su 5 stelle</div>
+    </div>
+    <div>
+      <div class="numero-valore">10+</div>
+      <div class="numero-label">Servizi disponibili<br>in entrambe le sedi</div>
+    </div>
+  </div>
+</div>
+<div class="section-divider">SEZIONE 4 — I NOSTRI VALORI</div>
+
+<!-- ══ VALORI ══ -->
+<div style="background:#fafafa; padding:72px 40px;">
+  <div style="max-width:1200px; margin:0 auto;">
+    <div class="section-tag">I nostri valori</div>
+    <h2 class="wf">Cosa ci guida ogni giorno</h2>
+    <p class="wf">Dietro ogni trattamento c'è una filosofia: prendersi cura delle persone con professionalità, rispetto e attenzione genuina.</p>
+    <div class="valori-grid">
+      <div class="valore-card">
+        <div class="valore-icon">🎯</div>
+        <div class="valore-titolo">Professionalità vera</div>
+        <div class="valore-desc">Le nostre estetiste sono formate e aggiornate continuamente sulle tecnologie e le tecniche più recenti. Lavoriamo con apparecchi certificati e prodotti selezionati per qualità ed efficacia.</div>
+      </div>
+      <div class="valore-card">
+        <div class="valore-icon">🤝</div>
+        <div class="valore-titolo">Ascolto prima di tutto</div>
+        <div class="valore-desc">Ogni cliente è diversa. Prima di qualsiasi trattamento, ci prendiamo il tempo per capire le tue esigenze, il tuo tipo di pelle e i tuoi obiettivi. Il trattamento giusto per te, non uno standard uguale per tutte.</div>
+      </div>
+      <div class="valore-card">
+        <div class="valore-icon">🌿</div>
+        <div class="valore-titolo">Prodotti che rispettano</div>
+        <div class="valore-desc">Scegliamo prodotti cosmetici professionali che rispettano la pelle e l'ambiente. Niente compromessi sulla qualità dei materiali che utilizziamo ogni giorno sul tuo corpo.</div>
+      </div>
+      <div class="valore-card">
+        <div class="valore-icon">✨</div>
+        <div class="valore-titolo">Risultati che durano</div>
+        <div class="valore-desc">Non ci interessa solo il risultato nell'immediato. Ti accompagniamo nel tempo, con consigli su come mantenere i risultati e percorsi pensati per migliorare progressivamente.</div>
+      </div>
+      <div class="valore-card">
+        <div class="valore-icon">💛</div>
+        <div class="valore-titolo">Un posto dove stare bene</div>
+        <div class="valore-desc">Vogliamo che entrare da Love Sun Beauty sia un momento piacevole — non solo un appuntamento da spuntare. Ambiente curato, accoglienza vera, nessuna fretta.</div>
+      </div>
+      <div class="valore-card">
+        <div class="valore-icon">📍</div>
+        <div class="valore-titolo">Radicati nel territorio</div>
+        <div class="valore-desc">Siamo un centro locale, non una catena. Conosciamo le nostre clienti per nome, ricordiamo le loro preferenze e costruiamo relazioni nel tempo. La fiducia si guadagna seduta dopo seduta.</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="section-divider">SEZIONE 5 — LE NOSTRE SEDI</div>
+
+<!-- ══ SEDI ══ -->
+<div style="background:#fafafa; padding:72px 40px;">
+  <div style="max-width:1200px; margin:0 auto;">
+    <div class="section-tag">Le nostre sedi</div>
+    <h2 class="wf">Dove trovarci</h2>
+    <p class="wf">Due centri in Lombardia, stessa qualità e stessa attenzione. Scegli la sede più comoda per te.</p>
+    <div class="sedi-grid">
+
+      <div class="sede-card">
+        <div class="sede-img" style="overflow:hidden;"><img src="img/bregnano.webp" alt="Sede di Bregnano" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="sede-body">
+          <div class="sede-nome">Love Sun Beauty Bregnano</div>
+          <div class="sede-indirizzo">📍 Via per Lazzate 7 — 22070 Bregnano (CO)</div>
+          <div class="sede-orari">
+            <strong>Lunedì – Sabato</strong> · 9:00 – 21:00<br>
+            <strong>Domenica</strong> · 9:00 – 17:00
+          </div>
+          <div class="sede-info">
+            <div class="sede-info-row">📞 031 4682567</div>
+            <div class="sede-info-row">💬 WhatsApp +39 347 3983337</div>
+            <div class="sede-info-row">📧 info@lovesun.it</div>
+          </div>
+          <a href="sede-bregnano.html" class="btn-sede">Scopri la sede →</a>
+        </div>
+      </div>
+
+      <div class="sede-card">
+        <div class="sede-img" style="overflow:hidden;"><img src="img/carugate.webp" alt="Sede di Carugate" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="sede-body">
+          <div class="sede-nome">Love Sun Beauty Carugate</div>
+          <div class="sede-indirizzo">📍 Via del Ginestrino 16 — 20061 Carugate (MI)</div>
+          <div class="sede-orari">
+            <strong>Mar / Mer / Ven / Sab</strong> · 9:00 – 20:00<br>
+            <strong>Giovedì</strong> · 9:00 – 21:00<br>
+            <strong>Lunedì e Domenica</strong> · Chiuso
+          </div>
+          <div class="sede-info">
+            <div class="sede-info-row">📞 031 4682567</div>
+            <div class="sede-info-row">💬 WhatsApp +39 347 3983337</div>
+            <div class="sede-info-row">📧 info@lovesun.it</div>
+          </div>
+          <a href="sede-carugate.html" class="btn-sede">Scopri la sede →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div class="section-divider">SEZIONE 7 — RECENSIONI</div>
+
+<!-- ══ RECENSIONI ══ -->
+<div style="background:#fff; padding:72px 40px;">
+  <div style="max-width:1200px; margin:0 auto;">
+    <div class="section-tag">Cosa dicono di noi</div>
+    <h2 class="wf">419 recensioni. Una sola costante: la cura.</h2>
+    <p class="wf" style="margin-bottom:0;">Cosa scrivono le clienti dopo aver vissuto l'esperienza Love Sun Beauty.</p>
+    <div class="recensioni-grid">
+      <div class="recensione-card">
+        <div class="rec-stelle">★★★★★</div>
+        <div class="rec-testo">"Ambiente curato e personale sempre gentile e professionale. Mi trovo benissimo ad ogni visita e i risultati parlano da soli. Lo consiglio a tutte!"</div>
+        <div class="rec-autore">— [Nome cliente] · Epilazione Laser</div>
+      </div>
+      <div class="recensione-card">
+        <div class="rec-stelle">★★★★★</div>
+        <div class="rec-testo">"Finalmente un nail center dove si lavora davvero bene. Le ragazze sono attente ai dettagli e il risultato dura molto più a lungo rispetto ad altri posti."</div>
+        <div class="rec-autore">— [Nome cliente] · Nail Center</div>
+      </div>
+      <div class="recensione-card">
+        <div class="rec-stelle">★★★★★</div>
+        <div class="rec-testo">"Ho fatto il trattamento T-Shape e sono rimasta stupita dai risultati. Il centro è accogliente, le estetiste competenti e l'assistenza è continua."</div>
+        <div class="rec-autore">— [Nome cliente] · Trattamenti Corpo</div>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:32px;">
+      <div style="display:inline-flex; align-items:center; gap:10px; background:#f5f5f5; border-radius:12px; padding:16px 28px;">
+        <span style="color:#ED1E88; font-size:22px;">★★★★★</span>
+        <div>
+          <div style="font-size:20px; font-weight:800; color:#111;">4,9 / 5</div>
+          <div style="font-size:13px; color:#777;">419 recensioni verificate</div>
+        </div>
+
+      </div>
+    </div>
+    <div class="wf-note" style="margin-top:16px; display:block; text-align:center;">Citazioni reali da inserire (Google, social, clienti dirette)</div>
+  </div>
+</div>
+<div class="section-divider">SEZIONE 8 — CTA FINALE</div>
+
+<!-- ══ CTA FINALE ══ -->
+<div class="cta-finale-bg">
+  <h2>Vieni a conoscerti meglio.</h2>
+  <p>Scegli un trattamento, prenota la sede più vicina e lasciati prendere cura da chi sa farlo davvero.</p>
+  <div class="cta-finale-actions">
+    <a href="contatti.html" style="text-decoration:none;"><button class="btn-finale-primary">📅 Prenota Ora</button></a>
+    <button class="btn-finale-secondary">📍 Le nostre Sedi</button>
+    <button class="btn-finale-secondary">💬 Scrivici su WhatsApp</button>
+  </div>
+</div>
+<div class="section-divider">FOOTER</div>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <img src="img/logo-bianco-rosa.webp" alt="Love Sun Beauty" class="footer-logo-img">
+      <p class="footer-tagline">Beauty Center. Bellezza e benessere in Lombardia.</p>
+      <div class="footer-social">
+        <a href="https://www.facebook.com/lovesunsolarium/" target="_blank" rel="noopener" class="social-icon" title="Facebook" style="text-decoration:none; display:flex; align-items:center; justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5H16.7V3.7c-.3-.04-1.3-.12-2.4-.12-2.4 0-4 1.46-4 4.14v2.31H7.5V13h2.8v8h3.2z"/></svg></a>
+        <a href="https://www.instagram.com/lovesun.beauty?igsh=MW90b3pvNXBhYWFtNA==" target="_blank" rel="noopener" class="social-icon" title="Instagram" style="text-decoration:none; display:flex; align-items:center; justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="3.8"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg></a>
+        <a href="#" target="_blank" rel="noopener" class="social-icon" title="TikTok — link da inserire" style="text-decoration:none; display:flex; align-items:center; justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 3c.3 2.2 1.5 3.5 3.6 3.7v2.5c-1.2.1-2.4-.3-3.6-1v5.7c0 3.2-2.3 5.4-5.3 5.4-2.7 0-4.9-2-4.9-4.8 0-2.9 2.4-4.9 5.4-4.6v2.6c-.4-.1-.8-.2-1.2-.2-1.2 0-2.2.9-2.2 2.1s1 2.2 2.3 2.2c1.3 0 2.1-1 2.1-2.4V3h3.5z"/></svg></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Servizi</div>
+      <a href="epilazione-laser.html">Epilazione Laser</a>
+      <a href="trattamenti-corpo.html">Trattamenti T-Shape</a>
+      <a href="pressoterapia.html">Pressoterapia</a>
+      <a href="nail-center.html">Nail Center</a>
+      <a href="solarium.html">Solarium</a>
+      <a href="cerette.html">Cerette</a>
+      <a href="pedicure.html">Pedicure</a>
+      <a href="pulizia-viso.html">Pulizia Viso</a>
+      <a href="massaggi.html">Massaggi</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Love Sun Beauty Bregnano</div>
+      <p>Via per Lazzate 7<br>22070 Bregnano (CO)</p>
+      <p>031 4682567<br>WhatsApp +39 347 3983337<br>info@lovesun.it</p>
+      <p>Lun–Sab 9:00–21:00<br>Dom 9:00–17:00</p>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Love Sun Beauty Carugate</div>
+      <p>Via del Ginestrino 16<br>20061 Carugate (MI)</p>
+      <p>031 4682567<br>WhatsApp +39 347 3983337<br>info@lovesun.it</p>
+      <p>Mar/Mer/Ven/Sab 9:00–20:00<br>Gio 9:00–21:00<br>Lun e Dom: Chiuso</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Love Sun Beauty &nbsp;·&nbsp; Privacy Policy &nbsp;·&nbsp; Cookie Policy</span>
+    <span>P.IVA: 03959640131</span>
+  </div>
+</footer>
+
+<div class="wa-float">💬</div>
+
+<script src="site.js"></script>
+</body>
+</html>

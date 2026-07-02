@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solarium | Love Sun Beauty</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f0f0f0; color: #222; }
+
+    .wf-note { display: inline-block; background: #fffbe6; border: 1px dashed #ED1E88; border-radius: 4px; font-size: 11px; color: #856404; padding: 3px 8px; margin-top: 6px; }
+    .section-tag { display: inline-block; background: #222; color: #fff; font-size: 10px; font-weight: 700; letter-spacing: .1em; padding: 3px 10px; border-radius: 3px; margin-bottom: 20px; }
+    .section-divider { background: #e8e8e8; text-align: center; padding: 6px; font-size: 10px; font-weight: 700; letter-spacing: .12em; color: #999; text-transform: uppercase; }
+
+    h2.wf { font-size: 26px; font-weight: 700; color: #111; margin-bottom: 10px; }
+    p.wf  { font-size: 15px; color: #555; line-height: 1.6; margin-bottom: 16px; }
+
+    /* HEADER */
+    header { position: sticky; top: 0; z-index: 100; background: #fff; border-bottom: 2px solid #e0e0e0; padding: 14px 40px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .header-logo { background: #d9d9d9; border: 2px dashed #bbb; border-radius: 4px; width: 120px; height: 36px; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #888; font-weight: 700; flex-shrink: 0; }
+    nav { display: flex; gap: 24px; font-size: 14px; font-weight: 500; color: #444; align-items: center; }
+    nav span { cursor: pointer; border-bottom: 1px dashed #bbb; padding-bottom: 2px; }
+    .nav-dropdown { position: relative; }
+    .nav-dropdown > span { display: flex; align-items: center; gap: 4px; cursor: pointer; border-bottom: 1px dashed #bbb; padding-bottom: 2px; }
+    .dropdown-menu { display: none; position: absolute; top: calc(100% + 8px); left: -20px; background: #fff; border: 1.5px solid #e0e0e0; border-radius: 10px; box-shadow: 0 8px 32px rgba(0,0,0,.1); min-width: 240px; z-index: 999; padding: 8px 0; }
+    .dropdown-menu::before { content: ''; position: absolute; top: -12px; left: 0; right: 0; height: 12px; }
+    .nav-dropdown:hover .dropdown-menu, .nav-dropdown.open .dropdown-menu { display: block; }
+    .dropdown-menu a { display: flex; align-items: center; gap: 10px; padding: 10px 20px; font-size: 14px; color: #222; text-decoration: none; font-weight: 500; }
+    .dropdown-menu a:hover { background: #f5f5f5; }
+    .dropdown-menu a.active { background: #f0f0f0; font-weight: 700; }
+    .dm-icon { font-size: 16px; width: 22px; text-align: center; }
+    .dropdown-divider { height: 1px; background: #f0f0f0; margin: 6px 0; }
+    .dropdown-submenu { position: relative; }
+    .submenu { display: none; position: absolute; left: 100%; top: -8px; background: #fff; border: 1.5px solid #e0e0e0; border-radius: 10px; box-shadow: 0 8px 32px rgba(0,0,0,.1); min-width: 200px; padding: 8px 0; z-index: 1000; }
+    .dropdown-submenu:hover .submenu { display: block; }
+    .header-actions { display: flex; gap: 10px; align-items: center; flex-shrink: 0; }
+    .btn-ghost { border: 1.5px solid #999; background: transparent; border-radius: 6px; padding: 7px 14px; font-size: 13px; font-weight: 500; color: #444; cursor: pointer; }
+    .btn-primary { background: #222; color: #fff; border: none; border-radius: 6px; padding: 8px 18px; font-size: 13px; font-weight: 700; cursor: pointer; }
+
+    /* BREADCRUMB */
+    .breadcrumb { background: #fff; border-bottom: 1px solid #eee; padding: 10px 40px; font-size: 13px; color: #999; }
+    .breadcrumb a { color: #999; text-decoration: none; }
+    .breadcrumb span { margin: 0 6px; }
+
+    /* HERO */
+    .hero { background: #c8b88a; min-height: 480px; position: relative; display: block; }
+    .hero-overlay-dark { position: absolute; inset: 0; background: rgba(0,0,0,.42); }
+    .hero-booking { display: grid; grid-template-columns: 1fr 360px; gap: 48px; align-items: center; max-width: 1200px; margin: 0 auto; padding: 72px 40px; position: relative; z-index: 2; }
+    .hero-booking-card { background: #fff; border-radius: 14px; padding: 28px; box-shadow: 0 8px 40px rgba(0,0,0,.18); }
+    .hbc-title { font-size: 16px; font-weight: 700; color: #111; margin-bottom: 4px; }
+    .hbc-sub { font-size: 12px; color: #888; margin-bottom: 18px; }
+    .hbc-field { margin-bottom: 12px; }
+    .hbc-field label { display: block; font-size: 11px; font-weight: 700; color: #777; margin-bottom: 5px; letter-spacing: .05em; text-transform: uppercase; }
+    .hbc-field input, .hbc-field select { width: 100%; background: #f5f5f5; border: 1.5px solid #e8e8e8; border-radius: 8px; padding: 10px 12px; font-size: 13px; color: #333; }
+    .hbc-btn-primary { width: 100%; padding: 13px; background: #222; color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; margin-top: 4px; }
+    .hbc-divider { display: flex; align-items: center; gap: 8px; color: #ccc; font-size: 11px; margin: 12px 0; }
+    .hbc-divider::before, .hbc-divider::after { content: ''; flex: 1; height: 1px; background: #e8e8e8; }
+    .hbc-channels { display: flex; gap: 8px; }
+    .hbc-wa { flex: 1; padding: 10px; background: #25d366; color: #fff; border: none; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; text-align: center; }
+    .hbc-tw { flex: 1; padding: 10px; background: #00b67a; color: #fff; border: none; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; text-align: center; }
+
+    /* APPARECCHI */
+    .apparecchi-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 32px; }
+    .apparecchio-card { background: #fff; border: 1.5px solid #e0e0e0; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; }
+    .apparecchio-card.solo-carugate { border-color: #c8a96e; }
+    .apparecchio-img { background: #d9d9d9; border-bottom: 1px solid #e8e8e8; height: 160px; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #999; font-weight: 600; text-align: center; flex-direction: column; gap: 6px; }
+    .apparecchio-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+    .apparecchio-badge { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 12px; }
+    .badge-sede { font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; letter-spacing: .05em; }
+    .badge-bregnano { background: #e8f4fd; color: #1a6fa8; }
+    .badge-carugate { background: #fdf3e8; color: #c8761a; }
+    .badge-entrambe { background: #e8fdf0; color: #1a8a44; }
+    .badge-durata { font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; background: #f5f5f5; color: #666; }
+    .apparecchio-nome { font-size: 17px; font-weight: 800; color: #111; margin-bottom: 8px; line-height: 1.3; }
+    .apparecchio-desc { font-size: 13px; color: #666; line-height: 1.6; margin-bottom: 16px; flex: 1; }
+    .apparecchio-features { display: flex; flex-wrap: wrap; gap: 6px; }
+    .apparecchio-feature { background: #f5f5f5; border-radius: 6px; padding: 4px 10px; font-size: 11px; font-weight: 600; color: #555; }
+
+    /* ABBONAMENTI */
+    .abbonamenti-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 32px; }
+    .abbonamento-card { background: #fff; border: 1.5px solid #e0e0e0; border-radius: 12px; padding: 28px; position: relative; display: flex; flex-direction: column; }
+    .abbonamento-card.featured { border-color: #222; border-width: 2px; }
+    .abbonamento-badge { position: absolute; top: -1px; left: 50%; transform: translateX(-50%); background: #222; color: #fff; font-size: 11px; font-weight: 700; padding: 4px 16px; border-radius: 0 0 8px 8px; letter-spacing: .05em; white-space: nowrap; }
+    .abbonamento-nome { font-size: 18px; font-weight: 800; color: #111; margin-bottom: 6px; }
+    .abbonamento-desc { font-size: 13px; color: #777; margin-bottom: 18px; }
+    .abbonamento-prezzo { font-size: 28px; font-weight: 800; color: #111; margin-bottom: 4px; }
+    .abbonamento-prezzo-old { font-size: 14px; color: #bbb; text-decoration: line-through; margin-bottom: 16px; }
+    .abbonamento-features { list-style: none; padding: 0; margin-bottom: 24px; flex: 1; }
+    .abbonamento-features li { font-size: 13px; color: #444; padding: 6px 0; border-bottom: 1px solid #f0f0f0; display: flex; gap: 8px; }
+    .abbonamento-features li::before { content: "✓"; color: #27ae60; font-weight: 700; flex-shrink: 0; }
+    .abbonamento-features li:last-child { border-bottom: none; }
+    .btn-abbonamento { width: 100%; padding: 12px; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; border: 2px solid #222; background: transparent; color: #222; }
+    .abbonamento-card.featured .btn-abbonamento { background: #222; color: #fff; }
+
+    /* FAQ */
+    .faq-list { margin-top: 28px; display: flex; flex-direction: column; gap: 10px; }
+    .faq-item { background: #fff; border: 1.5px solid #e0e0e0; border-radius: 10px; overflow: hidden; }
+    .faq-question { display: flex; justify-content: space-between; align-items: center; padding: 16px 22px; font-size: 15px; font-weight: 600; color: #111; cursor: pointer; }
+    .faq-question:hover { background: #f8f8f8; }
+    .faq-arrow { font-size: 16px; color: #aaa; transition: transform .2s; flex-shrink: 0; }
+    .faq-answer { display: none; padding: 0 22px 16px; font-size: 14px; color: #555; line-height: 1.7; border-top: 1px solid #f0f0f0; }
+    .faq-item.open .faq-answer { display: block; }
+    .faq-item.open .faq-arrow { transform: rotate(180deg); }
+
+    /* FORM */
+    .prenota-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 32px; align-items: start; }
+    .form-box { background: #fff; border: 1.5px solid #e0e0e0; border-radius: 12px; padding: 32px; }
+    .form-title { font-size: 18px; font-weight: 700; color: #111; margin-bottom: 6px; }
+    .form-sub { font-size: 13px; color: #888; margin-bottom: 24px; }
+    .form-field { margin-bottom: 16px; }
+    .form-field label { display: block; font-size: 12px; font-weight: 700; color: #555; margin-bottom: 6px; letter-spacing: .05em; text-transform: uppercase; }
+    .form-field input, .form-field select, .form-field textarea { width: 100%; background: #f5f5f5; border: 1.5px solid #e0e0e0; border-radius: 8px; padding: 11px 14px; font-size: 14px; color: #333; }
+    .form-field textarea { height: 90px; resize: none; }
+    .btn-form { width: 100%; padding: 14px; background: #222; color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 8px; }
+    .form-privacy { font-size: 11px; color: #aaa; margin-top: 10px; text-align: center; }
+    .treatwell-box { background: #fff; border: 1.5px solid #e0e0e0; border-radius: 12px; padding: 32px; display: flex; flex-direction: column; gap: 20px; }
+    .tw-stars { color: #ED1E88; font-size: 16px; }
+    .btn-treatwell { display: block; width: 100%; padding: 14px; background: #00b67a; color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; text-align: center; }
+    .btn-wa { display: block; width: 100%; padding: 12px; background: #25d366; color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; text-align: center; margin-bottom: 10px; }
+    .btn-tel { display: block; width: 100%; padding: 12px; background: transparent; color: #222; border: 1.5px solid #ddd; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; text-align: center; margin-bottom: 8px; }
+
+    /* TRUST BAR */
+    .trust-bar { background: #fff; border-top: 1px solid #e8e8e8; border-bottom: 1px solid #e8e8e8; padding: 28px 40px; }
+    .trust-bar-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: center; }
+    .trust-icon { font-size: 24px; margin-bottom: 6px; }
+    .trust-title { font-size: 14px; font-weight: 700; color: #111; margin-bottom: 3px; }
+    .trust-sub { font-size: 12px; color: #777; }
+
+    /* CTA FINALE */
+    .cta-finale-bg { background: #111; color: #fff; padding: 72px 40px; text-align: center; }
+    .cta-finale-bg h2 { font-size: 30px; font-weight: 700; color: #fff; margin-bottom: 12px; }
+    .cta-finale-bg p { font-size: 15px; color: #bbb; max-width: 520px; margin: 0 auto 36px; line-height: 1.6; }
+    .cta-finale-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-finale-primary { background: #fff; color: #111; border: none; border-radius: 8px; padding: 14px 28px; font-size: 15px; font-weight: 700; cursor: pointer; }
+    .btn-finale-secondary { background: transparent; color: #fff; border: 2px solid #fff; border-radius: 8px; padding: 13px 28px; font-size: 15px; font-weight: 600; cursor: pointer; }
+
+    /* FOOTER */
+    footer { background: #1a1a1a; color: #aaa; padding: 48px 40px 24px; }
+    .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+    .footer-col-title { color: #fff; font-size: 13px; font-weight: 700; margin-bottom: 14px; letter-spacing: .05em; text-transform: uppercase; }
+    .footer-col p, .footer-col a { font-size: 13px; color: #999; line-height: 2; display: block; text-decoration: none; }
+    .footer-col .social-icon { display: flex; flex-shrink: 0; line-height: 1; }
+    .footer-logo { background: #333; border: 2px dashed #555; border-radius: 4px; width: 100px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #777; font-weight: 700; margin-bottom: 16px; }
+    .footer-tagline { font-size: 13px; color: #777; margin-bottom: 16px; line-height: 1.5; }
+    .footer-social { display: flex; flex-direction: row; gap: 8px; margin-top: 8px; }
+    .social-icon { background: #333; border-radius: 6px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+    .footer-bottom { max-width: 1200px; margin: 0 auto; border-top: 1px solid #333; padding-top: 20px; font-size: 12px; color: #666; display: flex; justify-content: space-between; }
+
+    .wa-float { position: fixed; bottom: 28px; right: 28px; background: #25d366; color: #fff; border-radius: 50%; width: 54px; height: 54px; display: flex; align-items: center; justify-content: center; font-size: 26px; box-shadow: 0 4px 16px rgba(0,0,0,.2); cursor: pointer; z-index: 200; }
+  </style>
+  <link rel="stylesheet" href="brand.css">
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header>
+  <a href="home.html" style="text-decoration:none;"><img src="img/logo-nero-rosa.webp" alt="Love Sun Beauty" class="header-logo-img"></a>
+  <nav>
+    <div class="nav-dropdown" onclick="this.classList.toggle('open')">
+      <span>Servizi ▾</span>
+      <div class="dropdown-menu">
+        <a href="epilazione-laser.html"><span class="dm-icon">✨</span> Epilazione Laser</a>
+        <a href="trattamenti-corpo.html"><span class="dm-icon">💆</span> Trattamenti T-Shape</a>
+        <a href="pressoterapia.html"><span class="dm-icon">💧</span> Pressoterapia</a>
+        <div class="dropdown-divider"></div>
+        <a href="nail-center.html"><span class="dm-icon">💅</span> Nail Center</a>
+        <a href="solarium.html" class="active"><span class="dm-icon">☀️</span> Solarium</a>
+        <div class="dropdown-divider"></div>
+        <div class="dropdown-submenu">
+          <a href="#"><span class="dm-icon">🌸</span> Estetica Base <span style="margin-left:auto;font-size:10px;color:#aaa;">▶</span></a>
+          <div class="submenu">
+            <a href="cerette.html"><span class="dm-icon">🪒</span> Cerette</a>
+            <a href="pedicure.html"><span class="dm-icon">🦶</span> Pedicure</a>
+            <a href="pulizia-viso.html"><span class="dm-icon">✨</span> Pulizia Viso</a>
+            <a href="massaggi.html"><span class="dm-icon">🤲</span> Massaggi</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <span><a href="offerte.html" style="color:inherit;text-decoration:none;">Offerte</a></span>
+    <div class="nav-dropdown" onclick="this.classList.toggle('open')">
+      <span>Le nostre Sedi ▾</span>
+      <div class="dropdown-menu">
+        <a href="sede-bregnano.html"><span class="dm-icon">📍</span> Centro Love Sun Beauty Bregnano</a>
+        <a href="sede-carugate.html"><span class="dm-icon">📍</span> Centro Love Sun Beauty Carugate</a>
+      </div>
+    </div>
+    <span><a href="chi-siamo.html" style="color:inherit;text-decoration:none;">Chi Siamo</a></span>
+    <span><a href="faq.html" style="color:inherit;text-decoration:none;">FAQ</a></span>
+    <span><a href="contatti.html" style="color:inherit;text-decoration:none;">Contatti</a></span>
+  </nav>
+  <div class="header-actions">
+    <button class="btn-ghost">📞 Chiama</button>
+    <button class="btn-ghost">💬 WhatsApp</button>
+    <a href="contatti.html" style="text-decoration:none;"><button class="btn-primary">Prenota Ora</button></a>
+  </div>
+</header>
+<div class="section-divider">SEZIONE 1 — HERO</div>
+
+<!-- ══ HERO ══ -->
+<div class="hero">
+  <div class="hero-parallax" role="img" aria-label="Solarium Love Sun Beauty" style="background-image:url('img/solarium/homesolarium.webp');"></div>
+  <div class="hero-overlay-dark"></div>
+  <div class="hero-booking">
+    <div>
+      <h1 style="font-size:40px; font-weight:800; color:#fff; line-height:1.2; margin-bottom:16px;">Solarium<br>La tua abbronzatura, tutto l'anno.</h1>
+      <p style="font-size:17px; color:rgba(255,255,255,.85); line-height:1.6; margin-bottom:18px;">Docce solari e lampade viso di ultima generazione con tecnologia CUBE® Compagnia del Sole. Abbronzatura uniforme, intensa e duratura — in totale sicurezza.</p>
+      <div style="display:flex; gap:16px; margin-top:18px; flex-wrap:wrap;">
+        <div style="color:rgba(255,255,255,.8); font-size:14px; font-weight:600;">✓ 6 apparecchi disponibili</div>
+        <div style="color:rgba(255,255,255,.8); font-size:14px; font-weight:600;">✓ Tecnologia CUBE®</div>
+        <div style="color:rgba(255,255,255,.8); font-size:14px; font-weight:600;">✓ Sedute da 13–15 min</div>
+      </div>
+      <div style="margin-top:20px; display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.25); border-radius:20px; padding:6px 16px;">
+        <span style="color:#ED1E88; font-size:14px;">★★★★★</span>
+        <span style="font-size:13px; color:#fff; font-weight:600;">4,9/5 · 419 recensioni verificate</span>
+      </div>
+    </div>
+    <div class="hero-booking-card">
+      <div class="hbc-title">📅 Prenota o acquista abbonamento</div>
+      <div class="hbc-sub">Risposta rapida · Nessun impegno</div>
+      <div class="hbc-field">
+        <label>Nome e Cognome *</label>
+        <input type="text" placeholder="Es. Maria Rossi" required>
+      </div>
+      <div class="hbc-field">
+        <label>Telefono / WhatsApp *</label>
+        <input type="text" placeholder="Es. 333 123 4567" required>
+      </div>
+      <div class="hbc-field">
+        <label>Email *</label>
+        <input type="email" placeholder="Es. maria@email.it" required>
+      </div>
+      <div class="hbc-field">
+        <label>Sede preferita</label>
+        <select>
+          <option>-- Seleziona --</option>
+          <option>Love Sun Beauty Bregnano (CO)</option>
+          <option>Love Sun Beauty Carugate (MI)</option>
+        </select>
+      </div>
+      <div class="hbc-field">
+        <label>Ti interessa</label>
+        <select>
+          <option>-- Seleziona --</option>
+          <option>Singola seduta</option>
+          <option>Abbonamento 10 sedute</option>
+          <option>Abbonamento mensile</option>
+          <option>Informazioni generali</option>
+        </select>
+      </div>
+            <div class="hbc-field">
+        <label>Messaggio (opzionale)</label>
+        <textarea style="width:100%; background:#f5f5f5; border:1.5px solid #e8e8e8; border-radius:8px; padding:10px 12px; font-size:13px; color:#333; height:72px; resize:none;" placeholder="Scrivi qui domande o preferenze di orario…"></textarea>
+      </div>
+      <button class="hbc-btn-primary">Invia Richiesta →</button>
+      <div class="hbc-divider">oppure contattaci subito</div>
+      <div class="hbc-channels">
+        <button class="hbc-tw">📅 Treatwell</button>
+        <button class="hbc-wa">💬 WhatsApp</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="section-divider">SEZIONE 2 — I NOSTRI APPARECCHI</div>
+
+<!-- ══ APPARECCHI ══ -->
+<div style="background:#fafafa; padding:72px 40px;">
+  <div style="max-width:1200px; margin:0 auto;">
+    <div class="section-tag">I nostri apparecchi</div>
+    <h2 class="wf">Tecnologia di ultima generazione per ogni esigenza</h2>
+    <p class="wf">Disponiamo di 6 apparecchi professionali — lampade viso e docce solari — tutti equipaggiati con la tecnologia CUBE® della Compagnia del Sole per un'abbronzatura uniforme senza punti focali.</p>
+
+    <!-- Legenda sedi -->
+    <div style="display:flex; gap:12px; margin-bottom:28px; flex-wrap:wrap;">
+      <div style="display:flex; align-items:center; gap:6px; font-size:12px; color:#555;"><span style="display:inline-block; width:10px; height:10px; background:#e8f4fd; border:1.5px solid #1a6fa8; border-radius:3px;"></span> Solo Bregnano</div>
+      <div style="display:flex; align-items:center; gap:6px; font-size:12px; color:#555;"><span style="display:inline-block; width:10px; height:10px; background:#fdf3e8; border:1.5px solid #c8761a; border-radius:3px;"></span> Solo Carugate</div>
+      <div style="display:flex; align-items:center; gap:6px; font-size:12px; color:#555;"><span style="display:inline-block; width:10px; height:10px; background:#e8fdf0; border:1.5px solid #1a8a44; border-radius:3px;"></span> Entrambe le sedi</div>
+    </div>
+
+    <div class="apparecchi-grid">
+
+      <!-- Lampada viso quadrifacciale -->
+      <div class="apparecchio-card">
+        <div class="apparecchio-img" style="padding:0; overflow:hidden;"><img src="img/solarium/lampadavisoquadrifacciale.webp" alt="Lampada viso quadrifacciale" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="apparecchio-body">
+          <div class="apparecchio-badge">
+            <span class="badge-sede badge-entrambe">Bregnano + Carugate</span>
+            <span class="badge-durata">⏱ 13 min</span>
+          </div>
+          <div class="apparecchio-nome">Lampada Viso Quadrifacciale<br><span style="font-size:13px; font-weight:500; color:#888;">Alta pressione con collagene</span></div>
+          <div class="apparecchio-desc">4 lampade UV-A ad alta pressione con ventilazione centrale, regolabili in altezza e profondità. Include 2 lampade UV-A per l'abbronzatura delle mani. Sistema di proiezione verticale con parabola CUBE® per massima uniformità.</div>
+          <div class="apparecchio-features">
+            <span class="apparecchio-feature">4 lampade UV-A</span>
+            <span class="apparecchio-feature">Abbronzatura mani</span>
+            <span class="apparecchio-feature">Altoparlanti integrati</span>
+            <span class="apparecchio-feature">Display digitale</span>
+            <span class="apparecchio-feature">Luci di cortesia</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lampada viso esafacciale -->
+      <div class="apparecchio-card">
+        <div class="apparecchio-img" style="padding:0; overflow:hidden;"><img src="img/solarium/lampadavisoesafacciale.webp" alt="Lampada viso esafacciale" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="apparecchio-body">
+          <div class="apparecchio-badge">
+            <span class="badge-sede badge-entrambe">Bregnano + Carugate</span>
+            <span class="badge-durata">⏱ 13 min</span>
+          </div>
+          <div class="apparecchio-nome">Lampada Viso Esafacciale<br><span style="font-size:13px; font-weight:500; color:#888;">Alta pressione con collagene</span></div>
+          <div class="apparecchio-desc">6 parabole riflettenti con sistema esclusivo CUBE® per abbronzatura uniforme su viso e décolleté. Massaggio integrato, alzagambe elettronico e consolle di controllo con tutti i comandi a portata di mano.</div>
+          <div class="apparecchio-features">
+            <span class="apparecchio-feature">6 parabole CUBE®</span>
+            <span class="apparecchio-feature">Viso + décolleté</span>
+            <span class="apparecchio-feature">Massaggio integrato</span>
+            <span class="apparecchio-feature">Alzagambe elettronico</span>
+            <span class="apparecchio-feature">Altoparlanti</span>
+            <span class="apparecchio-feature">6 lampade</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Doccia bassa pressione STAND-UP -->
+      <div class="apparecchio-card">
+        <div class="apparecchio-img" style="padding:0; overflow:hidden;"><img src="img/solarium/docciabassapressione.webp" alt="Doccia abbronzante STAND-UP" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="apparecchio-body">
+          <div class="apparecchio-badge">
+            <span class="badge-sede badge-bregnano">Solo Bregnano</span>
+            <span class="badge-durata">⏱ 13 min</span>
+          </div>
+          <div class="apparecchio-nome">Doccia Solare STAND-UP Evolution<br><span style="font-size:13px; font-weight:500; color:#888;">Bassa pressione con collagene</span></div>
+          <div class="apparecchio-desc">Abbronzatura integrale in 8–10 minuti in totale sicurezza. Forma ellittica per irradiazione omogenea su tutto il corpo. 49 tubi ad alta efficienza, pavimento retroilluminato e ventilazione Full Body regolabile.</div>
+          <div class="apparecchio-features">
+            <span class="apparecchio-feature">49 tubi 160w/180w</span>
+            <span class="apparecchio-feature">Corpo intero</span>
+            <span class="apparecchio-feature">Ventilazione Full Body</span>
+            <span class="apparecchio-feature">Pavimento LED</span>
+            <span class="apparecchio-feature">Luci colorate</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Doccia alta pressione V-400 -->
+      <div class="apparecchio-card">
+        <div class="apparecchio-img" style="padding:0; overflow:hidden;"><img src="img/solarium/docciaabbronzantealtapressione.webp" alt="Doccia abbronzante V-400" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="apparecchio-body">
+          <div class="apparecchio-badge">
+            <span class="badge-sede badge-entrambe">Bregnano + Carugate</span>
+            <span class="badge-durata">⏱ 13 min</span>
+          </div>
+          <div class="apparecchio-nome">Doccia Solare V-400<br><span style="font-size:13px; font-weight:500; color:#888;">Alta pressione Compagnia del Sole</span></div>
+          <div class="apparecchio-desc">Abbronzatura completa di viso, gambe e busto con sistema di proiezione verticale parabola CUBE® monofacciale. Selettore 3 zone indipendenti (gambe / busto / corpo) e variazione di potenza per personalizzare la seduta. 24+1 lampade.</div>
+          <div class="apparecchio-features">
+            <span class="apparecchio-feature">24+1 lampade</span>
+            <span class="apparecchio-feature">3 zone selezionabili</span>
+            <span class="apparecchio-feature">Parabola CUBE®</span>
+            <span class="apparecchio-feature">Variazione potenza</span>
+            <span class="apparecchio-feature">Full Body ventilation</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lettino bassa pressione ERGOLINE -->
+      <div class="apparecchio-card">
+        <div class="apparecchio-img" style="padding:0; overflow:hidden;"><img src="img/solarium/lettinobassapressione.webp" alt="Lettino bassa pressione ERGOLINE" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="apparecchio-body">
+          <div class="apparecchio-badge">
+            <span class="badge-sede badge-bregnano">Solo Bregnano</span>
+            <span class="badge-durata">⏱ 15 min</span>
+          </div>
+          <div class="apparecchio-nome">Lettino Abbronzante Bassa Pressione<br><span style="font-size:13px; font-weight:500; color:#888;">Collagene · ERGOLINE</span></div>
+          <div class="apparecchio-desc">Lettino a bassa pressione con lampade al collagene ERGOLINE — il produttore numero uno al mondo di apparecchiature professionali. Costruito secondo le più innovative tecnologie ergonomiche ed estetiche, in conformità CE. Rilassati e goditi una sessione di abbronzatura in totale comfort con risultato uniforme e naturale.</div>
+          <div class="apparecchio-features">
+            <span class="apparecchio-feature">Lampade collagene</span>
+            <span class="apparecchio-feature">ERGOLINE #1 al mondo</span>
+            <span class="apparecchio-feature">Design ergonomico</span>
+            <span class="apparecchio-feature">Abbronzatura naturale</span>
+            <span class="apparecchio-feature">Conformità CE</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lettino C-VENTI -->
+      <div class="apparecchio-card solo-carugate">
+        <div class="apparecchio-img" style="padding:0; overflow:hidden;"><img src="img/solarium/lettinoaltapressione.webp" alt="Lettino C-VENTI" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="apparecchio-body">
+          <div class="apparecchio-badge">
+            <span class="badge-sede badge-carugate">Solo Carugate</span>
+            <span class="badge-durata">⏱ 15 min</span>
+          </div>
+          <div class="apparecchio-nome">Lettino Abbronzante C-VENTI<br><span style="font-size:13px; font-weight:500; color:#888;">Alta pressione · Compagnia del Sole</span></div>
+          <div class="apparecchio-desc">Il lettino abbronzante di ultima generazione con 20 gruppi abbronzanti a distribuzione omogenea della luce. Sistema di lampade a proiezione verticale con parabole CUBE® per un'irradiazione uniforme senza punti focali o zone d'ombra. Design ergonomico per il massimo comfort durante la seduta.</div>
+          <div class="apparecchio-features">
+            <span class="apparecchio-feature">20 gruppi abbronzanti</span>
+            <span class="apparecchio-feature">Parabole CUBE®</span>
+            <span class="apparecchio-feature">Design ergonomico</span>
+            <span class="apparecchio-feature">Nessun punto focale</span>
+            <span class="apparecchio-feature">Abbronzatura intensa e duratura</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="wf-note" style="margin-top:20px;">Disponibilità apparecchi per sede da confermare con il centro · Screenshot reali degli apparecchi da inserire</div>
+  </div>
+</div>
+<div class="section-divider">SEZIONE 3 — ABBONAMENTI</div>
+
+<!-- ══ ABBONAMENTI ══ -->
+<div style="background:#fff; padding:72px 40px;">
+  <div style="max-width:1200px; margin:0 auto;">
+    <div class="section-tag">Abbonamenti</div>
+    <h2 class="wf">Scegli la formula più adatta</h2>
+    <p class="wf">Più usi il solarium, più risparmi. Abbonati e prenota quando vuoi, in entrambe le sedi.</p>
+    <div class="abbonamenti-grid">
+
+      <div class="abbonamento-card">
+        <div class="abbonamento-nome">Singola seduta</div>
+        <div class="abbonamento-desc">Prova senza impegno</div>
+        <div class="abbonamento-prezzo">[Prezzo]</div>
+        <div class="abbonamento-prezzo-old">a seduta</div>
+        <ul class="abbonamento-features">
+          <li>1 seduta su apparecchio a scelta</li>
+          <li>Occhialini inclusi</li>
+          <li>Consiglio sul fototipo</li>
+          <li>Cosmetici abbronzanti disponibili</li>
+        </ul>
+        <a href="contatti.html" style="text-decoration:none;"><button class="btn-abbonamento">Richiedi Info →</button></a>
+      </div>
+
+      <div class="abbonamento-card featured">
+        <div class="abbonamento-badge">⭐ Più conveniente</div>
+        <div class="abbonamento-nome">10 sedute</div>
+        <div class="abbonamento-desc">Il pacchetto più scelto</div>
+        <div class="abbonamento-prezzo">[Prezzo]</div>
+        <div class="abbonamento-prezzo-old">invece di [10× singole]</div>
+        <ul class="abbonamento-features">
+          <li>10 sedute su apparecchio a scelta</li>
+          <li>Valide 6 mesi dall'acquisto</li>
+          <li>Occhialini sempre inclusi</li>
+          <li>Cedibile a un familiare</li>
+          <li>Risparmio rispetto alle singole</li>
+        </ul>
+        <a href="contatti.html" style="text-decoration:none;"><button class="btn-abbonamento">Richiedi Info →</button></a>
+      </div>
+
+      <div class="abbonamento-card">
+        <div class="abbonamento-nome">Mensile illimitato</div>
+        <div class="abbonamento-desc">Per chi vuole abbronzarsi tutto l'anno</div>
+        <div class="abbonamento-prezzo">[Prezzo]</div>
+        <div class="abbonamento-prezzo-old">al mese</div>
+        <ul class="abbonamento-features">
+          <li>Sedute illimitate per 30 giorni</li>
+          <li>Max 1 seduta al giorno</li>
+          <li>Occhialini sempre inclusi</li>
+          <li>Rinnovabile mensilmente</li>
+          <li>Massimo risparmio</li>
+        </ul>
+        <a href="contatti.html" style="text-decoration:none;"><button class="btn-abbonamento">Richiedi Info →</button></a>
+      </div>
+
+    </div>
+    <div class="wf-note" style="margin-top:20px;">Prezzi reali da inserire dal centro</div>
+      <div class="wf-note" style="margin-top:6px; display:block;">⚙️ <strong>CPT WordPress:</strong> ogni abbonamento è un Custom Post Type <code>ls_abbonamento</code> — campi: nome, prezzo, periodo, feature_list, in_evidenza. Aggiornabili dall'admin senza toccare il template.</div>
+  </div>
+</div>
+<div class="section-divider">SEZIONE 4 — FAQ</div>
+
+<!-- ══ FAQ ══ -->
+<div style="background:#fafafa; padding:72px 40px;">
+  <div style="max-width:1200px; margin:0 auto;">
+    <div class="section-tag">Domande frequenti</div>
+    <h2 class="wf">Le domande più comuni sul solarium</h2>
+    <div class="faq-list">
+      <div class="faq-item open">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">Qual è la differenza tra doccia solare e lampada viso? <span class="faq-arrow">▼</span></div>
+        <div class="faq-answer">La doccia solare (STAND-UP o V-400) abbronza tutto il corpo in posizione eretta — è ideale per chi vuole un'abbronzatura completa e uniforme. Le lampade viso sono pensate specificamente per il viso e il décolleté, con risultati più mirati e intensi su quelle zone. Molte clienti le combinano.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">Quante sedute devo fare per vedere i risultati? <span class="faq-arrow">▼</span></div>
+        <div class="faq-answer">Dipende dal fototipo, ma in generale si inizia a vedere una differenza già dopo 3–4 sedute. Consigliamo le prime sedute a giorni alterni per permettere alla pelle di adattarsi. La durata standard è di 13 minuti (15 minuti per il lettino C-VENTI).</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">Gli occhialini sono obbligatori? <span class="faq-arrow">▼</span></div>
+        <div class="faq-answer">Sì, assolutamente. I raggi UV possono causare danni seri alla retina. Forniamo occhialini protettivi omologati inclusi in ogni seduta — il loro utilizzo è obbligatorio per legge e per la tua sicurezza.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">Devo usare una crema speciale al solarium? <span class="faq-arrow">▼</span></div>
+        <div class="faq-answer">Non si usa la protezione solare, ma consigliamo creme acceleratrici specifiche per lettino o doccia abbronzante — migliorano il risultato e idratano la pelle. Dopo la seduta applica sempre un doposole o una crema idratante. Trovi i cosmetici disponibili in salone.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">Quali apparecchi sono disponibili in ciascuna sede? <span class="faq-arrow">▼</span></div>
+        <div class="faq-answer">A <strong>Bregnano</strong>: lampada viso quadrifacciale, lampada viso esafacciale, doccia STAND-UP bassa pressione, doccia V-400 alta pressione e lettino bassa pressione ERGOLINE. A <strong>Carugate</strong>: lampada viso quadrifacciale, lampada viso esafacciale, doccia V-400 alta pressione e lettino C-VENTI alta pressione.</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="section-divider">SEZIONE 5 — PRENOTA</div>
+
+<!-- ══ PRENOTA ══ -->
+<div style="background:#fff; padding:72px 40px;">
+  <div style="max-width:1200px; margin:0 auto;">
+    <div class="section-tag">Prenota o abbonati</div>
+    <h2 class="wf">Inizia la tua abbronzatura oggi</h2>
+    <p class="wf">Contattaci per prenotare la tua prima seduta o per acquistare un abbonamento.</p>
+    <div class="prenota-grid">
+      <div class="form-box">
+        <div class="form-title">💬 Richiedi informazioni o prenota</div>
+        <div class="form-sub">Risponderemo entro poche ore.</div>
+        <div class="form-field">
+          <label>Nome e Cognome *</label>
+          <input type="text" placeholder="Es. Maria Rossi" required>
+        </div>
+        <div class="form-field">
+          <label>Telefono / WhatsApp *</label>
+          <input type="text" placeholder="Es. 333 123 4567" required>
+        </div>
+        <div class="form-field">
+          <label>Email *</label>
+          <input type="email" placeholder="Es. maria@email.it" required>
+        </div>
+        <div class="form-field">
+          <label>Sede preferita</label>
+          <select>
+            <option>-- Seleziona --</option>
+            <option>Love Sun Beauty Bregnano (lampade viso + docce)</option>
+            <option>Love Sun Beauty Carugate (lettino + lampade + doccia)</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label>Apparecchio o formula</label>
+          <select>
+            <option>-- Seleziona --</option>
+            <option>Lampada viso quadrifacciale</option>
+            <option>Lampada viso esafacciale</option>
+            <option>Doccia STAND-UP bassa pressione (Bregnano)</option>
+            <option>Doccia V-400 alta pressione</option>
+            <option>Lettino bassa pressione ERGOLINE (Bregnano)</option>
+            <option>Lettino C-VENTI alta pressione (Carugate)</option>
+            <option>Abbonamento 10 sedute</option>
+            <option>Abbonamento mensile illimitato</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label>Messaggio (opzionale)</label>
+          <textarea placeholder="Indica il tuo fototipo o eventuali domande..."></textarea>
+        </div>
+        <button class="btn-form">Invia Richiesta →</button>
+        <div class="form-privacy">Inviando accetti la nostra <u>Privacy Policy</u>. I tuoi dati non saranno condivisi con terzi.</div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:20px;">
+        <div class="treatwell-box">
+          <div style="display:flex; align-items:center; gap:14px;">
+            <div style="background:#00b67a; color:#fff; font-size:13px; font-weight:800; padding:8px 16px; border-radius:8px; flex-shrink:0;">treatwell</div>
+            <div>
+              <div class="tw-stars">★★★★★</div>
+              <div style="font-size:13px; color:#555; margin-top:2px;"><strong>4,9/5</strong> · 419 recensioni</div>
+            </div>
+          </div>
+          <div style="font-size:14px; color:#555; line-height:1.6;">Prenota online in pochi clic. Scegli la sede, il giorno e l'orario che preferisci.</div>
+          <button class="btn-treatwell">📅 Prenota su Treatwell</button>
+        </div>
+        <div class="treatwell-box">
+          <div class="form-title" style="font-size:16px;">Preferisci contattarci direttamente?</div>
+          <div>
+            <button class="btn-wa">💬 Scrivici su WhatsApp</button>
+            <button class="btn-tel">📞 Chiama — 031 4682567</button>
+            <button class="btn-tel">📧 info@lovesun.it</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="section-divider">SEZIONE 6 — TRUST BAR</div>
+
+<!-- ══ TRUST BAR ══ -->
+<div class="trust-bar">
+  <div class="trust-bar-inner">
+    <div>
+      <div class="trust-icon">⭐</div>
+      <div class="trust-title">4,9/5 · Valutazione media</div>
+      <div class="trust-sub">419 recensioni verificate</div>
+    </div>
+    <div>
+      <div class="trust-icon">☀️</div>
+      <div class="trust-title">6 Apparecchi</div>
+      <div class="trust-sub">Tecnologia CUBE® Compagnia del Sole</div>
+    </div>
+    <div>
+      <div class="trust-icon">🛡️</div>
+      <div class="trust-title">Sicurezza garantita</div>
+      <div class="trust-sub">Occhialini inclusi · Staff formato</div>
+    </div>
+    <div>
+      <div class="trust-icon">📍</div>
+      <div class="trust-title">2 Sedi in Lombardia</div>
+      <div class="trust-sub">Bregnano (CO) · Carugate (MI)</div>
+    </div>
+  </div>
+</div>
+<div class="section-divider">SEZIONE 7 — CTA FINALE</div>
+
+<!-- ══ CTA FINALE ══ -->
+<div class="cta-finale-bg">
+  <h2>Pelle dorata, tutto l'anno.</h2>
+  <p>Scegli il tuo apparecchio, prenota la sede e inizia oggi. La tua prima seduta ti aspetta.</p>
+  <div class="cta-finale-actions">
+    <a href="contatti.html" style="text-decoration:none;"><button class="btn-finale-primary">📅 Prenota Ora</button></a>
+    <button class="btn-finale-secondary">💬 Scrivici su WhatsApp</button>
+    <button class="btn-finale-secondary">📞 Chiama Ora</button>
+  </div>
+</div>
+<div class="section-divider">FOOTER</div>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <img src="img/logo-bianco-rosa.webp" alt="Love Sun Beauty" class="footer-logo-img">
+      <p class="footer-tagline">Beauty Center. Bellezza e benessere in Lombardia.</p>
+      <div class="footer-social">
+        <a href="https://www.facebook.com/lovesunsolarium/" target="_blank" rel="noopener" class="social-icon" title="Facebook" style="text-decoration:none; display:flex; align-items:center; justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5H16.7V3.7c-.3-.04-1.3-.12-2.4-.12-2.4 0-4 1.46-4 4.14v2.31H7.5V13h2.8v8h3.2z"/></svg></a>
+        <a href="https://www.instagram.com/lovesun.beauty?igsh=MW90b3pvNXBhYWFtNA==" target="_blank" rel="noopener" class="social-icon" title="Instagram" style="text-decoration:none; display:flex; align-items:center; justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="3.8"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg></a>
+        <a href="#" target="_blank" rel="noopener" class="social-icon" title="TikTok — link da inserire" style="text-decoration:none; display:flex; align-items:center; justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 3c.3 2.2 1.5 3.5 3.6 3.7v2.5c-1.2.1-2.4-.3-3.6-1v5.7c0 3.2-2.3 5.4-5.3 5.4-2.7 0-4.9-2-4.9-4.8 0-2.9 2.4-4.9 5.4-4.6v2.6c-.4-.1-.8-.2-1.2-.2-1.2 0-2.2.9-2.2 2.1s1 2.2 2.3 2.2c1.3 0 2.1-1 2.1-2.4V3h3.5z"/></svg></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Servizi</div>
+      <a href="epilazione-laser.html">Epilazione Laser</a>
+      <a href="trattamenti-corpo.html">Trattamenti T-Shape</a>
+      <a href="pressoterapia.html">Pressoterapia</a>
+      <a href="nail-center.html">Nail Center</a>
+      <a href="solarium.html">Solarium</a>
+      <a href="cerette.html">Cerette</a>
+      <a href="pedicure.html">Pedicure</a>
+      <a href="pulizia-viso.html">Pulizia Viso</a>
+      <a href="massaggi.html">Massaggi</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Love Sun Beauty Bregnano</div>
+      <p>Via per Lazzate 7<br>22070 Bregnano (CO)</p>
+      <p>031 4682567<br>WhatsApp +39 347 3983337<br>info@lovesun.it</p>
+      <p>Lun–Sab 9:00–21:00<br>Dom 9:00–17:00</p>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Love Sun Beauty Carugate</div>
+      <p>Via del Ginestrino 16<br>20061 Carugate (MI)</p>
+      <p>031 4682567<br>WhatsApp +39 347 3983337<br>info@lovesun.it</p>
+      <p>Mar/Mer/Ven/Sab 9:00–20:00<br>Gio 9:00–21:00<br>Lun e Dom: Chiuso</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Love Sun Beauty &nbsp;·&nbsp; Privacy Policy &nbsp;·&nbsp; Cookie Policy</span>
+    <span>P.IVA: 03959640131</span>
+  </div>
+</footer>
+
+<div class="wa-float">💬</div>
+
+<script src="site.js"></script>
+</body>
+</html>

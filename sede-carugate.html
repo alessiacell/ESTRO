@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Centro Love Sun Beauty Carugate | Love Sun Beauty</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f0f0f0; color: #222; }
+
+    .wf-label { font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #999; margin-bottom: 6px; }
+    .wf-note { display: inline-block; background: #fffbe6; border: 1px dashed #ED1E88; border-radius: 4px; font-size: 11px; color: #856404; padding: 3px 8px; margin-top: 6px; }
+    .wf-placeholder { background: #d9d9d9; border: 2px dashed #bbb; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #888; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; flex-direction: column; gap: 4px; }
+    .section-tag { display: inline-block; background: #222; color: #fff; font-size: 10px; font-weight: 700; letter-spacing: .1em; padding: 3px 10px; border-radius: 3px; margin-bottom: 20px; }
+    .section-divider { background: #e8e8e8; text-align: center; padding: 6px; font-size: 10px; font-weight: 700; letter-spacing: .12em; color: #999; text-transform: uppercase; }
+
+    h1.wf { font-size: 36px; font-weight: 800; line-height: 1.2; color: #111; margin-bottom: 16px; }
+    h2.wf { font-size: 26px; font-weight: 700; color: #111; margin-bottom: 10px; }
+    h3.wf { font-size: 16px; font-weight: 700; color: #222; margin-bottom: 6px; }
+    p.wf  { font-size: 15px; color: #555; line-height: 1.6; margin-bottom: 16px; }
+
+    /* HEADER */
+    header { position: sticky; top: 0; z-index: 100; background: #fff; border-bottom: 2px solid #e0e0e0; padding: 14px 40px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .header-logo { background: #d9d9d9; border: 2px dashed #bbb; border-radius: 4px; width: 120px; height: 36px; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #888; font-weight: 700; flex-shrink: 0; }
+    nav { display: flex; gap: 24px; font-size: 14px; font-weight: 500; color: #444; align-items: center; }
+    nav span { cursor: pointer; border-bottom: 1px dashed #bbb; padding-bottom: 2px; }
+    .nav-dropdown { position: relative; }
+    .nav-dropdown > span { display: flex; align-items: center; gap: 4px; cursor: pointer; border-bottom: 1px dashed #bbb; padding-bottom: 2px; }
+    .dropdown-menu { display: none; position: absolute; top: calc(100% + 8px); left: -20px; background: #fff; border: 1.5px solid #e0e0e0; border-radius: 10px; box-shadow: 0 8px 32px rgba(0,0,0,.1); min-width: 240px; z-index: 999; padding: 8px 0; }
+    .dropdown-menu::before { content: ''; position: absolute; top: -12px; left: 0; right: 0; height: 12px; }
+    .nav-dropdown:hover .dropdown-menu, .nav-dropdown.open .dropdown-menu { display: block; }
+    .dropdown-menu a { display: flex; align-items: center; gap: 10px; padding: 10px 20px; font-size: 14px; color: #222; text-decoration: none; font-weight: 500; }
+    .dropdown-menu a:hover { background: #f5f5f5; }
+    .dropdown-menu a.active { background: #f0f0f0; font-weight: 700; }
+    .dm-icon { font-size: 16px; width: 22px; text-align: center; }
+    .dropdown-divider { height: 1px; background: #f0f0f0; margin: 6px 0; }
+    .dropdown-submenu { position: relative; }
+    .submenu { display: none; position: absolute; left: 100%; top: -8px; background: #fff; border: 1.5px solid #e0e0e0; border-radius: 10px; box-shadow: 0 8px 32px rgba(0,0,0,.1); min-width: 200px; padding: 8px 0; z-index: 1000; }
+    .dropdown-submenu:hover .submenu { display: block; }
+    .header-actions { display: flex; gap: 10px; align-items: center; flex-shrink: 0; }
+    .btn-ghost { border: 1.5px solid #999; background: transparent; border-radius: 6px; padding: 7px 14px; font-size: 13px; font-weight: 500; color: #444; cursor: pointer; }
+    .btn-primary { background: #222; color: #fff; border: none; border-radius: 6px; padding: 8px 18px; font-size: 13px; font-weight: 700; cursor: pointer; }
+
+    /* BREADCRUMB */
+    .breadcrumb { background: #fff; border-bottom: 1px solid #eee; padding: 10px 40px; font-size: 13px; color: #999; }
+    .breadcrumb a { color: #999; text-decoration: none; }
+    .breadcrumb span { margin: 0 6px; }
+
+    /* HERO */
+    .hero { background: #b8c0c2; min-height: 480px; position: relative; display: block; }
+    .hero-overlay-dark { position: absolute; inset: 0; background: rgba(0,0,0,.40); }
+    .hero-inner { max-width: 1200px; margin: 0 auto; padding: 72px 40px; position: relative; z-index: 2; display: grid; grid-template-columns: 1fr 380px; gap: 48px; align-items: center; }
+
+    /* INFO BOX HERO */
+    .hero-info-box { background: rgba(255,255,255,.97); border-radius: 14px; padding: 28px; box-shadow: 0 8px 40px rgba(0,0,0,.18); }
+    .hib-title { font-size: 14px; font-weight: 700; color: #111; margin-bottom: 16px; letter-spacing: .03em; border-bottom: 1px solid #f0f0f0; padding-bottom: 12px; }
+    .hib-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 13px; font-size: 13px; color: #444; line-height: 1.5; }
+    .hib-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .hib-label { font-weight: 700; color: #111; display: block; font-size: 11px; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 2px; }
+    .hib-divider { height: 1px; background: #f0f0f0; margin: 14px 0; }
+    .hib-btn-treatwell { display: block; width: 100%; padding: 12px; background: #00b67a; color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; text-align: center; margin-bottom: 8px; }
+    .hib-btn-wa { display: block; width: 100%; padding: 11px; background: #25d366; color: #fff; border: none; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; text-align: center; }
+
+    /* SEZIONI */
+    section { padding: 60px 40px; max-width: 1200px; margin: 0 auto; }
+
+    /* GRIGLIA 2 COL */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+    .grid-2-map { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+
+    /* MAPPA PLACEHOLDER */
+    .map-placeholder { background: #d9d9d9; border: 2px dashed #bbb; border-radius: 10px; height: 260px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: #777; font-size: 13px; font-weight: 600; }
+    .map-placeholder-large { height: 280px; }
+
+    /* TABELLA ORARI */
+    .orari-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 14px; }
+    .orari-table th { background: #f5f5f5; text-align: left; padding: 10px 14px; font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: #888; border-bottom: 2px solid #e8e8e8; }
+    .orari-table td { padding: 10px 14px; border-bottom: 1px solid #f0f0f0; color: #333; }
+    .orari-table tr:last-child td { border-bottom: none; }
+    .orari-table .closed { color: #bbb; font-style: italic; }
+    .orari-table .open { font-weight: 700; color: #111; }
+    .orari-table .highlight-row td { background: #f0f9f5; color: #0a6641; font-weight: 700; }
+    .badge-chiuso { display: inline-block; background: #f0f0f0; color: #aaa; font-size: 11px; font-weight: 700; border-radius: 4px; padding: 2px 8px; }
+    .badge-aperto { display: inline-block; background: #e6f7ef; color: #0a6641; font-size: 11px; font-weight: 700; border-radius: 4px; padding: 2px 8px; }
+
+    /* SERVIZI GRID 3 */
+    .servizi-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 32px; }
+    .servizio-card-3 { background: #fff; border: 1.5px solid #e0e0e0; border-radius: 14px; padding: 26px 22px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; transition: box-shadow .15s; }
+    .servizio-card-3:hover { box-shadow: 0 4px 18px rgba(0,0,0,.08); }
+    .servizio-card-3 .s-icon { font-size: 34px; }
+    .servizio-card-3 .s-name { font-size: 15px; font-weight: 700; color: #111; }
+    .servizio-card-3 .s-link { font-size: 12px; color: #888; text-decoration: none; border-bottom: 1px dashed #ccc; padding-bottom: 1px; }
+    .servizio-card-3 .s-link:hover { color: #333; }
+
+    /* SOLARIUM PILLS */
+    .solarium-section { background: #fafafa; padding: 72px 40px; }
+    .solarium-inner { max-width: 1200px; margin: 0 auto; }
+    .apparecchi-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-top: 32px; }
+    .apparecchio-card { background: #fff; border: 1.5px solid #e0e0e0; border-radius: 12px; padding: 22px 24px; display: flex; align-items: center; gap: 16px; }
+    .apparecchio-card.exclusive { border-color: #c9a84c; border-width: 2px; background: #fffdf5; }
+    .app-icon { font-size: 28px; flex-shrink: 0; }
+    .app-name { font-size: 15px; font-weight: 700; color: #111; margin-bottom: 4px; }
+    .app-desc { font-size: 12px; color: #777; line-height: 1.5; }
+    .exclusive-badge { display: inline-block; background: #c9a84c; color: #fff; font-size: 10px; font-weight: 800; letter-spacing: .08em; padding: 2px 10px; border-radius: 20px; text-transform: uppercase; margin-top: 6px; }
+
+    /* COME RAGGIUNGERCI */
+    .raggiungerci-pill { background: #fff; border: 1.5px solid #e0e0e0; border-radius: 8px; padding: 10px 16px; font-size: 14px; color: #333; display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+
+    /* FORM */
+    .prenota-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 32px; align-items: start; }
+    .form-box { background: #fff; border: 1.5px solid #e0e0e0; border-radius: 12px; padding: 32px; }
+    .form-title { font-size: 18px; font-weight: 700; color: #111; margin-bottom: 6px; }
+    .form-sub { font-size: 13px; color: #888; margin-bottom: 24px; }
+    .form-field { margin-bottom: 16px; }
+    .form-field label { display: block; font-size: 12px; font-weight: 700; color: #555; margin-bottom: 6px; letter-spacing: .05em; text-transform: uppercase; }
+    .form-field input, .form-field select, .form-field textarea { width: 100%; background: #f5f5f5; border: 1.5px solid #e0e0e0; border-radius: 8px; padding: 11px 14px; font-size: 14px; color: #333; }
+    .form-field textarea { height: 90px; resize: none; }
+    .btn-form { width: 100%; padding: 14px; background: #222; color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 8px; }
+    .form-privacy { font-size: 11px; color: #aaa; margin-top: 10px; text-align: center; }
+    .treatwell-box { background: #fff; border: 1.5px solid #e0e0e0; border-radius: 12px; padding: 32px; display: flex; flex-direction: column; gap: 20px; }
+    .tw-stars { color: #ED1E88; font-size: 16px; }
+    .btn-treatwell { display: block; width: 100%; padding: 14px; background: #00b67a; color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; text-align: center; }
+    .btn-wa { display: block; width: 100%; padding: 12px; background: #25d366; color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; text-align: center; margin-bottom: 10px; }
+    .btn-tel { display: block; width: 100%; padding: 12px; background: transparent; color: #222; border: 1.5px solid #ddd; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; text-align: center; margin-bottom: 8px; }
+
+    /* TRUST BAR */
+    .trust-bar { background: #fff; border-top: 1px solid #e8e8e8; border-bottom: 1px solid #e8e8e8; padding: 28px 40px; }
+    .trust-bar-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: center; }
+    .trust-icon { font-size: 24px; margin-bottom: 6px; }
+    .trust-title { font-size: 14px; font-weight: 700; color: #111; margin-bottom: 3px; }
+    .trust-sub { font-size: 12px; color: #777; }
+
+    /* CTA FINALE */
+    .cta-finale-bg { background: #111; color: #fff; padding: 72px 40px; text-align: center; }
+    .cta-finale-bg h2 { font-size: 30px; font-weight: 700; color: #fff; margin-bottom: 12px; }
+    .cta-finale-bg p { font-size: 15px; color: #bbb; max-width: 520px; margin: 0 auto 36px; line-height: 1.6; }
+    .cta-finale-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-finale-primary { background: #fff; color: #111; border: none; border-radius: 8px; padding: 14px 28px; font-size: 15px; font-weight: 700; cursor: pointer; }
+    .btn-finale-secondary { background: transparent; color: #fff; border: 2px solid #fff; border-radius: 8px; padding: 13px 28px; font-size: 15px; font-weight: 600; cursor: pointer; }
+
+    /* FOOTER */
+    footer { background: #1a1a1a; color: #aaa; padding: 48px 40px 24px; }
+    .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+    .footer-col-title { color: #fff; font-size: 13px; font-weight: 700; margin-bottom: 14px; letter-spacing: .05em; text-transform: uppercase; }
+    .footer-col p, .footer-col a { font-size: 13px; color: #999; line-height: 2; display: block; text-decoration: none; }
+    .footer-col .social-icon { display: flex; flex-shrink: 0; line-height: 1; }
+    .footer-logo { background: #333; border: 2px dashed #555; border-radius: 4px; width: 100px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #777; font-weight: 700; margin-bottom: 16px; }
+    .footer-tagline { font-size: 13px; color: #777; margin-bottom: 16px; line-height: 1.5; }
+    .footer-social { display: flex; flex-direction: row; gap: 8px; margin-top: 8px; }
+    .social-icon { background: #333; border-radius: 6px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+    .footer-bottom { max-width: 1200px; margin: 0 auto; border-top: 1px solid #333; padding-top: 20px; font-size: 12px; color: #666; display: flex; justify-content: space-between; }
+
+    .wa-float { position: fixed; bottom: 28px; right: 28px; background: #25d366; color: #fff; border-radius: 50%; width: 54px; height: 54px; display: flex; align-items: center; justify-content: center; font-size: 26px; box-shadow: 0 4px 16px rgba(0,0,0,.2); cursor: pointer; z-index: 200; }
+  </style>
+  <link rel="stylesheet" href="brand.css">
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header>
+  <a href="home.html" style="text-decoration:none;"><img src="img/logo-nero-rosa.webp" alt="Love Sun Beauty" class="header-logo-img"></a>
+  <nav>
+    <div class="nav-dropdown" onclick="this.classList.toggle('open')">
+      <span>Servizi ▾</span>
+      <div class="dropdown-menu">
+        <a href="epilazione-laser.html"><span class="dm-icon">✨</span> Epilazione Laser</a>
+        <a href="trattamenti-corpo.html"><span class="dm-icon">💆</span> Trattamenti T-Shape</a>
+        <a href="pressoterapia.html"><span class="dm-icon">💧</span> Pressoterapia</a>
+        <div class="dropdown-divider"></div>
+        <a href="nail-center.html"><span class="dm-icon">💅</span> Nail Center</a>
+        <a href="solarium.html"><span class="dm-icon">☀️</span> Solarium</a>
+        <div class="dropdown-divider"></div>
+        <div class="dropdown-submenu">
+          <a href="#"><span class="dm-icon">🌸</span> Estetica Base <span style="margin-left:auto;font-size:10px;color:#aaa;">▶</span></a>
+          <div class="submenu">
+            <a href="cerette.html"><span class="dm-icon">🪒</span> Cerette</a>
+            <a href="pedicure.html"><span class="dm-icon">💅</span> Pedicure</a>
+            <a href="pulizia-viso.html"><span class="dm-icon">✨</span> Pulizia Viso</a>
+            <a href="massaggi.html"><span class="dm-icon">🤲</span> Massaggi</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <span><a href="offerte.html" style="color:inherit;text-decoration:none;">Offerte</a></span>
+    <div class="nav-dropdown" onclick="this.classList.toggle('open')">
+      <span>Le nostre Sedi ▾</span>
+      <div class="dropdown-menu">
+        <a href="sede-bregnano.html"><span class="dm-icon">📍</span> Centro Love Sun Beauty Bregnano</a>
+        <a href="sede-carugate.html" class="active"><span class="dm-icon">📍</span> Centro Love Sun Beauty Carugate</a>
+      </div>
+    </div>
+    <span><a href="chi-siamo.html" style="color:inherit;text-decoration:none;">Chi Siamo</a></span>
+    <span><a href="faq.html" style="color:inherit;text-decoration:none;">FAQ</a></span>
+    <span><a href="contatti.html" style="color:inherit;text-decoration:none;">Contatti</a></span>
+  </nav>
+  <div class="header-actions">
+    <button class="btn-ghost">📞 Chiama</button>
+    <button class="btn-ghost">💬 WhatsApp</button>
+    <a href="contatti.html" style="text-decoration:none;"><button class="btn-primary">Prenota Ora</button></a>
+  </div>
+</header>
+<div class="section-divider">SEZIONE 1 — HERO</div>
+
+<!-- ══ HERO ══ -->
+<div class="hero">
+  <div class="hero-parallax" role="img" aria-label="Sede di Carugate" style="background-image:url('img/carugate.webp');"></div>
+  <div class="hero-overlay-dark"></div>
+  <div class="hero-inner">
+    <div>
+      <h1 class="wf" style="color:#fff; font-size:44px; line-height:1.15;">Love Sun Beauty<br>Carugate</h1>
+      <p class="wf" style="color:rgba(255,255,255,.85); font-size:18px; max-width:560px;">Il tuo centro estetico a Milano, aperto dal martedì al sabato.</p>
+      <div style="display:flex; gap:18px; margin-top:12px; flex-wrap:wrap;">
+        <div style="color:rgba(255,255,255,.8); font-size:14px; font-weight:600;">✓ Epilazione Laser</div>
+        <div style="color:rgba(255,255,255,.8); font-size:14px; font-weight:600;">✓ Solarium Professionale</div>
+        <div style="color:rgba(255,255,255,.8); font-size:14px; font-weight:600;">✓ Nail Center</div>
+        <div style="color:rgba(255,255,255,.8); font-size:14px; font-weight:600;">✓ T-Shape &amp; Corpo</div>
+      </div>
+    </div>
+
+    <!-- BOX INFO RAPIDE -->
+    <div class="hero-info-box">
+      <div class="hib-title">📍 Informazioni sede</div>
+
+      <div class="hib-row">
+        <span class="hib-icon">📍</span>
+        <div>
+          <span class="hib-label">Indirizzo</span>
+          Via del Ginestrino 16, 20061 Carugate (MI)
+        </div>
+      </div>
+
+      <div class="hib-row">
+        <span class="hib-icon">📞</span>
+        <div>
+          <span class="hib-label">Telefono</span>
+          031 4682567
+        </div>
+      </div>
+
+      <div class="hib-row">
+        <span class="hib-icon">💬</span>
+        <div>
+          <span class="hib-label">WhatsApp</span>
+          +39 347 3983337
+        </div>
+      </div>
+
+      <div class="hib-row">
+        <span class="hib-icon">📧</span>
+        <div>
+          <span class="hib-label">Email</span>
+          info@lovesun.it
+        </div>
+      </div>
+
+      <div class="hib-divider"></div>
+
+      <div class="hib-row">
+        <span class="hib-icon">🕐</span>
+        <div>
+          <span class="hib-label">Orari di apertura</span>
+          Mar / Mer / Ven / Sab — 9:00–20:00<br>
+          Gio — 9:00–21:00<br>
+          <span style="color:#bbb; font-size:12px;">Lun e Dom: Chiuso</span>
+        </div>
+      </div>
+
+      <div class="hib-divider"></div>
+
+      <a href="contatti.html" style="text-decoration:none; display:block; width:100%; margin-bottom:10px;"><button class="hib-btn-treatwell" style="background:#222;">📅 Prenota Ora</button></a>
+      <button class="hib-btn-treatwell">📅 Prenota su Treatwell</button>
+      <button class="hib-btn-wa">💬 Scrivici su WhatsApp</button>
+    </div>
+  </div>
+</div>
+<div class="section-divider">SEZIONE 2 — INTRO + MAPPA</div>
+
+<!-- ══ INTRO + MAPPA ══ -->
+<div style="background:#fff; padding:72px 40px;">
+  <div style="max-width:1200px; margin:0 auto;">
+    <div class="grid-2-map">
+
+      <!-- SINISTRA: TESTO + ORARI -->
+      <div>
+        <div style="display:inline-block; background:#111; color:#fff; font-size:10px; font-weight:700; letter-spacing:.12em; padding:5px 14px; border-radius:20px; margin-bottom:20px; text-transform:uppercase;">Il centro di Carugate</div>
+        <h2 style="font-size:28px; font-weight:800; color:#111; line-height:1.25; margin-bottom:16px;">Il riferimento Love Sun Beauty<br>per la provincia di Milano.</h2>
+        <p style="font-size:15px; color:#555; line-height:1.7; margin-bottom:16px;">Il centro di Carugate è il riferimento Love Sun Beauty per la provincia di Milano e l'hinterland est. Struttura moderna, attrezzata con i migliori apparecchi disponibili e un team di estetiste esperte pronte ad accoglierti.</p>
+        <p style="font-size:15px; color:#555; line-height:1.7; margin-bottom:28px;">Trovi da noi tutti i principali trattamenti estetici: dall'epilazione laser permanente ai trattamenti corpo T-Shape, dal Nail Center al solarium professionale, fino ai servizi di estetica base come cerette, pedicure e pulizia viso.</p>
+
+        <h3 style="font-size:16px; font-weight:700; color:#111; margin-bottom:4px;">Orari di apertura</h3>
+        <div class="wf-note" style="margin-bottom:12px;">Orari aggiornati — verificare eventuali variazioni festive</div>
+        <table class="orari-table">
+          <thead>
+            <tr>
+              <th>Giorno</th>
+              <th>Orario</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="chiuso"><td>Lunedì</td><td>Chiuso</td></tr>
+            <tr><td>Martedì</td><td>9:00 – 20:00</td></tr>
+            <tr><td>Mercoledì</td><td>9:00 – 20:00</td></tr>
+            <tr class="highlight-row"><td>Giovedì</td><td>9:00 – 21:00</td></tr>
+            <tr><td>Venerdì</td><td>9:00 – 20:00</td></tr>
+            <tr><td>Sabato</td><td>9:00 – 20:00</td></tr>
+            <tr class="chiuso"><td>Domenica</td><td>Chiuso</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- DESTRA: MAPPA -->
+      <div>
+        <div class="map-frame" style="height:420px;"><iframe class="map-embed" src="https://maps.google.com/maps?q=Via%20del%20Ginestrino%2016%2C%2020061%20Carugate%20MI&z=15&output=embed" height="420" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Mappa Love Sun Beauty Carugate"></iframe></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div class="section-divider">SEZIONE 3 — SERVIZI DISPONIBILI</div>
+
+<!-- ══ SERVIZI ══ -->
+<div style="background:#fafafa; padding:72px 40px;">
+  <div style="max-width:1200px; margin:0 auto;">
+    <div style="display:inline-block; background:#111; color:#fff; font-size:10px; font-weight:700; letter-spacing:.12em; padding:5px 14px; border-radius:20px; margin-bottom:20px; text-transform:uppercase;">Servizi disponibili</div>
+    <h2 style="font-size:32px; font-weight:800; color:#111; line-height:1.2; margin-bottom:14px;">Tutti i servizi disponibili a Carugate</h2>
+    <p style="font-size:16px; color:#666; max-width:620px; line-height:1.7; margin-bottom:8px;">Un centro completo per tutti i tuoi bisogni estetici. Dalla cura del corpo al viso, dall'abbronzatura alla bellezza delle mani: trovi tutto a Carugate.</p>
+
+    <div class="servizi-grid-3">
+
+      <div class="servizio-card-3">
+        <div class="s-icon">✨</div>
+        <div class="s-name">Epilazione Laser</div>
+        <p style="font-size:13px; color:#666; line-height:1.5; margin:0;">Epilazione laser permanente su tutte le aree del corpo, con tecnologia diodo avanzata.</p>
+        <a href="epilazione-laser.html" class="s-link">Scopri il servizio →</a>
+      </div>
+
+      <div class="servizio-card-3">
+        <div class="s-icon">💆</div>
+        <div class="s-name">Trattamenti T-Shape</div>
+        <p style="font-size:13px; color:#666; line-height:1.5; margin:0;">Tecnologie avanzate per modellare, rassodare e ridurre gli inestetismi corporei.</p>
+        <a href="trattamenti-corpo.html" class="s-link">Scopri il servizio →</a>
+      </div>
+
+      <div class="servizio-card-3">
+        <div class="s-icon">💅</div>
+        <div class="s-name">Nail Center</div>
+        <p style="font-size:13px; color:#666; line-height:1.5; margin:0;">Manicure, gel, nail art e cura professionale delle unghie di mani e piedi.</p>
+        <a href="nail-center.html" class="s-link">Scopri il servizio →</a>
+      </div>
+
+      <div class="servizio-card-3">
+        <div class="s-icon">☀️</div>
+        <div class="s-name">Solarium</div>
+        <p style="font-size:13px; color:#666; line-height:1.5; margin:0;">Apparecchi professionali per un'abbronzatura uniforme e duratura. Lettino esclusivo C-VENTI solo a Carugate.</p>
+        <a href="solarium.html" class="s-link">Scopri il servizio →</a>
+      </div>
+
+      <div class="servizio-card-3">
+        <div class="s-icon">🌸</div>
+        <div class="s-name">Estetica Base</div>
+        <p style="font-size:13px; color:#666; line-height:1.5; margin:0;">Cerette, pedicure, pulizia viso e massaggi. I classici dell'estetica eseguiti con cura e prodotti selezionati.</p>
+        <a href="cerette.html" class="s-link">Scopri i trattamenti →</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div class="section-divider">SEZIONE 4 — APPARECCHI SOLARIUM</div>
+
+<!-- ══ SOLARIUM ══ -->
+<div class="solarium-section">
+  <div class="solarium-inner">
+    <div style="display:inline-block; background:#111; color:#fff; font-size:10px; font-weight:700; letter-spacing:.12em; padding:5px 14px; border-radius:20px; margin-bottom:20px; text-transform:uppercase;">Solarium Carugate</div>
+    <h2 style="font-size:32px; font-weight:800; color:#111; line-height:1.2; margin-bottom:14px;">Apparecchi solarium disponibili a Carugate</h2>
+    <p style="font-size:16px; color:#666; max-width:640px; line-height:1.7; margin-bottom:8px;">La sede di Carugate dispone di una selezione di apparecchi professionali per ogni esigenza — incluso il <strong>Lettino C-VENTI ad alta pressione</strong>, disponibile in esclusiva solo in questa sede.</p>
+    <div class="wf-note" style="margin-bottom:32px;">Apparecchi specifici per sede — verificare disponibilità con il centro</div>
+
+    <div class="apparecchi-grid">
+
+      <div class="apparecchio-card">
+        <div class="app-icon">💡</div>
+        <div>
+          <div class="app-name">Lampada Viso Quadrifacciale</div>
+          <div class="app-desc">4 pannelli per un'abbronzatura uniforme del viso su tutte le angolazioni. Disponibile a Carugate.</div>
+        </div>
+      </div>
+
+      <div class="apparecchio-card">
+        <div class="app-icon">💡</div>
+        <div>
+          <div class="app-name">Lampada Viso Esafacciale</div>
+          <div class="app-desc">6 pannelli per una copertura ancora più completa e un risultato professionale sul viso. Disponibile a Carugate.</div>
+        </div>
+      </div>
+
+      <div class="apparecchio-card">
+        <div class="app-icon">🚿</div>
+        <div>
+          <div class="app-name">Doccia Abbronzante Bassa Pressione</div>
+          <div class="app-desc">Abbronzatura integrale con lampade al collagene. Forma ergonomica per un'irradiazione omogenea su tutto il corpo in totale comfort.</div>
+        </div>
+      </div>
+
+      <div class="apparecchio-card">
+        <div class="app-icon">🚿</div>
+        <div>
+          <div class="app-name">Doccia V-400 Alta Pressione</div>
+          <div class="app-desc">Doccia solare ad alta pressione per un'abbronzatura totale e uniforme su tutto il corpo in posizione verticale.</div>
+        </div>
+      </div>
+
+      <div class="apparecchio-card exclusive">
+        <div class="app-icon">🛏️</div>
+        <div>
+          <div class="app-name">Lettino C-VENTI Alta Pressione</div>
+          <div class="app-desc">Il massimo dell'abbronzatura orizzontale ad alta pressione. Potenza superiore e risultati visibili in tempi ridotti.</div>
+          <div class="exclusive-badge">⭐ Esclusiva Carugate</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div class="section-divider">SEZIONE 5 — COME RAGGIUNGERCI</div>
+
+<!-- ══ COME RAGGIUNGERCI ══ -->
+<div style="background:#fff; padding:72px 40px;">
+  <div style="max-width:1200px; margin:0 auto;">
+    <div style="display:inline-block; background:#111; color:#fff; font-size:10px; font-weight:700; letter-spacing:.12em; padding:5px 14px; border-radius:20px; margin-bottom:20px; text-transform:uppercase;">Come raggiungerci</div>
+    <h2 style="font-size:28px; font-weight:800; color:#111; margin-bottom:32px;">Vieni a trovarci a Carugate</h2>
+
+    <div class="grid-2">
+      <!-- SINISTRA: INDICAZIONI -->
+      <div>
+        <div style="background:#fff; border:1.5px solid #e0e0e0; border-radius:12px; padding:24px 26px; margin-bottom:20px;">
+          <div style="font-size:15px; font-weight:700; color:#111; margin-bottom:14px; display:flex; align-items:center; gap:8px;">🚗 In auto</div>
+          <div class="raggiungerci-pill">🛣️ Da Milano: SP11 Padana Superiore direzione est, uscita Carugate</div>
+          <div class="raggiungerci-pill">🛣️ Da Monza: SS36 direzione Milano, poi raccordo Carugate</div>
+          <div class="raggiungerci-pill">🛣️ Da Como: A9 fino a Milano, poi SS11 direzione est</div>
+          <div class="raggiungerci-pill">🅿️ Parcheggio disponibile nelle vicinanze</div>
+          <div class="raggiungerci-pill">🏢 In zona industriale / commerciale — accesso agevole in auto</div>
+        </div>
+
+        <div style="background:#fff; border:1.5px solid #e0e0e0; border-radius:12px; padding:24px 26px;">
+          <div style="font-size:15px; font-weight:700; color:#111; margin-bottom:14px; display:flex; align-items:center; gap:8px;">🚌 Con i mezzi pubblici</div>
+          <div class="raggiungerci-pill">🟢 Metro M2 (Linea Verde) — fermata Villa Fiorita o Cologno Nord</div>
+          <div class="raggiungerci-pill">🚌 Autobus Z305 direzione Carugate</div>
+          <div class="raggiungerci-pill">🛑 Scendi a Via Ginestrino o Via Asiago / Monte Grappa</div>
+          <div class="raggiungerci-pill">🚶 5–6 minuti a piedi — Via del Ginestrino 16, Carugate</div>
+        </div>
+
+        <div style="margin-top:16px; background:#f5f5f5; border-radius:10px; padding:16px 18px; font-size:14px; color:#555; line-height:1.6;">
+          <strong style="color:#111;">Indirizzo completo:</strong><br>
+          Via del Ginestrino 16, 20061 Carugate (MI)<br>
+          <a href="https://maps.google.com/?q=Via+del+Ginestrino+16+Carugate" style="color:#0a6641; font-weight:600; font-size:13px; text-decoration:none; display:inline-block; margin-top:6px;">Apri in Google Maps →</a>
+        </div>
+      </div>
+
+      <!-- DESTRA: MAPPA GRANDE -->
+      <div>
+        <div class="map-frame" style="height:460px;"><iframe class="map-embed" src="https://maps.google.com/maps?q=Via%20del%20Ginestrino%2016%2C%2020061%20Carugate%20MI&z=15&output=embed" height="460" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Mappa Love Sun Beauty Carugate"></iframe></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="section-divider">SEZIONE 6 — PRENOTA</div>
+
+<!-- ══ PRENOTA ══ -->
+<div style="background:#fafafa; padding:72px 40px;">
+  <div style="max-width:1200px; margin:0 auto;">
+    <div style="display:inline-block; background:#111; color:#fff; font-size:10px; font-weight:700; letter-spacing:.12em; padding:5px 14px; border-radius:20px; margin-bottom:20px; text-transform:uppercase;">Prenota</div>
+    <h2 style="font-size:32px; font-weight:800; color:#111; margin-bottom:10px;">Prenota a Carugate</h2>
+    <p style="font-size:16px; color:#666; max-width:560px; line-height:1.7; margin-bottom:8px;">Compila il modulo per richiedere un appuntamento oppure usa Treatwell per prenotare online in pochi secondi.</p>
+
+    <div class="prenota-grid">
+      <!-- FORM -->
+      <div class="form-box">
+        <div class="form-title">💬 Richiedi informazioni o prenota</div>
+        <div class="form-sub">Ti risponderemo entro poche ore — di solito in giornata.</div>
+        <div class="form-field">
+          <label>Nome e Cognome *</label>
+          <input type="text" placeholder="Es. Maria Rossi" required>
+        </div>
+        <div class="form-field">
+          <label>Telefono / WhatsApp *</label>
+          <input type="text" placeholder="Es. 333 123 4567" required>
+        </div>
+        <div class="form-field">
+          <label>Email *</label>
+          <input type="email" placeholder="Es. maria@email.it" required>
+        </div>
+        <div class="form-field">
+          <label>Servizio di interesse</label>
+          <select>
+            <option>-- Seleziona un servizio --</option>
+            <option>Epilazione Laser</option>
+            <option>Trattamenti T-Shape</option>
+            <option>Nail Center</option>
+            <option>Solarium</option>
+            <option>Cerette</option>
+            <option>Pedicure</option>
+            <option>Pulizia Viso</option>
+            <option>Massaggi</option>
+            <option>Altro / Non so ancora</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label>Messaggio (opzionale)</label>
+          <textarea placeholder="Indica preferenze di giorno, orario, o eventuali domande..."></textarea>
+        </div>
+        <button class="btn-form">Invia Richiesta →</button>
+        <div class="form-privacy">Inviando accetti la nostra <u>Privacy Policy</u>. I tuoi dati non saranno condivisi con terzi.</div>
+      </div>
+
+      <!-- COLONNA DESTRA: TREATWELL + CONTATTI -->
+      <div style="display:flex; flex-direction:column; gap:20px;">
+        <div class="treatwell-box">
+          <div style="display:flex; align-items:center; gap:14px;">
+            <div style="background:#00b67a; color:#fff; font-size:13px; font-weight:800; padding:8px 16px; border-radius:8px; flex-shrink:0;">treatwell</div>
+            <div>
+              <div class="tw-stars">★★★★★</div>
+              <div style="font-size:13px; color:#555; margin-top:2px;"><strong>4,9/5</strong> · recensioni verificate</div>
+            </div>
+          </div>
+          <div style="font-size:14px; color:#555; line-height:1.6;">Prenota online in pochi clic. Scegli il giorno e l'orario che preferisci, direttamente sul calendario della sede di Carugate.</div>
+          <button class="btn-treatwell">📅 Prenota su Treatwell — Carugate</button>
+        </div>
+
+        <div class="treatwell-box">
+          <div class="form-title" style="font-size:16px;">Contattaci direttamente</div>
+          <div>
+            <button class="btn-wa">💬 WhatsApp — +39 347 3983337</button>
+            <button class="btn-tel">📞 Chiama — 031 4682567</button>
+            <button class="btn-tel">📧 info@lovesun.it</button>
+          </div>
+          <div style="font-size:12px; color:#aaa; line-height:1.6; margin-top:-6px;">
+            Siamo disponibili durante gli orari di apertura:<br>
+            Mar / Mer / Ven / Sab 9:00–20:00 · Gio 9:00–21:00
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="section-divider">SEZIONE 7 — TRUST BAR</div>
+
+<!-- ══ TRUST BAR ══ -->
+<div class="trust-bar">
+  <div class="trust-bar-inner">
+    <div>
+      <div class="trust-icon">⭐</div>
+      <div class="trust-title">4,9/5 · Valutazione media</div>
+      <div class="trust-sub">Recensioni verificate dai clienti</div>
+    </div>
+    <div>
+      <div class="trust-icon">📅</div>
+      <div class="trust-title">Anni di Attività</div>
+      <div class="trust-sub">Esperienza e professionalità</div>
+    </div>
+    <div>
+      <div class="trust-icon">📍</div>
+      <div class="trust-title">2 Sedi in Lombardia</div>
+      <div class="trust-sub">Bregnano (CO) · Carugate (MI)</div>
+    </div>
+    <div>
+      <div class="trust-icon">✨</div>
+      <div class="trust-title">10+ Servizi Disponibili</div>
+      <div class="trust-sub">Un centro completo per ogni esigenza</div>
+    </div>
+  </div>
+</div>
+<div class="section-divider">SEZIONE 8 — CTA FINALE</div>
+
+<!-- ══ CTA FINALE ══ -->
+<div class="cta-finale-bg">
+  <h2>Vieni a trovarci a Carugate.</h2>
+  <p>Prenota il tuo trattamento in pochi secondi. Il team Love Sun Beauty di Carugate è pronto ad accoglierti dal martedì al sabato.</p>
+  <div class="cta-finale-actions">
+    <button class="btn-finale-primary">📅 Prenota su Treatwell</button>
+    <button class="btn-finale-secondary">💬 WhatsApp — +39 347 3983337</button>
+    <button class="btn-finale-secondary">📞 031 4682567</button>
+  </div>
+  <div style="margin-top:28px; font-size:13px; color:rgba(255,255,255,.45);">Via del Ginestrino 16, 20061 Carugate (MI) · Mar–Sab 9:00–20:00 (Gio fino alle 21)</div>
+</div>
+<div class="section-divider">FOOTER</div>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <img src="img/logo-bianco-rosa.webp" alt="Love Sun Beauty" class="footer-logo-img">
+      <p class="footer-tagline">Beauty Center. Bellezza e benessere in Lombardia.</p>
+      <div class="footer-social">
+        <a href="https://www.facebook.com/lovesunsolarium/" target="_blank" rel="noopener" class="social-icon" title="Facebook" style="text-decoration:none; display:flex; align-items:center; justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5H16.7V3.7c-.3-.04-1.3-.12-2.4-.12-2.4 0-4 1.46-4 4.14v2.31H7.5V13h2.8v8h3.2z"/></svg></a>
+        <a href="https://www.instagram.com/lovesun.beauty?igsh=MW90b3pvNXBhYWFtNA==" target="_blank" rel="noopener" class="social-icon" title="Instagram" style="text-decoration:none; display:flex; align-items:center; justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="3.8"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg></a>
+        <a href="#" target="_blank" rel="noopener" class="social-icon" title="TikTok — link da inserire" style="text-decoration:none; display:flex; align-items:center; justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 3c.3 2.2 1.5 3.5 3.6 3.7v2.5c-1.2.1-2.4-.3-3.6-1v5.7c0 3.2-2.3 5.4-5.3 5.4-2.7 0-4.9-2-4.9-4.8 0-2.9 2.4-4.9 5.4-4.6v2.6c-.4-.1-.8-.2-1.2-.2-1.2 0-2.2.9-2.2 2.1s1 2.2 2.3 2.2c1.3 0 2.1-1 2.1-2.4V3h3.5z"/></svg></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Servizi</div>
+      <a href="epilazione-laser.html">Epilazione Laser</a>
+      <a href="trattamenti-corpo.html">Trattamenti T-Shape</a>
+      <a href="pressoterapia.html">Pressoterapia</a>
+      <a href="nail-center.html">Nail Center</a>
+      <a href="solarium.html">Solarium</a>
+      <a href="cerette.html">Cerette</a>
+      <a href="pedicure.html">Pedicure</a>
+      <a href="pulizia-viso.html">Pulizia Viso</a>
+      <a href="massaggi.html">Massaggi</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Love Sun Beauty Bregnano</div>
+      <a href="sede-bregnano.html">Pagina sede →</a>
+      <p>Via per Lazzate 7<br>22070 Bregnano (CO)</p>
+      <p>031 4682567<br>WhatsApp +39 347 3983337<br>info@lovesun.it</p>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Love Sun Beauty Carugate</div>
+      <a href="sede-carugate.html">Pagina sede →</a>
+      <p>Via del Ginestrino 16<br>20061 Carugate (MI)</p>
+      <p>031 4682567<br>WhatsApp +39 347 3983337<br>info@lovesun.it</p>
+      <p>Mar/Mer/Ven/Sab 9:00–20:00<br>Gio 9:00–21:00<br>Lun e Dom: Chiuso</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Love Sun Beauty &nbsp;·&nbsp; Privacy Policy &nbsp;·&nbsp; Cookie Policy</span>
+    <span>P.IVA: 03959640131</span>
+  </div>
+</footer>
+
+<div class="wa-float">💬</div>
+
+<script src="site.js"></script>
+</body>
+</html>

@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nail Center | Love Sun Beauty</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f0f0f0; color: #222; }
+
+    .wf-label { font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #999; margin-bottom: 6px; }
+    .wf-note { display: inline-block; background: #fffbe6; border: 1px dashed #ED1E88; border-radius: 4px; font-size: 11px; color: #856404; padding: 3px 8px; margin-top: 6px; }
+    .wf-placeholder { background: #d9d9d9; border: 2px dashed #bbb; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #888; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; flex-direction: column; gap: 4px; }
+    .section-tag { display: inline-block; background: #222; color: #fff; font-size: 10px; font-weight: 700; letter-spacing: .1em; padding: 3px 10px; border-radius: 3px; margin-bottom: 20px; }
+    .section-divider { background: #e8e8e8; text-align: center; padding: 6px; font-size: 10px; font-weight: 700; letter-spacing: .12em; color: #999; text-transform: uppercase; }
+
+    h1.wf { font-size: 36px; font-weight: 800; line-height: 1.2; color: #111; margin-bottom: 16px; }
+    h2.wf { font-size: 26px; font-weight: 700; color: #111; margin-bottom: 10px; }
+    h3.wf { font-size: 16px; font-weight: 700; color: #222; margin-bottom: 6px; }
+    p.wf  { font-size: 15px; color: #555; line-height: 1.6; margin-bottom: 16px; }
+
+    /* HEADER */
+    header { position: sticky; top: 0; z-index: 100; background: #fff; border-bottom: 2px solid #e0e0e0; padding: 14px 40px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .header-logo { background: #d9d9d9; border: 2px dashed #bbb; border-radius: 4px; width: 120px; height: 36px; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #888; font-weight: 700; flex-shrink: 0; }
+    nav { display: flex; gap: 24px; font-size: 14px; font-weight: 500; color: #444; align-items: center; }
+    nav span { cursor: pointer; border-bottom: 1px dashed #bbb; padding-bottom: 2px; }
+    .nav-dropdown { position: relative; }
+    .nav-dropdown > span { display: flex; align-items: center; gap: 4px; cursor: pointer; border-bottom: 1px dashed #bbb; padding-bottom: 2px; }
+    .dropdown-menu { display: none; position: absolute; top: calc(100% + 8px); left: -20px; background: #fff; border: 1.5px solid #e0e0e0; border-radius: 10px; box-shadow: 0 8px 32px rgba(0,0,0,.1); min-width: 240px; z-index: 999; padding: 8px 0; }
+    .dropdown-menu::before { content: ''; position: absolute; top: -12px; left: 0; right: 0; height: 12px; }
+    .nav-dropdown:hover .dropdown-menu, .nav-dropdown.open .dropdown-menu { display: block; }
+    .dropdown-menu a { display: flex; align-items: center; gap: 10px; padding: 10px 20px; font-size: 14px; color: #222; text-decoration: none; font-weight: 500; }
+    .dropdown-menu a:hover { background: #f5f5f5; }
+    .dropdown-menu a.active { background: #f0f0f0; font-weight: 700; }
+    .dm-icon { font-size: 16px; width: 22px; text-align: center; }
+    .dropdown-divider { height: 1px; background: #f0f0f0; margin: 6px 0; }
+    .dropdown-submenu { position: relative; }
+    .submenu { display: none; position: absolute; left: 100%; top: -8px; background: #fff; border: 1.5px solid #e0e0e0; border-radius: 10px; box-shadow: 0 8px 32px rgba(0,0,0,.1); min-width: 200px; padding: 8px 0; z-index: 1000; }
+    .dropdown-submenu:hover .submenu { display: block; }
+    .header-actions { display: flex; gap: 10px; align-items: center; flex-shrink: 0; }
+    .btn-ghost { border: 1.5px solid #999; background: transparent; border-radius: 6px; padding: 7px 14px; font-size: 13px; font-weight: 500; color: #444; cursor: pointer; }
+    .btn-primary { background: #222; color: #fff; border: none; border-radius: 6px; padding: 8px 18px; font-size: 13px; font-weight: 700; cursor: pointer; }
+
+    /* BREADCRUMB */
+    .breadcrumb { background: #fff; border-bottom: 1px solid #eee; padding: 10px 40px; font-size: 13px; color: #999; }
+    .breadcrumb a { color: #999; text-decoration: none; }
+    .breadcrumb span { margin: 0 6px; }
+
+    /* HERO */
+    .hero { background: #c4c0bd; min-height: 600px; position: relative; display: block; }
+    .hero-overlay-dark { position: absolute; inset: 0; background: rgba(0,0,0,.48); }
+    .hero-booking { display: grid; grid-template-columns: 1fr 380px; gap: 48px; align-items: center; max-width: 1200px; margin: 0 auto; padding: 80px 40px; position: relative; z-index: 2; }
+    .hero-booking-card { background: #fff; border-radius: 14px; padding: 28px; box-shadow: 0 8px 40px rgba(0,0,0,.18); }
+    .hbc-title { font-size: 16px; font-weight: 700; color: #111; margin-bottom: 4px; }
+    .hbc-sub { font-size: 12px; color: #888; margin-bottom: 18px; }
+    .hbc-field { margin-bottom: 12px; }
+    .hbc-field label { display: block; font-size: 11px; font-weight: 700; color: #777; margin-bottom: 5px; letter-spacing: .05em; text-transform: uppercase; }
+    .hbc-field input, .hbc-field select { width: 100%; background: #f5f5f5; border: 1.5px solid #e8e8e8; border-radius: 8px; padding: 10px 12px; font-size: 13px; color: #333; }
+    .hbc-btn-primary { width: 100%; padding: 13px; background: #222; color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; margin-top: 4px; }
+    .hbc-divider { display: flex; align-items: center; gap: 8px; color: #ccc; font-size: 11px; margin: 12px 0; }
+    .hbc-divider::before, .hbc-divider::after { content: ''; flex: 1; height: 1px; background: #e8e8e8; }
+    .hbc-channels { display: flex; gap: 8px; }
+    .hbc-wa { flex: 1; padding: 10px; background: #25d366; color: #fff; border: none; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; text-align: center; }
+    .hbc-tw { flex: 1; padding: 10px; background: #00b67a; color: #fff; border: none; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; text-align: center; }
+
+    /* SEZIONI */
+    section { padding: 60px 40px; max-width: 1200px; margin: 0 auto; }
+    .section-full { width: 100%; padding: 60px 40px; }
+    .section-full > div { max-width: 1200px; margin: 0 auto; }
+
+    /* BENEFICI */
+    .benefici-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 32px; }
+    .beneficio-card { background: #fff; border: 1.5px solid #e0e0e0; border-radius: 10px; padding: 24px; text-align: center; }
+    .beneficio-icon { font-size: 32px; margin-bottom: 12px; }
+
+    /* SERVIZI GRID */
+    .servizi-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 32px; }
+    .servizio-card { background: #fff; border: 1.5px solid #e0e0e0; border-radius: 14px; padding: 28px; display: flex; gap: 20px; align-items: flex-start; }
+    .servizio-icon { font-size: 32px; flex-shrink: 0; }
+    .servizio-title { font-size: 16px; font-weight: 700; color: #111; margin-bottom: 6px; }
+    .servizio-desc { font-size: 13px; color: #666; line-height: 1.6; }
+    .servizio-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+    .servizio-pill { background: #f5f5f5; border-radius: 20px; padding: 3px 10px; font-size: 11px; font-weight: 600; color: #555; }
+
+    /* COME FUNZIONA */
+    .steps { display: flex; gap: 0; margin-top: 32px; position: relative; }
+    .steps::before { content: ''; position: absolute; top: 28px; left: 28px; right: 28px; height: 2px; background: #e0e0e0; z-index: 0; }
+    .step { flex: 1; text-align: center; position: relative; z-index: 1; padding: 0 12px; }
+    .step-num { width: 56px; height: 56px; background: #222; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; margin: 0 auto 16px; }
+    .step-title { font-size: 14px; font-weight: 700; color: #111; margin-bottom: 6px; }
+    .step-desc { font-size: 13px; color: #666; line-height: 1.5; }
+
+    /* GALLERIA LAVORI */
+    .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 32px; }
+    .gallery-item { border-radius: 10px; overflow: hidden; }
+    .gallery-img { height: 180px; }
+
+    /* PACCHETTI */
+    .pacchetti-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 32px; }
+    .pacchetto-card { background: #fff; border: 1.5px solid #e0e0e0; border-radius: 12px; padding: 28px; position: relative; display: flex; flex-direction: column; }
+    .pacchetto-card.featured { border-color: #222; border-width: 2px; }
+    .pacchetto-badge { position: absolute; top: -1px; left: 50%; transform: translateX(-50%); background: #222; color: #fff; font-size: 11px; font-weight: 700; padding: 4px 16px; border-radius: 0 0 8px 8px; letter-spacing: .05em; white-space: nowrap; }
+    .pacchetto-nome { font-size: 18px; font-weight: 800; color: #111; margin-bottom: 6px; }
+    .pacchetto-desc { font-size: 13px; color: #777; margin-bottom: 18px; }
+    .pacchetto-prezzo { font-size: 28px; font-weight: 800; color: #111; margin-bottom: 4px; }
+    .pacchetto-prezzo-old { font-size: 14px; color: #bbb; text-decoration: line-through; margin-bottom: 16px; }
+    .pacchetto-features { list-style: none; padding: 0; margin-bottom: 24px; flex: 1; }
+    .pacchetto-features li { font-size: 13px; color: #444; padding: 6px 0; border-bottom: 1px solid #f0f0f0; display: flex; gap: 8px; }
+    .pacchetto-features li::before { content: "✓"; color: #27ae60; font-weight: 700; flex-shrink: 0; }
+    .pacchetto-features li:last-child { border-bottom: none; }
+    .btn-pacchetto { width: 100%; padding: 12px; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; border: 2px solid #222; background: transparent; color: #222; }
+    .pacchetto-card.featured .btn-pacchetto { background: #222; color: #fff; }
+
+    /* FAQ */
+    .faq-list { margin-top: 28px; display: flex; flex-direction: column; gap: 10px; }
+    .faq-item { background: #fff; border: 1.5px solid #e0e0e0; border-radius: 10px; overflow: hidden; }
+    .faq-question { display: flex; justify-content: space-between; align-items: center; padding: 16px 22px; font-size: 15px; font-weight: 600; color: #111; cursor: pointer; }
+    .faq-question:hover { background: #f8f8f8; }
+    .faq-arrow { font-size: 16px; color: #aaa; transition: transform .2s; flex-shrink: 0; }
+    .faq-answer { display: none; padding: 0 22px 16px; font-size: 14px; color: #555; line-height: 1.7; border-top: 1px solid #f0f0f0; }
+    .faq-item.open .faq-answer { display: block; }
+    .faq-item.open .faq-arrow { transform: rotate(180deg); }
+
+    /* FORM + TREATWELL */
+    .prenota-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 32px; align-items: start; }
+    .form-box { background: #fff; border: 1.5px solid #e0e0e0; border-radius: 12px; padding: 32px; }
+    .form-title { font-size: 18px; font-weight: 700; color: #111; margin-bottom: 6px; }
+    .form-sub { font-size: 13px; color: #888; margin-bottom: 24px; }
+    .form-field { margin-bottom: 16px; }
+    .form-field label { display: block; font-size: 12px; font-weight: 700; color: #555; margin-bottom: 6px; letter-spacing: .05em; text-transform: uppercase; }
+    .form-field input, .form-field select, .form-field textarea { width: 100%; background: #f5f5f5; border: 1.5px solid #e0e0e0; border-radius: 8px; padding: 11px 14px; font-size: 14px; color: #333; }
+    .form-field textarea { height: 90px; resize: none; }
+    .btn-form { width: 100%; padding: 14px; background: #222; color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 8px; }
+    .form-privacy { font-size: 11px; color: #aaa; margin-top: 10px; text-align: center; }
+    .treatwell-box { background: #fff; border: 1.5px solid #e0e0e0; border-radius: 12px; padding: 32px; display: flex; flex-direction: column; gap: 20px; }
+    .tw-stars { color: #ED1E88; font-size: 16px; }
+    .btn-treatwell { display: block; width: 100%; padding: 14px; background: #00b67a; color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; text-align: center; }
+    .btn-wa { display: block; width: 100%; padding: 12px; background: #25d366; color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; text-align: center; margin-bottom: 10px; }
+    .btn-tel { display: block; width: 100%; padding: 12px; background: transparent; color: #222; border: 1.5px solid #ddd; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; text-align: center; margin-bottom: 8px; }
+
+    /* TRUST BAR */
+    .trust-bar { background: #fff; border-top: 1px solid #e8e8e8; border-bottom: 1px solid #e8e8e8; padding: 28px 40px; }
+    .trust-bar-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: center; }
+    .trust-icon { font-size: 24px; margin-bottom: 6px; }
+    .trust-title { font-size: 14px; font-weight: 700; color: #111; margin-bottom: 3px; }
+    .trust-sub { font-size: 12px; color: #777; }
+
+    /* CTA FINALE */
+    .cta-finale-bg { background: #111; color: #fff; padding: 72px 40px; text-align: center; }
+    .cta-finale-bg h2 { font-size: 30px; font-weight: 700; color: #fff; margin-bottom: 12px; }
+    .cta-finale-bg p { font-size: 15px; color: #bbb; max-width: 520px; margin: 0 auto 36px; line-height: 1.6; }
+    .cta-finale-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-finale-primary { background: #fff; color: #111; border: none; border-radius: 8px; padding: 14px 28px; font-size: 15px; font-weight: 700; cursor: pointer; }
+    .btn-finale-secondary { background: transparent; color: #fff; border: 2px solid #fff; border-radius: 8px; padding: 13px 28px; font-size: 15px; font-weight: 600; cursor: pointer; }
+
+    /* FOOTER */
+    footer { background: #1a1a1a; color: #aaa; padding: 48px 40px 24px; }
+    .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+    .footer-col-title { color: #fff; font-size: 13px; font-weight: 700; margin-bottom: 14px; letter-spacing: .05em; text-transform: uppercase; }
+    .footer-col p, .footer-col a { font-size: 13px; color: #999; line-height: 2; display: block; text-decoration: none; }
+    .footer-col .social-icon { display: flex; flex-shrink: 0; line-height: 1; }
+    .footer-logo { background: #333; border: 2px dashed #555; border-radius: 4px; width: 100px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #777; font-weight: 700; margin-bottom: 16px; }
+    .footer-tagline { font-size: 13px; color: #777; margin-bottom: 16px; line-height: 1.5; }
+    .footer-social { display: flex; flex-direction: row; gap: 8px; margin-top: 8px; }
+    .social-icon { background: #333; border-radius: 6px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+    .footer-bottom { max-width: 1200px; margin: 0 auto; border-top: 1px solid #333; padding-top: 20px; font-size: 12px; color: #666; display: flex; justify-content: space-between; }
+
+    .wa-float { position: fixed; bottom: 28px; right: 28px; background: #25d366; color: #fff; border-radius: 50%; width: 54px; height: 54px; display: flex; align-items: center; justify-content: center; font-size: 26px; box-shadow: 0 4px 16px rgba(0,0,0,.2); cursor: pointer; z-index: 200; }
+  </style>
+  <link rel="stylesheet" href="brand.css">
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header>
+  <a href="home.html" style="text-decoration:none;"><img src="img/logo-nero-rosa.webp" alt="Love Sun Beauty" class="header-logo-img"></a>
+  <nav>
+    <div class="nav-dropdown" onclick="this.classList.toggle('open')">
+      <span>Servizi ▾</span>
+      <div class="dropdown-menu">
+        <a href="epilazione-laser.html"><span class="dm-icon">✨</span> Epilazione Laser</a>
+        <a href="trattamenti-corpo.html"><span class="dm-icon">💆</span> Trattamenti T-Shape</a>
+        <a href="pressoterapia.html"><span class="dm-icon">💧</span> Pressoterapia</a>
+        <div class="dropdown-divider"></div>
+        <a href="nail-center.html" class="active"><span class="dm-icon">💅</span> Nail Center</a>
+        <a href="solarium.html"><span class="dm-icon">☀️</span> Solarium</a>
+        <div class="dropdown-divider"></div>
+        <div class="dropdown-submenu">
+          <a href="#"><span class="dm-icon">🌸</span> Estetica Base <span style="margin-left:auto;font-size:10px;color:#aaa;">▶</span></a>
+          <div class="submenu">
+            <a href="cerette.html"><span class="dm-icon">🪒</span> Cerette</a>
+            <a href="pedicure.html"><span class="dm-icon">💅</span> Pedicure</a>
+            <a href="pulizia-viso.html"><span class="dm-icon">✨</span> Pulizia Viso</a>
+            <a href="massaggi.html"><span class="dm-icon">🤲</span> Massaggi</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <span><a href="offerte.html" style="color:inherit;text-decoration:none;">Offerte</a></span>
+    <div class="nav-dropdown" onclick="this.classList.toggle('open')">
+      <span>Le nostre Sedi ▾</span>
+      <div class="dropdown-menu">
+        <a href="sede-bregnano.html"><span class="dm-icon">📍</span> Centro Love Sun Beauty Bregnano</a>
+        <a href="sede-carugate.html"><span class="dm-icon">📍</span> Centro Love Sun Beauty Carugate</a>
+      </div>
+    </div>
+    <span><a href="chi-siamo.html" style="color:inherit;text-decoration:none;">Chi Siamo</a></span>
+    <span><a href="faq.html" style="color:inherit;text-decoration:none;">FAQ</a></span>
+    <span><a href="contatti.html" style="color:inherit;text-decoration:none;">Contatti</a></span>
+  </nav>
+  <div class="header-actions">
+    <button class="btn-ghost">📞 Chiama</button>
+    <button class="btn-ghost">💬 WhatsApp</button>
+    <a href="contatti.html" style="text-decoration:none;"><button class="btn-primary">Prenota Ora</button></a>
+  </div>
+</header>
+<div class="section-divider">SEZIONE 1 — HERO</div>
+
+<!-- ══ HERO ══ -->
+<div class="hero">
+  <div class="hero-parallax" role="img" aria-label="Nail Center Love Sun Beauty" style="background-image:url('img/home/homenailscenter.webp');"></div>
+  <div class="hero-overlay-dark"></div>
+  <div class="hero-booking">
+    <!-- Testo -->
+    <div>
+      <h1 class="wf" style="color:#fff; font-size:42px;">Nail Center<br>Le tue unghie, la tua firma.</h1>
+      <p class="wf" style="color:rgba(255,255,255,.85); font-size:17px;">Manicure, pedicure e nail art con prodotti professionali e nail technician specializzate. Gel, semipermanente, ricostruzione e decorazioni personalizzate.</p>
+      <div style="display:flex; gap:16px; margin-top:18px; flex-wrap:wrap;">
+        <div style="color:rgba(255,255,255,.8); font-size:14px; font-weight:600;">✓ Prodotti premium</div>
+        <div style="color:rgba(255,255,255,.8); font-size:14px; font-weight:600;">✓ Nail technician certificate</div>
+        <div style="color:rgba(255,255,255,.8); font-size:14px; font-weight:600;">✓ Nail art personalizzata</div>
+      </div>
+      <div style="margin-top:20px; display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.25); border-radius:20px; padding:6px 16px;">
+        <span style="color:#ED1E88; font-size:14px;">★★★★★</span>
+        <span style="font-size:13px; color:#fff; font-weight:600;">4,9/5 · 419 recensioni verificate</span>
+      </div>
+    </div>
+    <!-- Card prenotazione -->
+    <div class="hero-booking-card">
+      <div class="hbc-title">📅 Prenota o richiedi informazioni</div>
+      <div class="hbc-sub">Consulenza dedicata · Risposta entro poche ore</div>
+      <div class="hbc-field">
+        <label>Nome e Cognome *</label>
+        <input type="text" placeholder="Es. Maria Rossi" required>
+      </div>
+      <div class="hbc-field">
+        <label>Telefono / WhatsApp *</label>
+        <input type="text" placeholder="Es. 333 123 4567" required>
+      </div>
+      <div class="hbc-field">
+        <label>Email *</label>
+        <input type="email" placeholder="Es. maria@email.it" required>
+      </div>
+      <div class="hbc-field">
+        <label>Sede preferita</label>
+        <select>
+          <option>-- Seleziona --</option>
+          <option>Love Sun Beauty Bregnano (CO)</option>
+          <option>Love Sun Beauty Carugate (MI)</option>
+        </select>
+      </div>
+      <div class="hbc-field">
+        <label>Servizio di interesse</label>
+        <select>
+          <option>-- Seleziona --</option>
+          <option>Manicure gel / semipermanente</option>
+          <option>Pedicure gel / semipermanente</option>
+          <option>Ricostruzione unghie</option>
+          <option>Nail art</option>
+          <option>Manicure + Pedicure</option>
+        </select>
+      </div>
+            <div class="hbc-field">
+        <label>Messaggio (opzionale)</label>
+        <textarea style="width:100%; background:#f5f5f5; border:1.5px solid #e8e8e8; border-radius:8px; padding:10px 12px; font-size:13px; color:#333; height:72px; resize:none;" placeholder="Scrivi qui domande o preferenze di orario…"></textarea>
+      </div>
+      <button class="hbc-btn-primary">Invia Richiesta →</button>
+      <div class="hbc-divider">oppure prenota subito</div>
+      <div class="hbc-channels">
+        <button class="hbc-tw">📅 Treatwell</button>
+        <button class="hbc-wa">💬 WhatsApp</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="section-divider">SEZIONE 2 — PERCHÉ IL NAIL CENTER + BENEFICI</div>
+
+<!-- ══ PERCHÉ + BENEFICI ══ -->
+<div style="background:#fafafa; padding:80px 40px;">
+  <div style="max-width:1200px; margin:0 auto;">
+
+    <div style="margin-bottom:48px;">
+      <div style="display:inline-block; background:#111; color:#fff; font-size:10px; font-weight:700; letter-spacing:.12em; padding:5px 14px; border-radius:20px; margin-bottom:20px; text-transform:uppercase;">Nail Center Love Sun Beauty</div>
+      <h2 style="font-size:32px; font-weight:800; color:#111; line-height:1.2; margin-bottom:16px;">Unghie curate, fatte bene,<br>che durano davvero.</h2>
+      <p style="font-size:16px; color:#666; max-width:540px; line-height:1.7;">Non serve rinunciare alla qualità per avere unghie belle. Al Nail Center Love Sun Beauty trovi professioniste appassionate, prodotti sicuri e nail art personalizzata — ogni volta diversa, ogni volta tua.</p>
+    </div>
+
+    <!-- Griglia benefici -->
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-bottom:48px;">
+      <div style="background:#fff; border:1.5px solid #e0e0e0; border-radius:14px; padding:26px; text-align:center;">
+        <div style="font-size:32px; margin-bottom:12px;">⏱️</div>
+        <div style="font-size:15px; font-weight:700; color:#111; margin-bottom:8px;">Durano davvero</div>
+        <div style="font-size:13px; color:#666; line-height:1.6;">Gel e semipermanente professionali fino a 3–4 settimane senza scheggiature.</div>
+      </div>
+      <div style="background:#fff; border:1.5px solid #e0e0e0; border-radius:14px; padding:26px; text-align:center;">
+        <div style="font-size:32px; margin-bottom:12px;">🎨</div>
+        <div style="font-size:15px; font-weight:700; color:#111; margin-bottom:8px;">Solo per te</div>
+        <div style="font-size:13px; color:#666; line-height:1.6;">Nail art personalizzata su ogni richiesta: portaci la tua ispirazione e la realizziamo.</div>
+      </div>
+      <div style="background:#fff; border:1.5px solid #e0e0e0; border-radius:14px; padding:26px; text-align:center;">
+        <div style="font-size:32px; margin-bottom:12px;">🛡️</div>
+        <div style="font-size:15px; font-weight:700; color:#111; margin-bottom:8px;">Prodotti sicuri</div>
+        <div style="font-size:13px; color:#666; line-height:1.6;">Solo prodotti certificati che rispettano la lamina. Strumenti sterilizzati per ogni cliente.</div>
+      </div>
+      <div style="background:#fff; border:1.5px solid #e0e0e0; border-radius:14px; padding:26px; text-align:center;">
+        <div style="font-size:32px; margin-bottom:12px;">👩‍🎨</div>
+        <div style="font-size:15px; font-weight:700; color:#111; margin-bottom:8px;">Technician esperte</div>
+        <div style="font-size:13px; color:#666; line-height:1.6;">Nail artist sempre aggiornate sulle ultime tendenze e tecniche del settore.</div>
+      </div>
+      <div style="background:#fff; border:1.5px solid #e0e0e0; border-radius:14px; padding:26px; text-align:center;">
+        <div style="font-size:32px; margin-bottom:12px;">✋</div>
+        <div style="font-size:15px; font-weight:700; color:#111; margin-bottom:8px;">Mani e piedi</div>
+        <div style="font-size:13px; color:#666; line-height:1.6;">Un servizio completo: manicure, pedicure, ricostruzione e trattamenti in un unico centro.</div>
+      </div>
+      <div style="background:#fff; border:1.5px solid #e0e0e0; border-radius:14px; padding:26px; text-align:center;">
+        <div style="font-size:32px; margin-bottom:12px;">💬</div>
+        <div style="font-size:15px; font-weight:700; color:#111; margin-bottom:8px;">Atmosfera rilassante</div>
+        <div style="font-size:13px; color:#666; line-height:1.6;">Un momento tutto tuo. Vieni a rilassarti mentre le nostre specialist si prendono cura di te.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="section-divider">SEZIONE 3 — I NOSTRI SERVIZI</div>
+
+<!-- ══ SERVIZI DETTAGLIO ══ -->
+<div style="background:#fff; padding:0 40px;">
+  <div style="max-width:1200px; margin:0 auto;">
+    <section style="padding:72px 0;">
+      <div class="section-tag">Servizi</div>
+      <h2 class="wf">Tutto quello che offriamo al Nail Center</h2>
+      <p class="wf">Una gamma completa di servizi per mani e piedi, adatti a ogni esigenza e occasione.</p>
+
+      <div class="servizi-grid">
+
+        <div class="servizio-card">
+          <div class="servizio-icon">💅</div>
+          <div>
+            <div class="servizio-title">Applicazione Smalto</div>
+            <div class="servizio-desc">Smalto classico su unghie naturali o preparate, in una vasta palette di colori.</div>
+          </div>
+        </div>
+
+        <div class="servizio-card">
+          <div class="servizio-icon">✋</div>
+          <div>
+            <div class="servizio-title">Manicure</div>
+            <div class="servizio-desc">Forma, cuticole, lima e idratazione. La base per unghie sempre in ordine.</div>
+          </div>
+        </div>
+
+        <div class="servizio-card">
+          <div class="servizio-icon">✨</div>
+          <div>
+            <div class="servizio-title">Manicure Semipermanente</div>
+            <div class="servizio-desc">Smalto semipermanente di lunga durata, fino a 3 settimane senza scheggiature. Disponibile in centinaia di colori.</div>
+            <div class="servizio-pills">
+              <span class="servizio-pill">Durata 3 sett.</span>
+              <span class="servizio-pill">500+ colori</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="servizio-card">
+          <div class="servizio-icon">💎</div>
+          <div>
+            <div class="servizio-title">Ricostruzione Unghie in Acrilico o Acrygel</div>
+            <div class="servizio-desc">Unghie allungate e rinforzate in acrilico o acrygel. Ideale per unghie fragili o corte.</div>
+            <div class="servizio-pills">
+              <span class="servizio-pill">Acrilico</span>
+              <span class="servizio-pill">Acrygel</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="servizio-card">
+          <div class="servizio-icon">🔧</div>
+          <div>
+            <div class="servizio-title">Copertura Unghie in Acrilico o Acrygel</div>
+            <div class="servizio-desc">Copertura protettiva sull'unghia naturale per rinforzarla, senza estensione della lunghezza.</div>
+            <div class="servizio-pills">
+              <span class="servizio-pill">Acrilico</span>
+              <span class="servizio-pill">Acrygel</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="servizio-card">
+          <div class="servizio-icon">🔄</div>
+          <div>
+            <div class="servizio-title">Refill Mensili</div>
+            <div class="servizio-desc">Riempimento della crescita ogni 3–4 settimane per mantenere le unghie sempre perfette.</div>
+            <div class="servizio-pills">
+              <span class="servizio-pill">Ogni 3–4 sett.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="servizio-card">
+          <div class="servizio-icon">🎨</div>
+          <div>
+            <div class="servizio-title">French / Babyboomer / Decori</div>
+            <div class="servizio-desc">French classica, effetto babyboomer, gradienti, fiori, strass, stamping e decorazioni personalizzate. Portaci la tua ispirazione.</div>
+            <div class="servizio-pills">
+              <span class="servizio-pill">French</span>
+              <span class="servizio-pill">Babyboomer</span>
+              <span class="servizio-pill">Nail art</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="servizio-card">
+          <div class="servizio-icon">🦶</div>
+          <div>
+            <div class="servizio-title">Pedicure Estetica e Curativa</div>
+            <div class="servizio-desc">Bagno, lima, cuticole, trattamento curativo e idratazione. Piedi curati e in salute.</div>
+            <div class="servizio-pills">
+              <span class="servizio-pill">Estetica</span>
+              <span class="servizio-pill">Curativa</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="servizio-card">
+          <div class="servizio-icon">💅</div>
+          <div>
+            <div class="servizio-title">Pedicure Semipermanente</div>
+            <div class="servizio-desc">Pedicure estetica con applicazione smalto semipermanente per piedi perfetti e duraturi tutta la stagione.</div>
+            <div class="servizio-pills">
+              <span class="servizio-pill">Semipermanente</span>
+              <span class="servizio-pill">Lunga durata</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="servizio-card">
+          <div class="servizio-icon">🧴</div>
+          <div>
+            <div class="servizio-title">Pedicure Spa con Scrub</div>
+            <div class="servizio-desc">Bagno rigenerante, scrub esfoliante e maschera idratante. La coccola completa per i piedi.</div>
+            <div class="servizio-pills">
+              <span class="servizio-pill">Scrub</span>
+              <span class="servizio-pill">Maschera</span>
+              <span class="servizio-pill">Bagno rigenerante</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="servizio-card">
+          <div class="servizio-icon">🩹</div>
+          <div>
+            <div class="servizio-title">Rimozione Calli</div>
+            <div class="servizio-desc">Rimozione professionale di calli e ipercheratosi con tecniche sicure e delicate.</div>
+          </div>
+        </div>
+
+        <div class="servizio-card">
+          <div class="servizio-icon">🩺</div>
+          <div>
+            <div class="servizio-title">Trattamento Unghia Incarnita</div>
+            <div class="servizio-desc">Trattamento estetico per unghia incarnita con riduzione del dolore.</div>
+          </div>
+        </div>
+
+      </div>
+      <div class="wf-note" style="margin-top:20px;">Tempi e disponibilità servizi da confermare con il centro · Possibilità di aggiungere altri servizi</div>
+    </section>
+  </div>
+</div>
+<div class="section-divider">SEZIONE 4 — GALLERIA LAVORI</div>
+
+<!-- ══ GALLERIA ══ -->
+<div style="background:#fafafa; padding:0 40px;">
+  <div style="max-width:1200px; margin:0 auto;">
+    <section style="padding:72px 0;">
+      <div class="section-tag">I nostri lavori</div>
+      <h2 class="wf">Ispirati dai nostri lavori</h2>
+      <p class="wf">Una selezione delle nail art realizzate dalle nostre technician. Ogni unghia racconta una storia.</p>
+
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <div class="gallery-img wf-placeholder">📷 NAIL ART 1<br><span style="font-size:10px; font-weight:400;">French moderna</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-img wf-placeholder">📷 NAIL ART 2<br><span style="font-size:10px; font-weight:400;">Ombré rosa</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-img wf-placeholder">📷 NAIL ART 3<br><span style="font-size:10px; font-weight:400;">Decorazioni floreali</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-img wf-placeholder">📷 NAIL ART 4<br><span style="font-size:10px; font-weight:400;">Gel nude glitter</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-img wf-placeholder">📷 NAIL ART 5<br><span style="font-size:10px; font-weight:400;">Ricostruzione naturale</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-img wf-placeholder">📷 NAIL ART 6<br><span style="font-size:10px; font-weight:400;">Semipermanente rosso</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-img wf-placeholder">📷 NAIL ART 7<br><span style="font-size:10px; font-weight:400;">Nail art geometrica</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-img wf-placeholder">📷 NAIL ART 8<br><span style="font-size:10px; font-weight:400;">Pedicure estate</span></div>
+        </div>
+      </div>
+      <div class="wf-note" style="margin-top:20px;">Foto reali da raccogliere dal centro · Inserire anche link a Instagram/TikTok per galleria ampliata</div>
+    </section>
+  </div>
+</div>
+<div class="section-divider">SEZIONE 5 — PACCHETTI</div>
+
+<!-- ══ PACCHETTI ══ -->
+<div style="background:#fff; padding:0 40px;">
+  <div style="max-width:1200px; margin:0 auto;">
+    <section style="padding:72px 0;">
+      <div class="section-tag">Formule e Pacchetti</div>
+      <h2 class="wf">Scegli il trattamento più adatto a te</h2>
+      <p class="wf">Servizi singoli o pacchetti combinati: risparmia scegliendo più trattamenti insieme.</p>
+      <div class="pacchetti-grid">
+
+        <div class="pacchetto-card">
+          <div class="pacchetto-nome">Manicure</div>
+          <div class="pacchetto-desc">Semipermanente o gel, nail art inclusa</div>
+          <div class="pacchetto-prezzo">[Prezzo]</div>
+          <div class="pacchetto-prezzo-old">per seduta</div>
+          <ul class="pacchetto-features">
+            <li>Cura cuticole e forma</li>
+            <li>Semipermanente o gel a scelta</li>
+            <li>Nail art base inclusa</li>
+            <li>Durata fino a 3–4 settimane</li>
+          </ul>
+          <a href="contatti.html" style="text-decoration:none;"><button class="btn-pacchetto">Prenota Manicure</button></a>
+        </div>
+
+        <div class="pacchetto-card featured">
+          <div class="pacchetto-badge">⭐ Più scelto</div>
+          <div class="pacchetto-nome">Mani + Piedi</div>
+          <div class="pacchetto-desc">Manicure e pedicure in un'unica seduta</div>
+          <div class="pacchetto-prezzo">[Prezzo]</div>
+          <div class="pacchetto-prezzo-old">invece di [prezzo singoli]</div>
+          <ul class="pacchetto-features">
+            <li>Manicure semipermanente completa</li>
+            <li>Pedicure estetico + semipermanente</li>
+            <li>Nail art base su mani e piedi</li>
+            <li>Trattamento cuticole completo</li>
+            <li>Risparmio rispetto ai singoli</li>
+          </ul>
+          <a href="contatti.html" style="text-decoration:none;"><button class="btn-pacchetto">Prenota Mani + Piedi</button></a>
+        </div>
+
+        <div class="pacchetto-card">
+          <div class="pacchetto-nome">Ricostruzione</div>
+          <div class="pacchetto-desc">Unghie lunghe e rinforzate in gel o acrilico</div>
+          <div class="pacchetto-prezzo">[Prezzo]</div>
+          <div class="pacchetto-prezzo-old">per seduta</div>
+          <ul class="pacchetto-features">
+            <li>Ricostruzione in gel o acrilico</li>
+            <li>Forma personalizzata a scelta</li>
+            <li>Semipermanente o gel colorato</li>
+            <li>Nail art inclusa</li>
+            <li>Durata fino a 4 settimane</li>
+          </ul>
+          <a href="contatti.html" style="text-decoration:none;"><button class="btn-pacchetto">Prenota Ricostruzione</button></a>
+        </div>
+
+      </div>
+      <div class="wf-note" style="margin-top:20px;">I prezzi reali sono da inserire dal centro · Valutare abbonamenti mensili o card fedeltà</div>
+    </section>
+  </div>
+</div>
+<div class="section-divider">SEZIONE 6 — FAQ</div>
+
+<!-- ══ FAQ ══ -->
+<div style="background:#fafafa; padding:0 40px;">
+  <div style="max-width:1200px; margin:0 auto;">
+    <section style="padding:72px 0;">
+      <div class="section-tag">Domande frequenti</div>
+      <h2 class="wf">Le domande più comuni sul Nail Center</h2>
+      <div class="faq-list">
+        <div class="faq-item open">
+          <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">Quanto dura il semipermanente? <span class="faq-arrow">▼</span></div>
+          <div class="faq-answer">Il semipermanente applicato con tecnica professionale dura in media 2–3 settimane, a volte anche 4, dipende dalla crescita dell'unghia e dal tipo di attività svolta. Il gel ha una durata leggermente superiore.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">La ricostruzione rovina le unghie naturali? <span class="faq-arrow">▼</span></div>
+          <div class="faq-answer">No, se eseguita correttamente. La ricostruzione professionale non danneggia la lamina. Sono le rimozioni fai-da-te o le applicazioni scorrette che possono indebolirle. Le nostre nail technician usano tecniche e prodotti che proteggono l'unghia naturale.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">Come si rimuove il gel o il semipermanente? <span class="faq-arrow">▼</span></div>
+          <div class="faq-answer">La rimozione viene eseguita in salone con acetone specifico e tecnica di soak-off. Sconsigliamo la rimozione fai-da-te, che può danneggiare la lamina. Il servizio di rimozione è disponibile con o senza riapplicazione.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">Posso scegliere qualsiasi design di nail art? <span class="faq-arrow">▼</span></div>
+          <div class="faq-answer">Sì. Portaci le tue ispirazioni (foto, Pinterest, Instagram) e le nostre nail artist cercheranno di realizzarle al meglio. Alcune decorazioni molto elaborate potrebbero richiedere più tempo: ti consigliamo di comunicarcelo in anticipo.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">Ogni quanto devo fare il refill? <span class="faq-arrow">▼</span></div>
+          <div class="faq-answer">Il refill (riempimento della crescita) si consiglia ogni 3–4 settimane. Aspettare troppo a lungo può compromettere la struttura dell'unghia ricostruita. Il servizio di refill costa meno rispetto a una ricostruzione completa.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">Gli strumenti sono igienizzati tra un cliente e l'altro? <span class="faq-arrow">▼</span></div>
+          <div class="faq-answer">Assolutamente sì. Seguiamo protocolli di igiene rigorosi: gli strumenti metallici vengono sterilizzati in autoclave, quelli monouso vengono sostituiti per ogni cliente. La tua sicurezza è la nostra priorità.</div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+<div class="section-divider">SEZIONE 7 — PRENOTA</div>
+
+<!-- ══ PRENOTA ══ -->
+<div style="background:#fff; padding:0 40px;">
+  <div style="max-width:1200px; margin:0 auto;">
+    <section style="padding:72px 0;">
+      <div class="section-tag">Prenota</div>
+      <h2 class="wf">Prenota la tua seduta al Nail Center</h2>
+      <p class="wf">Scegli come preferisci: prenota direttamente online oppure scrivici per qualsiasi domanda.</p>
+      <div class="prenota-grid">
+        <div class="form-box">
+          <div class="form-title">💬 Richiedi informazioni o prenota</div>
+          <div class="form-sub">Risponderemo entro poche ore.</div>
+          <div class="form-field">
+            <label>Nome e Cognome *</label>
+            <input type="text" placeholder="Es. Maria Rossi" required>
+          </div>
+          <div class="form-field">
+            <label>Telefono / WhatsApp *</label>
+            <input type="text" placeholder="Es. 333 123 4567" required>
+          </div>
+          <div class="form-field">
+            <label>Email *</label>
+            <input type="email" placeholder="Es. maria@email.it" required>
+          </div>
+          <div class="form-field">
+            <label>Sede preferita</label>
+            <select>
+              <option>-- Seleziona --</option>
+              <option>Love Sun Beauty Bregnano</option>
+              <option>Love Sun Beauty Carugate</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>Servizio di interesse</label>
+            <select>
+              <option>-- Seleziona --</option>
+              <option>Manicure semipermanente</option>
+              <option>Manicure gel</option>
+              <option>Pedicure estetico</option>
+              <option>Pedicure semipermanente</option>
+              <option>Mani + Piedi</option>
+              <option>Ricostruzione unghie</option>
+              <option>Refill / Manutenzione</option>
+              <option>Nail art</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>Messaggio (opzionale)</label>
+            <textarea placeholder="Descrivi il design o il trattamento che desideri..."></textarea>
+          </div>
+          <button class="btn-form">Invia Richiesta →</button>
+          <div class="form-privacy">Inviando accetti la nostra <u>Privacy Policy</u>. I tuoi dati non saranno condivisi con terzi.</div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:20px;">
+          <div class="treatwell-box">
+            <div style="display:flex; align-items:center; gap:14px;">
+              <div style="background:#00b67a; color:#fff; font-size:13px; font-weight:800; padding:8px 16px; border-radius:8px; flex-shrink:0;">treatwell</div>
+              <div>
+                <div class="tw-stars">★★★★★</div>
+                <div style="font-size:13px; color:#555; margin-top:2px;"><strong>4,9/5</strong> · 419 recensioni</div>
+              </div>
+            </div>
+            <div style="font-size:14px; color:#555; line-height:1.6;">Prenota online in pochi clic. Scegli la sede, il giorno e l'orario che preferisci. Disponibilità in tempo reale.</div>
+            <button class="btn-treatwell">📅 Prenota su Treatwell</button>
+          </div>
+          <div class="treatwell-box">
+            <div class="form-title" style="font-size:16px;">Preferisci contattarci direttamente?</div>
+            <div>
+              <button class="btn-wa">💬 Scrivici su WhatsApp</button>
+              <button class="btn-tel">📞 Chiama — 031 4682567</button>
+              <button class="btn-tel">📧 info@lovesun.it</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+<div class="section-divider">SEZIONE 8 — TRUST BAR</div>
+
+<!-- ══ TRUST BAR ══ -->
+<div class="trust-bar">
+  <div class="trust-bar-inner">
+    <div>
+      <div class="trust-icon">⭐</div>
+      <div class="trust-title">4,9/5 · Valutazione media</div>
+      <div class="trust-sub">419 recensioni verificate</div>
+    </div>
+    <div>
+      <div class="trust-icon">💅</div>
+      <div class="trust-title">Nail Technician</div>
+      <div class="trust-sub">Specialiste certificate</div>
+    </div>
+    <div>
+      <div class="trust-icon">🔬</div>
+      <div class="trust-title">Igiene Certificata</div>
+      <div class="trust-sub">Strumenti sterilizzati</div>
+    </div>
+    <div>
+      <div class="trust-icon">🎨</div>
+      <div class="trust-title">Nail Art Personalizzata</div>
+      <div class="trust-sub">Su ogni richiesta</div>
+    </div>
+  </div>
+</div>
+<div class="section-divider">SEZIONE 9 — CTA FINALE</div>
+
+<!-- ══ CTA FINALE ══ -->
+<div class="cta-finale-bg">
+  <h2>Prenota la tua seduta al Nail Center</h2>
+  <p>Unghie belle, durature e personalizzate. Scegli il trattamento più adatto e prenota la tua seduta oggi stesso.</p>
+  <div class="cta-finale-actions">
+    <a href="contatti.html" style="text-decoration:none;"><button class="btn-finale-primary">📅 Prenota Ora</button></a>
+    <button class="btn-finale-secondary">💬 Scrivici su WhatsApp</button>
+    <button class="btn-finale-secondary">📞 Chiama Ora</button>
+  </div>
+</div>
+<div class="section-divider">FOOTER</div>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <img src="img/logo-bianco-rosa.webp" alt="Love Sun Beauty" class="footer-logo-img">
+      <p class="footer-tagline">Beauty Center. Bellezza e benessere in Lombardia.</p>
+      <div class="footer-social">
+        <a href="https://www.facebook.com/lovesunsolarium/" target="_blank" rel="noopener" class="social-icon" title="Facebook" style="text-decoration:none; display:flex; align-items:center; justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5H16.7V3.7c-.3-.04-1.3-.12-2.4-.12-2.4 0-4 1.46-4 4.14v2.31H7.5V13h2.8v8h3.2z"/></svg></a>
+        <a href="https://www.instagram.com/lovesun.beauty?igsh=MW90b3pvNXBhYWFtNA==" target="_blank" rel="noopener" class="social-icon" title="Instagram" style="text-decoration:none; display:flex; align-items:center; justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="3.8"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg></a>
+        <a href="#" target="_blank" rel="noopener" class="social-icon" title="TikTok — link da inserire" style="text-decoration:none; display:flex; align-items:center; justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 3c.3 2.2 1.5 3.5 3.6 3.7v2.5c-1.2.1-2.4-.3-3.6-1v5.7c0 3.2-2.3 5.4-5.3 5.4-2.7 0-4.9-2-4.9-4.8 0-2.9 2.4-4.9 5.4-4.6v2.6c-.4-.1-.8-.2-1.2-.2-1.2 0-2.2.9-2.2 2.1s1 2.2 2.3 2.2c1.3 0 2.1-1 2.1-2.4V3h3.5z"/></svg></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Servizi</div>
+      <a href="epilazione-laser.html">Epilazione Laser</a>
+      <a href="trattamenti-corpo.html">Trattamenti T-Shape</a>
+      <a href="pressoterapia.html">Pressoterapia</a>
+      <a href="nail-center.html">Nail Center</a>
+      <a href="solarium.html">Solarium</a>
+      <a href="cerette.html">Cerette</a>
+      <a href="pedicure.html">Pedicure</a>
+      <a href="pulizia-viso.html">Pulizia Viso</a>
+      <a href="massaggi.html">Massaggi</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Love Sun Beauty Bregnano</div>
+      <p>Via per Lazzate 7<br>22070 Bregnano (CO)</p>
+      <p>031 4682567<br>WhatsApp +39 347 3983337<br>info@lovesun.it</p>
+      <p>Lun–Sab 9:00–21:00<br>Dom 9:00–17:00</p>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Love Sun Beauty Carugate</div>
+      <p>Via del Ginestrino 16<br>20061 Carugate (MI)</p>
+      <p>031 4682567<br>WhatsApp +39 347 3983337<br>info@lovesun.it</p>
+      <p>Mar/Mer/Ven/Sab 9:00–20:00<br>Gio 9:00–21:00<br>Lun e Dom: Chiuso</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Love Sun Beauty &nbsp;·&nbsp; Privacy Policy &nbsp;·&nbsp; Cookie Policy</span>
+    <span>P.IVA: 03959640131</span>
+  </div>
+</footer>
+
+<div class="wa-float">💬</div>
+
+<script src="site.js"></script>
+</body>
+</html>

@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pressoterapia | Love Sun Beauty</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f0f0f0; color: #222; }
+
+    .wf-note { display: inline-block; background: #fffbe6; border: 1px dashed #ED1E88; border-radius: 4px; font-size: 11px; color: #856404; padding: 3px 8px; margin-top: 6px; }
+    .wf-label { display: inline-block; background: #e8f0fe; border: 1px solid #c5d4f5; border-radius: 4px; font-size: 10px; color: #1a56db; padding: 2px 6px; margin-bottom: 4px; font-weight: 700; letter-spacing: .05em; }
+    .wf { color: #222; }
+    .section-tag { display: inline-block; background: #222; color: #fff; font-size: 10px; font-weight: 700; letter-spacing: .1em; padding: 3px 10px; border-radius: 3px; margin-bottom: 20px; }
+    .section-divider { background: #e8e8e8; text-align: center; padding: 6px; font-size: 10px; font-weight: 700; letter-spacing: .12em; color: #999; text-transform: uppercase; }
+    .wf-placeholder { background: #d9d9d9; border: 2px dashed #bbb; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 8px; color: #999; font-size: 12px; font-weight: 600; text-align: center; padding: 12px; }
+
+    /* HEADER */
+    header { position: sticky; top: 0; z-index: 100; background: #fff; border-bottom: 2px solid #e0e0e0; padding: 14px 40px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .header-logo { background: #d9d9d9; border: 2px dashed #bbb; border-radius: 4px; width: 120px; height: 36px; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #888; font-weight: 700; flex-shrink: 0; }
+    nav { display: flex; gap: 24px; font-size: 14px; font-weight: 500; color: #444; align-items: center; }
+    nav span { cursor: pointer; border-bottom: 1px dashed #bbb; padding-bottom: 2px; }
+    .nav-dropdown { position: relative; }
+    .nav-dropdown > span { display: flex; align-items: center; gap: 4px; cursor: pointer; border-bottom: 1px dashed #bbb; padding-bottom: 2px; }
+    .dropdown-menu { display: none; position: absolute; top: calc(100% + 8px); left: -20px; background: #fff; border: 1.5px solid #e0e0e0; border-radius: 10px; box-shadow: 0 8px 32px rgba(0,0,0,.1); min-width: 240px; z-index: 999; padding: 8px 0; }
+    .dropdown-menu::before { content: ''; position: absolute; top: -12px; left: 0; right: 0; height: 12px; }
+    .nav-dropdown:hover .dropdown-menu, .nav-dropdown.open .dropdown-menu { display: block; }
+    .dropdown-menu a { display: flex; align-items: center; gap: 10px; padding: 10px 20px; font-size: 14px; color: #222; text-decoration: none; font-weight: 500; }
+    .dropdown-menu a:hover { background: #f5f5f5; }
+    .dropdown-menu a.active { background: #f0f0f0; font-weight: 700; }
+    .dm-icon { font-size: 16px; width: 22px; text-align: center; }
+    .dropdown-divider { height: 1px; background: #f0f0f0; margin: 6px 0; }
+    .dropdown-submenu { position: relative; }
+    .submenu { display: none; position: absolute; left: 100%; top: -8px; background: #fff; border: 1.5px solid #e0e0e0; border-radius: 10px; box-shadow: 0 8px 32px rgba(0,0,0,.1); min-width: 200px; padding: 8px 0; z-index: 1000; }
+    .dropdown-submenu:hover .submenu { display: block; }
+    .header-actions { display: flex; gap: 10px; align-items: center; flex-shrink: 0; }
+    .btn-ghost { border: 1.5px solid #999; background: transparent; border-radius: 6px; padding: 7px 14px; font-size: 13px; font-weight: 500; color: #444; cursor: pointer; }
+    .btn-primary { background: #222; color: #fff; border: none; border-radius: 6px; padding: 8px 18px; font-size: 13px; font-weight: 700; cursor: pointer; }
+
+    /* BREADCRUMB */
+    .breadcrumb { background: #fff; border-bottom: 1px solid #eee; padding: 10px 40px; font-size: 13px; color: #999; }
+    .breadcrumb a { color: #999; text-decoration: none; }
+    .breadcrumb span { margin: 0 6px; }
+
+    /* HERO */
+    .hero { background: #c8c8c8; min-height: 480px; position: relative; display: block; width: 100vw; margin-left: calc(50% - 50vw); }
+    .hero-overlay { position: absolute; inset: 0; background: transparent; border: none; padding: 0; }
+    .hero-booking { display: grid; grid-template-columns: 1fr 360px; gap: 48px; align-items: center; max-width: 1200px; margin: 0 auto; padding: 72px 40px; position: relative; z-index: 2; }
+    .hero-booking-card { background: #fff; border-radius: 14px; padding: 28px; box-shadow: 0 8px 40px rgba(0,0,0,.18); }
+    .hbc-title { font-size: 16px; font-weight: 700; color: #111; margin-bottom: 4px; }
+    .hbc-sub { font-size: 12px; color: #888; margin-bottom: 18px; }
+    .hbc-field { margin-bottom: 12px; }
+    .hbc-field label { display: block; font-size: 11px; font-weight: 700; color: #777; margin-bottom: 5px; letter-spacing: .05em; text-transform: uppercase; }
+    .hbc-field input, .hbc-field select, .hbc-field textarea { width: 100%; background: #f5f5f5; border: 1.5px solid #e8e8e8; border-radius: 8px; padding: 10px 12px; font-size: 13px; color: #333; }
+    .hbc-field textarea { height: 70px; resize: none; }
+    .hbc-btn-primary { width: 100%; padding: 13px; background: #222; color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; margin-top: 4px; }
+    .hbc-divider { display: flex; align-items: center; gap: 8px; color: #ccc; font-size: 11px; margin: 12px 0; }
+    .hbc-divider::before, .hbc-divider::after { content: ''; flex: 1; height: 1px; background: #e8e8e8; }
+    .hbc-channels { display: flex; gap: 8px; }
+    .hbc-wa { flex: 1; padding: 10px; background: #25d366; color: #fff; border: none; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; text-align: center; }
+    .hbc-tw { flex: 1; padding: 10px; background: #00b67a; color: #fff; border: none; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; text-align: center; }
+
+    /* BENEFICI */
+    .benefici-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 32px; }
+    .beneficio-card { background: #fff; border: 1.5px solid #e0e0e0; border-radius: 12px; padding: 24px; text-align: center; }
+    .beneficio-icon { font-size: 28px; margin-bottom: 12px; }
+
+    /* STEPS */
+    .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 32px; }
+    .step { background: #fff; border: 1.5px solid #e0e0e0; border-radius: 12px; padding: 24px; text-align: center; }
+    .step-num { width: 44px; height: 44px; background: #222; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 800; margin: 0 auto 14px; }
+    .step-title { font-size: 14px; font-weight: 700; color: #111; margin-bottom: 8px; }
+    .step-desc { font-size: 12px; color: #666; line-height: 1.6; }
+
+    /* FAQ */
+    .faq-list { display: flex; flex-direction: column; gap: 0; border: 1.5px solid #e0e0e0; border-radius: 12px; overflow: hidden; background: #fff; margin-top: 32px; }
+    .faq-item { border-bottom: 1px solid #e8e8e8; }
+    .faq-item:last-child { border-bottom: none; }
+    .faq-question { padding: 18px 24px; font-size: 15px; font-weight: 600; color: #111; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+    .faq-arrow { font-size: 12px; color: #999; transition: transform .2s; }
+    .faq-answer { display: none; padding: 0 24px 18px; font-size: 14px; color: #555; line-height: 1.7; }
+    .faq-item.open .faq-answer { display: block; }
+    .faq-item.open .faq-arrow { transform: rotate(180deg); }
+
+    /* FORM */
+    .prenota-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 32px; align-items: start; }
+    .form-box { background: #fff; border: 1.5px solid #e0e0e0; border-radius: 12px; padding: 32px; }
+    .form-title { font-size: 18px; font-weight: 700; color: #111; margin-bottom: 6px; }
+    .form-sub { font-size: 13px; color: #888; margin-bottom: 24px; }
+    .form-field { margin-bottom: 16px; }
+    .form-field label { display: block; font-size: 12px; font-weight: 700; color: #555; margin-bottom: 6px; letter-spacing: .05em; text-transform: uppercase; }
+    .form-field input, .form-field select, .form-field textarea { width: 100%; background: #f5f5f5; border: 1.5px solid #e0e0e0; border-radius: 8px; padding: 11px 14px; font-size: 14px; color: #333; }
+    .form-field textarea { height: 90px; resize: none; }
+    .btn-form { width: 100%; padding: 14px; background: #222; color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 8px; }
+    .form-privacy { font-size: 11px; color: #aaa; margin-top: 10px; text-align: center; }
+    .treatwell-box { background: #fff; border: 1.5px solid #e0e0e0; border-radius: 12px; padding: 28px; display: flex; flex-direction: column; gap: 16px; }
+    .tw-stars { color: #ED1E88; font-size: 16px; }
+    .btn-treatwell { width: 100%; padding: 12px; background: #00b67a; color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; }
+    .btn-wa { width: 100%; padding: 11px; background: #25d366; color: #fff; border: none; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; margin-bottom: 8px; }
+    .btn-tel { width: 100%; padding: 11px; background: #f5f5f5; color: #222; border: 1.5px solid #ddd; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; margin-bottom: 8px; }
+
+    /* TRUST BAR */
+    .trust-bar { background: #fff; border-top: 1px solid #e8e8e8; border-bottom: 1px solid #e8e8e8; padding: 28px 40px; }
+    .trust-bar-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: center; }
+
+    /* CTA FINALE */
+    .cta-finale { background: #111; color: #fff; padding: 72px 40px; text-align: center; }
+    .cta-finale h2 { font-size: 30px; font-weight: 700; color: #fff; margin-bottom: 12px; }
+    .cta-finale p { font-size: 15px; color: #bbb; max-width: 520px; margin: 0 auto 36px; line-height: 1.6; }
+    .cta-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-cta-primary { background: #fff; color: #111; border: none; border-radius: 8px; padding: 14px 28px; font-size: 15px; font-weight: 700; cursor: pointer; }
+    .btn-cta-secondary { background: transparent; color: #fff; border: 2px solid #fff; border-radius: 8px; padding: 13px 28px; font-size: 15px; font-weight: 600; cursor: pointer; }
+
+    /* FOOTER */
+    footer { background: #1a1a1a; color: #aaa; padding: 48px 40px 24px; }
+    .footer-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+    .footer-col-title { color: #fff; font-size: 13px; font-weight: 700; margin-bottom: 14px; letter-spacing: .05em; text-transform: uppercase; }
+    .footer-col p, .footer-col a { font-size: 13px; color: #999; line-height: 2; display: block; text-decoration: none; }
+    .footer-col .social-icon { display: flex; flex-shrink: 0; line-height: 1; }
+    .footer-logo { background: #333; border: 2px dashed #555; border-radius: 4px; width: 100px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #777; font-weight: 700; margin-bottom: 16px; }
+    .footer-tagline { font-size: 13px; color: #777; margin-bottom: 16px; line-height: 1.5; }
+    .social-icon { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; background: #333; border-radius: 6px; font-size: 13px; color: #aaa; cursor: pointer; margin-right: 6px; }
+    .footer-social { margin-top: 12px; }
+    .footer-bottom { max-width: 1100px; margin: 0 auto; border-top: 1px solid #333; padding-top: 20px; font-size: 12px; color: #666; display: flex; justify-content: space-between; }
+
+    .wa-float { position: fixed; bottom: 28px; right: 28px; background: #25d366; color: #fff; border-radius: 50%; width: 54px; height: 54px; display: flex; align-items: center; justify-content: center; font-size: 26px; box-shadow: 0 4px 16px rgba(0,0,0,.2); cursor: pointer; z-index: 200; }
+  </style>
+  <link rel="stylesheet" href="brand.css">
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header>
+  <a href="home.html" style="text-decoration:none;"><img src="img/logo-nero-rosa.webp" alt="Love Sun Beauty" class="header-logo-img"></a>
+  <nav>
+    <div class="nav-dropdown" onclick="this.classList.toggle('open')">
+      <span>Servizi ▾</span>
+      <div class="dropdown-menu">
+        <a href="epilazione-laser.html"><span class="dm-icon">✨</span> Epilazione Laser</a>
+        <a href="trattamenti-corpo.html"><span class="dm-icon">💆</span> Trattamenti T-Shape</a>
+        <a href="pressoterapia.html" class="active"><span class="dm-icon">💧</span> Pressoterapia</a>
+        <a href="solarium.html"><span class="dm-icon">☀️</span> Solarium</a>
+        <a href="nail-center.html"><span class="dm-icon">💅</span> Nail Center</a>
+        <div class="dropdown-divider"></div>
+        <div class="dropdown-submenu">
+          <a href="#"><span class="dm-icon">🌸</span> Estetica Base <span style="margin-left:auto;font-size:10px;color:#aaa;">▶</span></a>
+          <div class="submenu">
+            <a href="cerette.html"><span class="dm-icon">🪒</span> Cerette</a>
+            <a href="pedicure.html"><span class="dm-icon">🦶</span> Pedicure</a>
+            <a href="pulizia-viso.html"><span class="dm-icon">✨</span> Pulizia Viso</a>
+            <a href="massaggi.html"><span class="dm-icon">🤲</span> Massaggi</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a href="offerte.html" style="color:inherit;text-decoration:none;border-bottom:1px dashed #bbb;padding-bottom:2px;">Offerte</a>
+    <div class="nav-dropdown" onclick="this.classList.toggle('open')">
+      <span>Le nostre Sedi ▾</span>
+      <div class="dropdown-menu">
+        <a href="sede-bregnano.html"><span class="dm-icon">📍</span> Love Sun Beauty Bregnano</a>
+        <a href="sede-carugate.html"><span class="dm-icon">📍</span> Love Sun Beauty Carugate</a>
+      </div>
+    </div>
+    <a href="chi-siamo.html" style="color:inherit;text-decoration:none;border-bottom:1px dashed #bbb;padding-bottom:2px;">Chi Siamo</a>
+    <a href="faq.html" style="color:inherit;text-decoration:none;border-bottom:1px dashed #bbb;padding-bottom:2px;">FAQ</a>
+    <a href="contatti.html" style="color:inherit;text-decoration:none;border-bottom:1px dashed #bbb;padding-bottom:2px;">Contatti</a>
+  </nav>
+  <div class="header-actions">
+    <button class="btn-ghost">📞 Chiama</button>
+    <button class="btn-ghost">💬 WhatsApp</button>
+    <a href="contatti.html" style="text-decoration:none;"><button class="btn-primary">Prenota Ora</button></a>
+  </div>
+</header>
+<div class="section-divider">SEZIONE 1 — HERO</div>
+
+<!-- ══ HERO ══ -->
+<div class="hero">
+  <div class="hero-parallax" role="img" aria-label="Pressoterapia" style="background-image:url('img/pressoterapia/pressohero.webp');"></div>
+  <div style="position:absolute; inset:0; background:rgba(0,0,0,.45);"></div>
+  <div class="hero-booking">
+    <div style="position:relative; z-index:2;">
+      <div style="display:inline-block; background:rgba(255,255,255,.22); border:1.5px solid rgba(255,255,255,.6); border-radius:20px; padding:5px 16px; font-size:12px; font-weight:700; color:#fff; letter-spacing:.08em; text-transform:uppercase; margin-bottom:20px; backdrop-filter:blur(4px);">💧 Drenaggio · Leggerezza · Benessere</div>
+      <h1 style="font-size:42px; font-weight:800; color:#fff; line-height:1.2; margin-bottom:16px;">Pressoterapia<br>Ritrova la tua leggerezza.</h1>
+      <p style="font-size:16px; color:rgba(255,255,255,.85); max-width:520px; line-height:1.6; margin-bottom:24px;">Drena, tonifica e rimodella la silhouette in modo naturale. Ideale contro ritenzione idrica, gonfiore e cellulite.</p>
+      <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:28px;">
+        <div style="color:rgba(255,255,255,.8); font-size:14px; font-weight:600;">✓ Entrambe le sedi — Bregnano e Carugate</div>
+        <div style="color:rgba(255,255,255,.8); font-size:14px; font-weight:600;">✓ Sedute da 30 min · nessun recupero</div>
+        <div style="color:rgba(255,255,255,.8); font-size:14px; font-weight:600;">✓ 4 pacchetti disponibili — a partire da 129€</div>
+      </div>
+    </div>
+    <div class="hero-booking-card" style="position:relative; z-index:2;">
+      <div class="hbc-title">📅 Prenota o richiedi informazioni</div>
+      <div class="hbc-sub">Consulenza dedicata · Risposta entro poche ore</div>
+      <div class="hbc-field">
+        <label>Nome e Cognome *</label>
+        <input type="text" placeholder="Es. Maria Rossi">
+      </div>
+      <div class="hbc-field">
+        <label>Telefono / WhatsApp *</label>
+        <input type="tel" placeholder="Es. 333 123 4567">
+      </div>
+      <div class="hbc-field">
+        <label>Email *</label>
+        <input type="email" placeholder="Es. maria@email.it">
+      </div>
+      <div class="hbc-field">
+        <label>Sede preferita</label>
+        <select>
+          <option>-- Seleziona --</option>
+          <option>Love Sun Beauty Bregnano (CO)</option>
+          <option>Love Sun Beauty Carugate (MI)</option>
+        </select>
+      </div>
+      <div class="hbc-field">
+        <label>Messaggio (opzionale)</label>
+        <textarea placeholder="Scrivi qui domande o preferenze di orario…" style="height:70px; resize:none;"></textarea>
+      </div>
+      <button class="hbc-btn-primary">Invia Richiesta →</button>
+      <div class="hbc-divider">oppure prenota subito</div>
+      <div class="hbc-channels">
+        <button class="hbc-tw">📅 Treatwell</button>
+        <button class="hbc-wa">💬 WhatsApp</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="section-divider">SEZIONE 2 — COS'È</div>
+
+<!-- ══ COS'È LA PRESSOTERAPIA ══ -->
+<div style="background:#fff; padding:0 40px;">
+  <div style="max-width:1200px; margin:0 auto;">
+    <section style="padding:72px 0;">
+      <div class="section-tag">Il trattamento</div>
+      <h2 class="wf">Cos'è il Pressomassaggio</h2>
+      <p class="wf" style="max-width:760px;">Il <strong>pressomassaggio</strong> è un innovativo trattamento estetico/curativo basato sulla pressione esterna degli arti, attraverso una specifica apparecchiatura dotata di speciali cuscinetti a getti d'aria discontinua che, indossati dal paziente e gonfiati in maniera sequenziale, aiutano a migliorare il tono e l'integrità della pelle, riducono la cellulite e ridefiniscono la forma delle gambe, oltre ad alleviare il dolore indotto da alcuni traumi sportivi.</p>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:32px;">
+        <span style="background:#f0f0f0; color:#444; font-size:12px; font-weight:700; padding:5px 14px; border-radius:20px;">⏱ Durata: 30 min</span>
+        <span style="background:#e8f5e9; color:#2e7d32; font-size:12px; font-weight:700; padding:5px 14px; border-radius:20px;">📍 Entrambe le sedi</span>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:40px; margin-top:40px; align-items:center;">
+        <div style="background:#111; border-radius:16px; padding:32px; display:flex; flex-direction:column; gap:20px;">
+          <div>
+            <div style="font-size:11px; font-weight:700; color:rgba(255,255,255,.5); letter-spacing:.1em; text-transform:uppercase; margin-bottom:6px;">Come funziona</div>
+            <div style="font-size:15px; font-weight:700; color:#fff; margin-bottom:6px;">Pressione sequenziale graduata</div>
+            <div style="font-size:13px; color:rgba(255,255,255,.65); line-height:1.6;">Gonfia e sgonfia in sequenza le camere dell'indumento, simulando un massaggio linfatico profondo. Spinge i liquidi verso i linfonodi per essere eliminati naturalmente.</div>
+          </div>
+          <div>
+            <div style="font-size:11px; font-weight:700; color:rgba(255,255,255,.5); letter-spacing:.1em; text-transform:uppercase; margin-bottom:6px;">Durata e frequenza</div>
+            <div style="font-size:15px; font-weight:700; color:#fff; margin-bottom:6px;">30 min · 2–3 volte a settimana</div>
+            <div style="font-size:13px; color:rgba(255,255,255,.65); line-height:1.6;">Sedute brevi e comode. Per risultati ottimali consigliamo cicli da 7 o 12 trattamenti. Il corpo si riattiva già dalla prima seduta.</div>
+          </div>
+          <div>
+            <div style="font-size:11px; font-weight:700; color:rgba(255,255,255,.5); letter-spacing:.1em; text-transform:uppercase; margin-bottom:6px;">Disponibilità</div>
+            <div style="font-size:15px; font-weight:700; color:#fff; margin-bottom:6px;">Entrambe le sedi</div>
+            <div style="font-size:13px; color:rgba(255,255,255,.65); line-height:1.6;">Disponibile a Bregnano (CO) e Carugate (MI). Prenota nella sede più vicina a te.</div>
+          </div>
+        </div>
+        <div style="height:320px; border-radius:12px; overflow:hidden;"><img src="img/pressoterapia/trattamentopresso.webp" alt="Trattamento di pressoterapia in corso" style="width:100%;height:100%;object-fit:cover;"></div>
+      </div>
+    </section>
+  </div>
+</div>
+<div class="section-divider">SEZIONE 3 — BENEFICI</div>
+
+<!-- ══ BENEFICI ══ -->
+<div style="background:#fafafa; padding:0 40px;">
+  <div style="max-width:1200px; margin:0 auto;">
+    <section style="padding:72px 0;">
+      <div class="section-tag">Benefici</div>
+      <h2 class="wf">Cosa ottieni con la Pressoterapia</h2>
+      <p class="wf" style="max-width:760px;">Risultati visibili già dalla prima seduta. Un trattamento piacevole, non invasivo, adatto a chiunque — disponibile in entrambi i centri.</p>
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:32px;">
+        <div class="beneficio-card">
+          <div class="beneficio-icon">🔄</div>
+          <h3 class="wf" style="font-size:14px; margin-bottom:6px;">Circolazione migliorata</h3>
+          <p class="wf" style="font-size:12px; color:#666;">Migliora la circolazione sanguigna e quella linfatica, riducendo ristagni e pesantezza.</p>
+        </div>
+        <div class="beneficio-card">
+          <div class="beneficio-icon">💧</div>
+          <h3 class="wf" style="font-size:14px; margin-bottom:6px;">Riduce gonfiore ed edema</h3>
+          <p class="wf" style="font-size:12px; color:#666;">Drena i liquidi in eccesso e riduce visibilmente il gonfiore agli arti inferiori.</p>
+        </div>
+        <div class="beneficio-card">
+          <div class="beneficio-icon">🛡️</div>
+          <h3 class="wf" style="font-size:14px; margin-bottom:6px;">Anti-infiammatorio</h3>
+          <p class="wf" style="font-size:12px; color:#666;">Riduce gli stati infiammatori di natura non-infettiva e favorisce la guarigione.</p>
+        </div>
+        <div class="beneficio-card">
+          <div class="beneficio-icon">✨</div>
+          <h3 class="wf" style="font-size:14px; margin-bottom:6px;">Ossigenazione cutanea</h3>
+          <p class="wf" style="font-size:12px; color:#666;">Migliora l'ossigenazione della cute e la rende più luminosa e tonica.</p>
+        </div>
+        <div class="beneficio-card">
+          <div class="beneficio-icon">💪</div>
+          <h3 class="wf" style="font-size:14px; margin-bottom:6px;">Tono e integrità della pelle</h3>
+          <p class="wf" style="font-size:12px; color:#666;">Migliora il tono e l'integrità della pelle, rendendola più compatta ed elastica.</p>
+        </div>
+        <div class="beneficio-card">
+          <div class="beneficio-icon">🦵</div>
+          <h3 class="wf" style="font-size:14px; margin-bottom:6px;">Gambe e cellulite</h3>
+          <p class="wf" style="font-size:12px; color:#666;">Riduce con buoni risultati la cellulite e ridefinisce la forma delle gambe.</p>
+        </div>
+        <div class="beneficio-card">
+          <div class="beneficio-icon">🏥</div>
+          <h3 class="wf" style="font-size:14px; margin-bottom:6px;">Post-operatorio</h3>
+          <p class="wf" style="font-size:12px; color:#666;">Riduce con buoni risultati il linfedema post-operatorio, favorendo il recupero.</p>
+        </div>
+        <div class="beneficio-card">
+          <div class="beneficio-icon">⚽</div>
+          <h3 class="wf" style="font-size:14px; margin-bottom:6px;">Traumi sportivi</h3>
+          <p class="wf" style="font-size:12px; color:#666;">Allevia il dolore indotto da alcuni traumi sportivi e riduce l'edema post-traumatico.</p>
+        </div>
+        <div class="beneficio-card">
+          <div class="beneficio-icon">🌿</div>
+          <h3 class="wf" style="font-size:14px; margin-bottom:6px;">Detox e relax</h3>
+          <p class="wf" style="font-size:12px; color:#666;">Favorisce l'eliminazione delle tossine e dei prodotti di scarto, riducendo lo stress.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+<div class="section-divider">SEZIONE 4 — OFFERTA / PACCHETTI</div>
+
+<!-- ══ OFFERTA ══ -->
+<div style="background:#fff; padding:0 40px;">
+  <div style="max-width:1200px; margin:0 auto;">
+    <section style="padding:72px 0;">
+      <div class="section-tag">Pacchetti</div>
+      <h2 class="wf">Scegli il tuo percorso</h2>
+      <p class="wf">Tutti i pacchetti includono la consulenza dedicata iniziale.</p>
+      <div style="background:#fff; border:1.5px solid #e0e0e0; border-radius:12px; overflow:hidden; display:grid; grid-template-columns:480px 1fr; margin-top:32px;">
+        <div style="min-height:400px; overflow:hidden;"><img src="img/pressoterapia/pressohero.webp" alt="Pressoterapia — ritrova la leggerezza" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div style="padding:36px; display:flex; flex-direction:column; justify-content:center;">
+          <div style="display:inline-block; background:#e8f5e9; color:#2e7d32; font-size:10px; font-weight:700; letter-spacing:.06em; padding:3px 10px; border-radius:20px; margin-bottom:16px; width:fit-content;">📍 Entrambe le sedi</div>
+          <div style="font-size:22px; font-weight:800; color:#111; margin-bottom:6px; line-height:1.3;">Ritrova la tua leggerezza<br>con la Pressoterapia</div>
+          <div style="font-size:13px; color:#666; line-height:1.7; margin-bottom:20px;">Drena, tonifica e rimodella la tua silhouette in modo naturale. Ideale contro ritenzione idrica, gonfiore alle gambe e cellulite.</div>
+          <ul style="list-style:none; padding:0; margin:0 0 20px; display:flex; flex-direction:column; gap:7px;">
+            <li style="font-size:12px; color:#444; display:flex; gap:8px;"><span style="color:#27ae60; font-weight:700;">✓</span> Drena i liquidi in eccesso</li>
+            <li style="font-size:12px; color:#444; display:flex; gap:8px;"><span style="color:#27ae60; font-weight:700;">✓</span> Alleggerisce gambe e caviglie</li>
+            <li style="font-size:12px; color:#444; display:flex; gap:8px;"><span style="color:#27ae60; font-weight:700;">✓</span> Tonifica e rimodella la silhouette</li>
+            <li style="font-size:12px; color:#444; display:flex; gap:8px;"><span style="color:#27ae60; font-weight:700;">✓</span> Migliora la circolazione</li>
+          </ul>
+          <div style="font-size:13px; color:#888; margin-bottom:4px;">A partire da</div>
+          <div style="font-size:28px; font-weight:800; color:#111; margin-bottom:20px;">129€</div>
+          <a href="contatti.html" style="text-decoration:none;"><button style="padding:12px 28px; background:#222; color:#fff; border:none; border-radius:8px; font-size:14px; font-weight:700; cursor:pointer;">Prenota ora →</button></a>
+        </div>
+      </div>
+      <div class="wf-note" style="margin-top:16px;">Prezzi reali da inserire: 129€/7 tratt · 229€/7 tratt+bendaggi · 199€/12 tratt · 349€/12 tratt+bendaggi</div>
+    </section>
+  </div>
+</div>
+<div class="section-divider">SEZIONE 5 — FAQ</div>
+
+<!-- ══ FAQ ══ -->
+<div style="background:#fafafa; padding:0 40px;">
+  <div style="max-width:1200px; margin:0 auto;">
+    <section style="padding:72px 0;">
+      <div class="section-tag">Domande frequenti</div>
+      <h2 class="wf">Le domande più comuni sulla Pressoterapia</h2>
+      <div class="faq-list">
+        <div class="faq-item open">
+          <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">La pressoterapia fa male? <span class="faq-arrow">▼</span></div>
+          <div class="faq-answer">No, è un trattamento indolore e piacevole. Si percepisce una leggera pressione che si gonfia e si sgonfia progressivamente. Molte clienti lo trovano molto rilassante.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">Quante sedute servono per vedere i risultati? <span class="faq-arrow">▼</span></div>
+          <div class="faq-answer">I primi risultati (gambe più leggere, riduzione del gonfiore) si notano già dalla prima seduta. Per un miglioramento stabile della cellulite e del drenaggio, consigliamo un ciclo di 7–12 sedute.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">Con quale frequenza si fanno le sedute? <span class="faq-arrow">▼</span></div>
+          <div class="faq-answer">Idealmente 2–3 volte a settimana per ottenere i migliori risultati. Dopo il ciclo iniziale, si consigliano sedute di mantenimento periodiche.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">Si può abbinare ad altri trattamenti? <span class="faq-arrow">▼</span></div>
+          <div class="faq-answer">Sì, la pressoterapia si abbina molto bene al T-Shape 2 per potenziare l'effetto drenante e rimodellante. Il nostro team ti suggerirà il percorso integrato più adatto in fase di consulenza dedicata.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">Ci sono controindicazioni? <span class="faq-arrow">▼</span></div>
+          <div class="faq-answer">La pressoterapia è controindicata in caso di trombosi, insufficienza cardiaca grave, infezioni acute agli arti. In caso di dubbio, consigliamo sempre di consultare il proprio medico prima di iniziare il trattamento.</div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+<div class="section-divider">SEZIONE 6 — PRENOTA</div>
+
+<!-- ══ PRENOTA ══ -->
+<div style="background:#fafafa; padding:72px 40px;">
+  <div style="max-width:1200px; margin:0 auto;">
+    <div class="section-tag">Prenota</div>
+    <h2 class="wf">Prenota la tua seduta di Pressoterapia</h2>
+    <p class="wf">Compila il modulo o scegli il canale che preferisci. Ti rispondiamo entro 24h.</p>
+    <div class="prenota-grid">
+      <div class="form-box">
+        <div class="form-title">💬 Richiedi informazioni o prenota</div>
+        <div class="form-sub">Risponderemo entro poche ore · Prima consulenza dedicata</div>
+        <div class="form-field">
+          <label>Nome e Cognome *</label>
+          <input type="text" placeholder="Es. Maria Rossi">
+        </div>
+        <div class="form-field">
+          <label>Telefono / WhatsApp *</label>
+          <input type="tel" placeholder="Es. 333 123 4567">
+        </div>
+        <div class="form-field">
+          <label>Email</label>
+          <input type="email" placeholder="Es. maria@email.it">
+        </div>
+        <div class="form-field">
+          <label>Sede preferita</label>
+          <select>
+            <option>Bregnano (CO)</option>
+            <option>Carugate (MI)</option>
+            <option>Indifferente</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label>Pacchetto di interesse</label>
+          <select>
+            <option>-- Non so ancora --</option>
+            <option>7 trattamenti — 129€</option>
+            <option>7 trattamenti + bendaggi — 229€</option>
+            <option>12 trattamenti — 199€</option>
+            <option>12 trattamenti + bendaggi — 349€</option>
+          </select>
+          <div class="wf-note" style="margin-top:6px;">⚠️ Prezzi placeholder — inserire prezzi reali</div>
+        </div>
+        <div class="form-field">
+          <label>Messaggio (opzionale)</label>
+          <textarea placeholder="Descrivi il tuo obiettivo o fai una domanda…"></textarea>
+        </div>
+        <button class="btn-form">Invia Richiesta →</button>
+        <div class="form-privacy">Inviando accetti la nostra <u>Privacy Policy</u>. I tuoi dati non saranno condivisi con terzi.</div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:20px;">
+        <div class="treatwell-box">
+          <div style="display:flex; align-items:center; gap:14px;">
+            <div style="background:#00b67a; color:#fff; font-size:13px; font-weight:800; padding:8px 16px; border-radius:8px; flex-shrink:0;">treatwell</div>
+            <div>
+              <div class="tw-stars">★★★★★</div>
+              <div style="font-size:13px; color:#555; margin-top:2px;"><strong>4,9/5</strong> · 419 recensioni</div>
+            </div>
+          </div>
+          <div style="font-size:14px; color:#555; line-height:1.6;">Prenota online in pochi clic. Scegli la sede, il giorno e l'orario che preferisci.</div>
+          <button class="btn-treatwell">📅 Prenota su Treatwell</button>
+        </div>
+        <div class="treatwell-box">
+          <div class="form-title" style="font-size:16px;">Preferisci contattarci direttamente?</div>
+          <div>
+            <button class="btn-wa">💬 Scrivici su WhatsApp</button>
+            <button class="btn-tel">📞 Chiama — 031 4682567</button>
+            <button class="btn-tel">📧 info@lovesun.it</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="section-divider">SEZIONE 7 — TRUST BAR</div>
+
+<!-- ══ TRUST BAR ══ -->
+<div class="trust-bar">
+  <div class="trust-bar-inner">
+    <div>
+      <div style="font-size:24px; margin-bottom:6px;">📍</div>
+      <div style="font-size:14px; font-weight:700; color:#111; margin-bottom:3px;">2 Sedi</div>
+      <div style="font-size:12px; color:#777;">Bregnano &amp; Carugate</div>
+    </div>
+    <div>
+      <div style="font-size:24px; margin-bottom:6px;">⭐</div>
+      <div style="font-size:14px; font-weight:700; color:#111; margin-bottom:3px;">419 Recensioni</div>
+      <div style="font-size:12px; color:#777;">verificate</div>
+    </div>
+    <div>
+      <div style="font-size:24px; margin-bottom:6px;">💆</div>
+      <div style="font-size:14px; font-weight:700; color:#111; margin-bottom:3px;">Non invasivo</div>
+      <div style="font-size:12px; color:#777;">Nessun recupero</div>
+    </div>
+    <div>
+      <div style="font-size:24px; margin-bottom:6px;">🕐</div>
+      <div style="font-size:14px; font-weight:700; color:#111; margin-bottom:3px;">30 min</div>
+      <div style="font-size:12px; color:#777;">Per seduta</div>
+    </div>
+  </div>
+</div>
+<div class="section-divider">SEZIONE 8 — CTA FINALE</div>
+
+<!-- ══ CTA FINALE ══ -->
+<div class="cta-finale">
+  <h2>Inizia il tuo percorso di drenaggio</h2>
+  <p>Prima seduta con consulenza dedicata. Nessun impegno — solo risultati.</p>
+  <div class="cta-actions">
+    <a href="contatti.html" style="text-decoration:none;"><button class="btn-cta-primary">📅 Prenota Ora</button></a>
+    <button class="btn-cta-secondary">💬 Scrivici su WhatsApp</button>
+  </div>
+</div>
+<div class="section-divider">FOOTER</div>
+
+<!-- ════════════════════════════════════════ FOOTER ════════════════════════════════════════ -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <img src="img/logo-bianco-rosa.webp" alt="Love Sun Beauty" class="footer-logo-img">
+      <p class="footer-tagline">Beauty Center. Bellezza e benessere in Lombardia.</p>
+      <div class="footer-social">
+        <a href="https://www.facebook.com/lovesunsolarium/" target="_blank" rel="noopener" class="social-icon" title="Facebook" style="text-decoration:none; display:flex; align-items:center; justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5H16.7V3.7c-.3-.04-1.3-.12-2.4-.12-2.4 0-4 1.46-4 4.14v2.31H7.5V13h2.8v8h3.2z"/></svg></a>
+        <a href="https://www.instagram.com/lovesun.beauty?igsh=MW90b3pvNXBhYWFtNA==" target="_blank" rel="noopener" class="social-icon" title="Instagram" style="text-decoration:none; display:flex; align-items:center; justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="3.8"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg></a>
+        <a href="#" target="_blank" rel="noopener" class="social-icon" title="TikTok — link da inserire" style="text-decoration:none; display:flex; align-items:center; justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 3c.3 2.2 1.5 3.5 3.6 3.7v2.5c-1.2.1-2.4-.3-3.6-1v5.7c0 3.2-2.3 5.4-5.3 5.4-2.7 0-4.9-2-4.9-4.8 0-2.9 2.4-4.9 5.4-4.6v2.6c-.4-.1-.8-.2-1.2-.2-1.2 0-2.2.9-2.2 2.1s1 2.2 2.3 2.2c1.3 0 2.1-1 2.1-2.4V3h3.5z"/></svg></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Servizi</div>
+      <a href="epilazione-laser.html">Epilazione Laser</a>
+      <a href="trattamenti-corpo.html">T-Shape 2</a>
+      <a href="pressoterapia.html">Pressoterapia</a>
+      <a href="solarium.html">Solarium</a>
+      <a href="nail-center.html">Nail Center</a>
+      <a href="cerette.html">Cerette</a>
+      <a href="pedicure.html">Pedicure</a>
+      <a href="pulizia-viso.html">Pulizia Viso</a>
+      <a href="massaggi.html">Massaggi</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Love Sun Beauty Bregnano</div>
+      <p>Via per Lazzate 7<br>22070 Bregnano (CO)</p>
+      <p>031 4682567<br>WhatsApp +39 347 3983337<br>info@lovesun.it</p>
+      <p>Lun–Sab 9:00–21:00<br>Dom 9:00–17:00</p>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Love Sun Beauty Carugate</div>
+      <p>Via del Ginestrino 16<br>20061 Carugate (MI)</p>
+      <p>031 4682567<br>WhatsApp +39 347 3983337<br>info@lovesun.it</p>
+      <p>Mar/Mer/Ven/Sab 9:00–20:00<br>Gio 9:00–21:00<br>Lun e Dom: Chiuso</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Love Sun Beauty &nbsp;·&nbsp; Privacy Policy &nbsp;·&nbsp; Cookie Policy</span>
+    <span>P.IVA: 03959640131</span>
+  </div>
+</footer>
+
+<div class="wa-float">💬</div>
+
+<script>
+  document.querySelectorAll('.faq-question').forEach(q => {
+    q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
+  });
+  document.querySelectorAll('.nav-dropdown > span').forEach(s => {
+    s.addEventListener('click', () => s.parentElement.classList.toggle('open'));
+  });
+</script>
+<script src="site.js"></script>
+</body>
+</html>

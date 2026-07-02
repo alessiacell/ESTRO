@@ -1,0 +1,401 @@
+/* ============================================================
+   LOVE SUN BEAUTY — Brand theme
+   Applied on top of the wireframe CSS. Loaded last in <head>.
+   Palette: #ED1E88 magenta · #FF9AB8 pink · #FFD9DD light pink
+            #FFF4F5 near-white · #630C62 deep purple · #10E2FF cyan
+   Type:    Bakbak One (headings) · Quicksand (body)
+   ============================================================ */
+
+@font-face {
+  font-family: 'Bakbak One';
+  src: url('fonts/BakbakOne-Regular.ttf') format('truetype');
+  font-weight: 400 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Quicksand';
+  src: url('fonts/Quicksand-VariableFont_wght.ttf') format('truetype');
+  font-weight: 300 700;
+  font-display: swap;
+}
+
+:root {
+  --magenta: #ED1E88;
+  --magenta-dark: #c9166f;
+  --pink: #FF9AB8;
+  --pink-light: #FFD9DD;
+  --cream: #FFF4F5;
+  --purple: #630C62;
+  --cyan: #10E2FF;
+}
+
+/* ── Typography ─────────────────────────────────────── */
+body { font-family: 'Quicksand', sans-serif !important; }
+
+h1, h2, h3, h4,
+h1.wf, h2.wf, h3.wf,
+.rating-big, .brand-wordmark, .footer-wordmark,
+.offerta-title, .sede-name {
+  font-family: 'Bakbak One', 'Quicksand', sans-serif !important;
+  letter-spacing: .2px;
+}
+
+/* ── Page & section backgrounds ─────────────────────── */
+body { background: var(--cream) !important; }
+.perche-bg, .faq-bg { background: var(--cream) !important; }
+
+/* soften cold grey section fills → warm brand cream */
+[style*="background:#fafafa"],
+[style*="background: #fafafa"],
+[style*="background:#f5f5f5"],
+[style*="background: #f5f5f5"],
+[style*="background:#f8f8f8"] { background: var(--cream) !important; }
+
+/* ── Hide wireframe annotations ─────────────────────── */
+.wf-label, .wf-note, .section-divider { display: none !important; }
+
+/* ── Eyebrow tag → magenta pill ─────────────────────── */
+.section-tag {
+  background: var(--magenta) !important;
+  color: #fff !important;
+  border-radius: 20px !important;
+  letter-spacing: .12em !important;
+  font-family: 'Quicksand', sans-serif !important;
+  font-weight: 700 !important;
+}
+
+/* ── Placeholders left un-swapped → pink tint ───────── */
+.wf-placeholder {
+  background: var(--pink-light) !important;
+  border: none !important;
+  color: var(--magenta) !important;
+}
+
+/* ── Real logo images ───────────────────────────────── */
+.header-logo-img { height: 44px; width: auto; display: block; flex-shrink: 0; }
+.footer-logo-img { height: 40px; width: auto; display: block; margin-bottom: 16px; }
+@media (max-width: 620px) { .header-logo-img { height: 34px; } }
+
+/* ── PARALLAX hero (background fixed, content scrolls over) ── */
+.hero-parallax {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+@media (max-width: 820px) {
+  .hero-parallax { background-attachment: scroll; }
+}
+
+/* ── Fuchsia eyebrow labels → uppercase ─────────────── */
+.section-tag { text-transform: uppercase !important; }
+
+/* ── Trust stats in fuchsia ─────────────────────────── */
+.trust-title { color: var(--magenta) !important; }
+
+/* ── "Come funziona" step numbers coloured (not black) ─ */
+.step-num { background: var(--magenta) !important; color: #fff !important; }
+
+/* ── Pattern as background of the FORM SECTION (not inside the box) ── */
+.form-box { background: #fff !important; }
+.form-section-bg,
+.section-full:has(.prenota-grid),
+.section-full:has(.form-box) {
+  background-color: var(--cream) !important;
+  background-image: url('img/pattern-chiaro.webp') !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+}
+.form-section-bg .form-card { background: #fff !important; }
+
+/* ── Leftover content placeholders → brand pink (admin fills later) ── */
+.offer-img, .team-foto, .gallery-img {
+  background: var(--pink-light) !important;
+  border: 1.5px dashed var(--pink) !important;
+  color: var(--magenta) !important;
+}
+
+/* ── Real image helper ──────────────────────────────── */
+.ls-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.card-img.ls-photo { padding: 0 !important; border: none !important; overflow: hidden; }
+.card-img.ls-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* ── Brand wordmark (logo) ──────────────────────────── */
+.header-logo.brand-wordmark,
+.brand-wordmark {
+  background: none !important;
+  border: none !important;
+  width: auto !important;
+  height: auto !important;
+  font-family: 'Bakbak One', sans-serif !important;
+  font-size: 26px !important;
+  line-height: 1 !important;
+  color: var(--purple) !important;
+  letter-spacing: .5px !important;
+  white-space: nowrap;
+}
+.brand-wordmark span { color: var(--magenta) !important; }
+.footer-logo.footer-wordmark,
+.footer-wordmark {
+  background: none !important;
+  border: none !important;
+  width: auto !important;
+  height: auto !important;
+  font-family: 'Bakbak One', sans-serif !important;
+  font-size: 24px !important;
+  line-height: 1 !important;
+  color: #fff !important;
+  letter-spacing: .5px !important;
+}
+.footer-wordmark span { color: var(--pink) !important; }
+
+/* ── Buttons ────────────────────────────────────────── */
+.btn-primary, .btn-lg-primary, .btn-sede-primary,
+.btn-finale-primary, .btn-treatwell {
+  background: var(--magenta) !important;
+  color: #fff !important;
+  border: none !important;
+}
+.btn-primary:hover, .btn-lg-primary:hover, .btn-sede-primary:hover,
+.btn-finale-primary:hover { background: var(--magenta-dark) !important; }
+
+/* inline dark buttons (background:#222) → magenta */
+button[style*="background:#222"],
+button[style*="background: #222"] {
+  background: var(--magenta) !important;
+  color: #fff !important;
+}
+
+.btn-lg-secondary, .btn-sede-secondary {
+  background: transparent !important;
+  color: var(--magenta) !important;
+  border: 2px solid var(--magenta) !important;
+}
+.btn-finale-secondary {
+  border: 2px solid var(--pink) !important;
+  color: #fff !important;
+}
+.btn-ghost {
+  border: 1.5px solid var(--pink) !important;
+  color: var(--magenta) !important;
+}
+.card-cta, .section-link, .treatwell-link {
+  color: var(--magenta) !important;
+  border-color: var(--magenta) !important;
+}
+
+/* ── Navigation ─────────────────────────────────────── */
+nav a { color: #3a2138; }
+nav span:hover, nav a:hover { color: var(--magenta) !important; }
+nav span { border-bottom-color: transparent !important; }
+
+/* Dropdown items: text ALWAYS visible in brand magenta; the pink box appears
+   only on the single hovered row (never on the whole panel). */
+.dropdown-menu a, .submenu a { color: var(--magenta) !important; font-weight: 600 !important; background: transparent !important; }
+.dropdown-menu a .dm-icon, .submenu a .dm-icon { filter: none; }
+.dropdown-menu a:hover, .submenu a:hover { background: var(--pink-light) !important; color: var(--magenta-dark) !important; }
+.dropdown-menu a.active, .submenu a.active { color: var(--magenta) !important; font-weight: 700 !important; background: transparent !important; }
+.dropdown-menu, .submenu { background: #fff !important; }
+
+/* ── Cards / borders ────────────────────────────────── */
+.card, .benefit-item, .recensione-card, .faq-item, .sede-card {
+  border-color: var(--pink-light) !important;
+}
+.card { transition: transform .18s ease, box-shadow .18s ease; }
+.card:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(237,30,136,.12); }
+
+/* ── Ratings / accents ──────────────────────────────── */
+.stars, .rec-stars { color: var(--magenta) !important; }
+.rating-big { color: var(--magenta) !important; }
+.hero-badge { border-color: var(--pink) !important; color: var(--magenta) !important; }
+.trust-icon, .benefit-icon { filter: none; }
+
+/* offerta cards */
+.offerta-card { border-color: var(--magenta) !important; }
+.offerta-badge { background: var(--magenta) !important; }
+.prezzo-new { color: var(--magenta) !important; }
+
+/* faq */
+.faq-question:hover { background: var(--cream) !important; }
+.faq-item.open .faq-question { color: var(--magenta) !important; }
+.faq-arrow { color: var(--pink) !important; }
+
+/* ── Dark sections stay dark (black is a brand neutral) ─ */
+.cta-finale-bg { background: var(--purple) !important; }
+footer { background: #1a1220 !important; }
+
+/* ═══════════════ RESPONSIVE ═══════════════ */
+@media (max-width: 1080px) {
+  section, .section-full { padding-left: 28px !important; padding-right: 28px !important; }
+  .cards-grid { grid-template-columns: repeat(3, 1fr) !important; }
+}
+@media (max-width: 900px) {
+  header { flex-wrap: wrap !important; padding: 12px 20px !important; gap: 12px !important; }
+  nav { order: 3; width: 100%; overflow-x: auto; gap: 16px !important;
+        padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
+  nav::-webkit-scrollbar { height: 0; }
+  .header-actions { margin-left: auto; }
+  .cards-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .benefits-grid, .recensioni-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .trust-bar-inner { grid-template-columns: repeat(2, 1fr) !important; }
+  .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 28px !important; }
+  h1.wf, h1 { font-size: 30px !important; }
+}
+@media (max-width: 620px) {
+  section, .section-full, .trust-bar, .cta-finale-bg { padding-left: 18px !important; padding-right: 18px !important; }
+  section { padding-top: 40px !important; padding-bottom: 40px !important; }
+  .cards-grid, .benefits-grid, .recensioni-grid,
+  .offerte-grid, .sedi-grid,
+  .cards-grid, [style*="grid-template-columns:1fr 1fr"],
+  [style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
+  .trust-bar-inner { grid-template-columns: 1fr 1fr !important; gap: 12px !important; }
+  .footer-grid { grid-template-columns: 1fr !important; gap: 22px !important; }
+  .footer-bottom { flex-direction: column; gap: 6px; }
+  .rating-big { font-size: 40px !important; }
+  h1.wf, h1 { font-size: 26px !important; }
+  .hero-overlay { margin: 32px 22px !important; }
+  .header-actions .btn-ghost { display: none; }
+}
+
+/* ═══════════════ BRAND HARMONY PASS ═══════════════ */
+
+/* ── Black boxes → deep purple (brand neutral). Buttons stay magenta. ── */
+[style*="background:#111"], [style*="background: #111"],
+[style*="background:#1a1a1a"], .bg-dark {
+  background: var(--purple) !important;
+}
+button[style*="background:#111"], button[style*="background: #111"] {
+  background: var(--magenta) !important; color: #fff !important;
+}
+.tech-badge, .pacchetto-badge, .offerta-badge, .pacchetto-card.featured {
+  background: var(--magenta) !important;
+}
+.pacchetto-card.featured { background: #fff !important; border-color: var(--magenta) !important; }
+.pacchetto-card.featured .btn-pacchetto { background: var(--magenta) !important; color: #fff !important; }
+.btn-pacchetto { border-color: var(--magenta) !important; color: var(--magenta) !important; }
+
+/* ── Cold greys → warm cream ── */
+[style*="background:#f9f9f9"], [style*="background: #f9f9f9"],
+[style*="background:#f8f8f8"], [style*="background: #f8f8f8"] { background: var(--cream) !important; }
+
+/* ── Out-of-palette success/error TEXT → palette ── */
+[style*="color:#27ae60"], [style*="color:#0a6641"], [style*="color: #27ae60"],
+.pacchetto-features li::before, .sol-list li::before { color: var(--magenta) !important; }
+[style*="color:#e74c3c"], [style*="color:#c0392b"], [style*="color: #e74c3c"] { color: var(--purple) !important; }
+/* pale red/green fills used on tiny marker circles → palette tints */
+[style*="background:#fef2f2"], [style*="background: #fef2f2"] { background: var(--pink-light) !important; }
+[style*="background:#f0fff4"], [style*="background: #f0fff4"] { background: var(--cream) !important; }
+[style*="background:#f0f9f5"], [style*="background: #f0f9f5"] { background: var(--pink-light) !important; }
+
+/* ── Benefit cards: colored, not plain white ── */
+.beneficio-card { border: none !important; box-shadow: 0 8px 24px rgba(237,30,136,.08); }
+.beneficio-card:nth-child(6n+1) { background: var(--pink-light) !important; }
+.beneficio-card:nth-child(6n+2) { background: #FFE9EF !important; }
+.beneficio-card:nth-child(6n+3) { background: var(--cream) !important; }
+.beneficio-card:nth-child(6n+4) { background: #FFE9EF !important; }
+.beneficio-card:nth-child(6n+5) { background: var(--cream) !important; }
+.beneficio-card:nth-child(6n) { background: var(--pink-light) !important; }
+.beneficio-card .beneficio-icon { filter: none; }
+.beneficio-card h3.wf { color: var(--purple) !important; }
+
+/* ── Orari — one clean, aligned pink component, identical on every page ── */
+.orari-table {
+  width: 100% !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  background: var(--pink-light) !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+  margin-top: 20px;
+  box-shadow: 0 10px 30px rgba(237,30,136,.10);
+  font-size: 14px;
+}
+.orari-table th {
+  background: var(--pink) !important;
+  color: #fff !important;
+  border: none !important;
+  padding: 13px 22px !important;
+  text-align: left !important;
+  font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+}
+.orari-table td {
+  padding: 13px 22px !important;
+  color: var(--purple) !important;
+  border-bottom: 1px solid rgba(99,12,98,.12) !important;
+  vertical-align: middle;
+  width: auto !important;
+}
+.orari-table tr:last-child td { border-bottom: none !important; }
+.orari-table td:first-child { font-weight: 600 !important; }
+.orari-table td:last-child { text-align: right; font-weight: 700; }
+.orari-table .highlight-row td { background: var(--magenta) !important; color: #fff !important; }
+.orari-table .open { color: var(--purple) !important; }
+.orari-table tr.chiuso td, .orari-table td.closed, .orari-table .orari-chiuso { color: rgba(99,12,98,.42) !important; font-style: normal; }
+.badge-aperto { background: var(--magenta) !important; color: #fff !important; }
+.badge-chiuso { background: #fff !important; color: var(--pink) !important; }
+.contatti-orari, .sede-map { border: none !important; }
+@media (max-width: 620px) {
+  .orari-table th, .orari-table td { padding: 10px 14px !important; font-size: 13px; }
+}
+
+/* ── "I numeri" strip (chi-siamo): purple box, not black ── */
+.numeri-bg { background: var(--purple) !important; }
+.numeri-bg .numero-label { color: rgba(255,255,255,.72) !important; }
+
+/* ── Google Maps embeds ── */
+.map-embed { border: 0; display: block; width: 100%; border-radius: 14px; }
+.map-frame { border-radius: 16px; overflow: hidden; box-shadow: 0 12px 34px rgba(237,30,136,.12); }
+
+/* ── Footer social icons ── */
+.footer-social .social-icon {
+  background: var(--magenta) !important;
+  color: #fff !important;
+  width: 36px; height: 36px; border-radius: 10px;
+}
+.footer-social .social-icon:hover { background: var(--pink) !important; }
+.footer-social .social-icon svg { display: block; }
+
+/* ═══════════════ TRANSPARENT HEADER OVER HERO — ALL PAGES ═══════════════ */
+header {
+  position: fixed !important; left: 0; right: 0; top: 0;
+  background: transparent !important;
+  border-bottom: 1px solid transparent !important;
+  box-shadow: none !important;
+  transition: background .3s ease, box-shadow .3s ease, border-color .3s ease;
+}
+header nav a,
+header nav span,
+header nav a.nav-link,
+header .nav-dropdown > span { color: #fff !important; }
+header nav span { border-bottom-color: transparent !important; }
+header .btn-ghost { border-color: rgba(255,255,255,.65) !important; color: #fff !important; }
+header.scrolled {
+  background: #fff !important;
+  box-shadow: 0 4px 22px rgba(237,30,136,.10);
+  border-bottom: 2px solid var(--pink-light) !important;
+}
+header.scrolled nav a,
+header.scrolled nav span,
+header.scrolled nav a.nav-link,
+header.scrolled .nav-dropdown > span { color: #3a2138 !important; }
+header.scrolled .btn-ghost { border-color: var(--magenta) !important; color: var(--magenta) !important; }
+/* Dropdown panels sit on white — keep their items magenta in BOTH header states */
+header .dropdown-menu a, header .submenu a { color: var(--magenta) !important; }
+header .dropdown-menu a:hover, header .submenu a:hover { color: var(--magenta-dark) !important; }
+header.scrolled nav span.active { color: var(--magenta) !important; }
+
+/* ── Contatti: centre the "Chiama"/"WhatsApp" channel buttons ── */
+.channel-card { display: flex; flex-direction: column; }
+.channel-card p { flex: 1; }
+.channel-card .btn-channel { width: auto !important; align-self: center; min-width: 210px; }
+.channel-card > div[style*="flex-direction:column"] { align-self: center; width: 100%; max-width: 260px; }
+
+/* ── Contatti: social buttons pink + icon colour ── */
+.btn-social { background: var(--magenta) !important; color: #fff !important; border: none !important; }
+.btn-social:hover { background: var(--magenta-dark) !important; }
+.social-card .icon { color: var(--magenta); }
+.social-card .icon svg { display: inline-block; }
