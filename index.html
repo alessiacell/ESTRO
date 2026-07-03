@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home Page | Love Sun Beauty</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f0f0f0;
+      color: #222;
+    }
+
+    /* ── Wireframe annotation styles ── */
+    .wf-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 6px;
+    }
+    .wf-note {
+      display: inline-block;
+      background: #fffbe6;
+      border: 1px dashed #ED1E88;
+      border-radius: 4px;
+      font-size: 11px;
+      color: #856404;
+      padding: 3px 8px;
+      margin-top: 6px;
+    }
+    .wf-placeholder {
+      background: #d9d9d9;
+      border: 2px dashed #bbb;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #fff;
+      border-bottom: 2px solid #e0e0e0;
+      padding: 14px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .header-logo {
+      background: #d9d9d9;
+      border: 2px dashed #bbb;
+      border-radius: 4px;
+      width: 120px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #888;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    nav {
+      display: flex;
+      gap: 24px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #444;
+    }
+    nav span { cursor: pointer; border-bottom: 1px dashed #bbb; padding-bottom: 2px; }
+
+    /* ── Dropdown Servizi ── */
+    .nav-dropdown { position: relative; }
+    .nav-dropdown > span { display: flex; align-items: center; gap: 4px; }
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: calc(100% + 8px);
+      left: -20px;
+      background: #fff;
+      border: 1.5px solid #e0e0e0;
+      border-radius: 10px;
+      box-shadow: 0 8px 32px rgba(0,0,0,.1);
+      min-width: 240px;
+      z-index: 999;
+      padding: 8px 0;
+    }
+    .dropdown-menu::before {
+      content: '';
+      position: absolute;
+      top: -12px;
+      left: 0;
+      right: 0;
+      height: 12px;
+    }
+    .nav-dropdown:hover .dropdown-menu,
+    .nav-dropdown.open .dropdown-menu { display: block; }
+    .dropdown-menu a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 20px;
+      font-size: 14px;
+      color: #222;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background .15s;
+    }
+    .dropdown-menu a:hover { background: #f5f5f5; }
+    .dropdown-menu a .dm-icon { font-size: 16px; width: 22px; text-align: center; }
+    .dropdown-divider { height: 1px; background: #f0f0f0; margin: 6px 0; }
+    .dropdown-submenu { position: relative; }
+    .dropdown-submenu > a { justify-content: space-between; }
+    .submenu { display: none; position: absolute; left: 100%; top: -8px; background: #fff; border: 1.5px solid #e0e0e0; border-radius: 10px; box-shadow: 0 8px 32px rgba(0,0,0,.1); min-width: 200px; padding: 8px 0; z-index: 1000; }
+    .dropdown-submenu:hover .submenu { display: block; }
+    .header-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .btn-ghost {
+      border: 1.5px solid #999;
+      background: transparent;
+      border-radius: 6px;
+      padding: 7px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #444;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: #222;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 18px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* ── SECTION WRAPPER ── */
+    section {
+      padding: 60px 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section-full {
+      width: 100%;
+      padding: 60px 40px;
+    }
+    .section-full > div {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* ── SECTION LABELS (annotation) ── */
+    .section-tag {
+      display: inline-block;
+      background: #222;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      padding: 3px 10px;
+      border-radius: 3px;
+      margin-bottom: 20px;
+    }
+
+    h1.wf { font-size: 36px; font-weight: 800; line-height: 1.2; color: #111; margin-bottom: 16px; }
+    h2.wf { font-size: 26px; font-weight: 700; color: #111; margin-bottom: 10px; }
+    h3.wf { font-size: 16px; font-weight: 700; color: #222; margin-bottom: 6px; }
+    p.wf  { font-size: 15px; color: #555; line-height: 1.6; margin-bottom: 16px; }
+
+    /* ── HERO ── */
+    .hero {
+      background: #c8c8c8;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+    .hero-overlay {
+      background: transparent;
+      border-radius: 0;
+      padding: 0;
+      max-width: 580px;
+      margin: 60px 60px;
+      border: none;
+    }
+    .hero-img-label {
+      position: absolute;
+      top: 50%;
+      right: 80px;
+      transform: translateY(-50%);
+      color: #aaa;
+      font-size: 13px;
+      font-weight: 600;
+      text-align: center;
+    }
+    .cta-group { display: flex; gap: 14px; margin-top: 24px; flex-wrap: wrap; }
+    .btn-lg-primary {
+      background: #222;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 14px 28px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .btn-lg-secondary {
+      background: transparent;
+      color: #222;
+      border: 2px solid #222;
+      border-radius: 8px;
+      padding: 13px 28px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #fff;
+      border: 1.5px solid #ddd;
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #333;
+      margin-top: 18px;
+    }
+
+    /* ── TRUST BAR ── */
+    .trust-bar {
+      background: #fff;
+      border-top: 1px solid #e8e8e8;
+      border-bottom: 1px solid #e8e8e8;
+      padding: 28px 40px;
+    }
+    .trust-bar-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      text-align: center;
+    }
+    .trust-item { padding: 10px; }
+    .trust-icon { font-size: 26px; margin-bottom: 8px; }
+    .trust-title { font-size: 14px; font-weight: 700; color: #111; margin-bottom: 4px; }
+    .trust-sub { font-size: 12px; color: #777; }
+
+    /* ── SERVIZI ── */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-top: 32px;
+    }
+    .card {
+      background: #fff;
+      border: 1.5px solid #e0e0e0;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .card-img { height: 140px; }
+    .card-body { padding: 18px; }
+    .card-cta {
+      display: inline-block;
+      font-size: 13px;
+      font-weight: 700;
+      color: #222;
+      border-bottom: 1.5px solid #222;
+      margin-top: 12px;
+      cursor: pointer;
+    }
+    .section-link {
+      display: inline-block;
+      margin-top: 28px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #444;
+      border-bottom: 1px solid #aaa;
+      cursor: pointer;
+    }
+
+    /* ── PERCHÉ SCEGLIERCI ── */
+    .perche-bg { background: #fafafa; }
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-top: 32px;
+    }
+    .benefit-item {
+      background: #fff;
+      border: 1.5px solid #e0e0e0;
+      border-radius: 10px;
+      padding: 24px;
+    }
+    .benefit-icon { font-size: 28px; margin-bottom: 12px; }
+
+    /* ── OFFERTE ── */
+    .offerte-bg { background: #f5f5f5; }
+    .offerte-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-top: 32px;
+    }
+    .offerta-card {
+      background: #fff;
+      border: 2px solid #222;
+      border-radius: 10px;
+      padding: 28px;
+      position: relative;
+    }
+    .offerta-badge {
+      position: absolute;
+      top: -1px;
+      left: 24px;
+      background: #222;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .05em;
+      padding: 4px 12px;
+      border-radius: 0 0 6px 6px;
+    }
+    .offerta-title { font-size: 20px; font-weight: 700; margin: 20px 0 8px; }
+    .prezzo-old { font-size: 16px; color: #999; text-decoration: line-through; }
+    .prezzo-new { font-size: 28px; font-weight: 800; color: #111; }
+    .scadenza { font-size: 12px; color: #888; margin: 6px 0 18px; }
+
+    /* ── RECENSIONI ── */
+    .recensioni-bg { background: #fff; }
+    .rating-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+    .rating-big { font-size: 48px; font-weight: 800; color: #111; }
+    .rating-info { }
+    .stars { font-size: 22px; letter-spacing: 2px; color: #ED1E88; }
+    .rating-sub { font-size: 13px; color: #777; margin-top: 4px; }
+    .recensioni-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .recensione-card {
+      background: #fafafa;
+      border: 1.5px solid #e8e8e8;
+      border-radius: 10px;
+      padding: 22px;
+    }
+    .rec-stars { font-size: 14px; color: #ED1E88; margin-bottom: 12px; }
+    .rec-text { font-size: 14px; color: #444; line-height: 1.6; font-style: italic; margin-bottom: 14px; }
+    .rec-source { font-size: 12px; color: #999; font-weight: 600; }
+    .treatwell-link {
+      display: inline-block;
+      margin-top: 28px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #444;
+      border-bottom: 1px solid #aaa;
+      cursor: pointer;
+    }
+
+    /* ── SEDI ── */
+    .sedi-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px;
+      margin-top: 32px;
+    }
+    .sede-card {
+      background: #fff;
+      border: 1.5px solid #e0e0e0;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .sede-map { height: 160px; }
+    .sede-body { padding: 24px; }
+    .sede-name { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
+    .sede-info { font-size: 14px; color: #555; line-height: 1.8; margin-bottom: 16px; }
+    .sede-info strong { color: #111; }
+    .sede-ctas { display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn-sede-primary {
+      background: #222;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 18px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .btn-sede-secondary {
+      background: transparent;
+      color: #222;
+      border: 1.5px solid #222;
+      border-radius: 6px;
+      padding: 9px 18px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* ── CTA FINALE ── */
+    .cta-finale-bg {
+      background: #111;
+      color: #fff;
+      padding: 72px 40px;
+      text-align: center;
+    }
+    .cta-finale-bg h2.wf { color: #fff; font-size: 30px; margin-bottom: 12px; }
+    .cta-finale-bg p.wf { color: #bbb; max-width: 520px; margin: 0 auto 36px; }
+    .cta-finale-actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-finale-primary {
+      background: #fff;
+      color: #111;
+      border: none;
+      border-radius: 8px;
+      padding: 14px 28px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .btn-finale-secondary {
+      background: transparent;
+      color: #fff;
+      border: 2px solid #fff;
+      border-radius: 8px;
+      padding: 13px 28px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #1a1a1a;
+      color: #aaa;
+      padding: 48px 40px 24px;
+    }
+    .footer-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+    .footer-col-title { color: #fff; font-size: 13px; font-weight: 700; margin-bottom: 14px; letter-spacing: .05em; text-transform: uppercase; }
+    .footer-col p, .footer-col a { font-size: 13px; color: #999; line-height: 2; display: block; text-decoration: none; }
+    .footer-col .social-icon { display: flex; flex-shrink: 0; line-height: 1; }
+    .footer-logo {
+      background: #333;
+      border: 2px dashed #555;
+      border-radius: 4px;
+      width: 100px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      color: #777;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .footer-tagline { font-size: 13px; color: #777; margin-bottom: 16px; line-height: 1.5; }
+    .footer-social { display: flex; flex-direction: row; gap: 8px; margin-top: 8px; }
+    .social-icon {
+      background: #333;
+      border-radius: 6px;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      border-top: 1px solid #333;
+      padding-top: 20px;
+      font-size: 12px;
+      color: #666;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* ── FAQ ── */
+    .faq-bg { background: #fafafa; }
+    .faq-list { margin-top: 32px; display: flex; flex-direction: column; gap: 12px; }
+    .faq-item {
+      background: #fff;
+      border: 1.5px solid #e0e0e0;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .faq-question {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 24px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #111;
+      cursor: pointer;
+      user-select: none;
+    }
+    .faq-question:hover { background: #f5f5f5; }
+    .faq-arrow { font-size: 18px; color: #aaa; transition: transform .2s; flex-shrink: 0; }
+    .faq-answer {
+      display: none;
+      padding: 0 24px 18px;
+      font-size: 14px;
+      color: #555;
+      line-height: 1.7;
+      border-top: 1px solid #f0f0f0;
+    }
+    .faq-item.open .faq-answer { display: block; }
+    .faq-item.open .faq-arrow { transform: rotate(180deg); }
+    .faq-category-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 24px 0 10px;
+    }
+    .faq-item.open .faq-question { color: #111; }
+
+    /* ── FLOATING WHATSAPP ── */
+    .wa-float {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      background: #25d366;
+      color: #fff;
+      border-radius: 50%;
+      width: 54px;
+      height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      box-shadow: 0 4px 16px rgba(0,0,0,.2);
+      cursor: pointer;
+      z-index: 200;
+    }
+
+    /* ── SECTION DIVIDER ANNOTATION ── */
+    .section-divider {
+      background: #e8e8e8;
+      text-align: center;
+      padding: 6px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      color: #999;
+      text-transform: uppercase;
+    }
+  </style>
+  <link rel="stylesheet" href="brand.css">
+</head>
+<body class="home">
+
+<!-- ════════════════════════════════════════ HEADER ════════════════════════════════════════ -->
+<header>
+  <a href="index.html" style="text-decoration:none;"><img src="img/logo-nero-rosa.webp" alt="Love Sun Beauty" class="header-logo-img"></a>
+  <nav>
+    <div class="nav-dropdown" onclick="this.classList.toggle('open')">
+      <span>Servizi ▾</span>
+      <div class="dropdown-menu">
+        <a href="epilazione-laser.html"><span class="dm-icon">✨</span> Epilazione Laser</a>
+        <a href="trattamenti-corpo.html"><span class="dm-icon">💆</span> Trattamenti T-Shape</a>
+        <a href="pressoterapia.html"><span class="dm-icon">💧</span> Pressoterapia</a>
+        <div class="dropdown-divider"></div>
+        <a href="nail-center.html"><span class="dm-icon">💅</span> Nail Center</a>
+        <a href="solarium.html"><span class="dm-icon">☀️</span> Solarium</a>
+        <div class="dropdown-divider"></div>
+        <div class="dropdown-submenu">
+          <a href="#"><span class="dm-icon">🌸</span> Estetica Base <span style="margin-left:auto;font-size:10px;color:#aaa;">▶</span></a>
+          <div class="submenu">
+            <a href="cerette.html"><span class="dm-icon">🪒</span> Cerette</a>
+            <a href="pedicure.html"><span class="dm-icon">💅</span> Pedicure</a>
+            <a href="pulizia-viso.html"><span class="dm-icon">✨</span> Pulizia Viso</a>
+            <a href="massaggi.html"><span class="dm-icon">🤲</span> Massaggi</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <span><a href="offerte.html" style="color:inherit;text-decoration:none;">Offerte</a></span>
+    <div class="nav-dropdown" onclick="this.classList.toggle('open')">
+      <span>Le nostre Sedi ▾</span>
+      <div class="dropdown-menu">
+        <a href="sede-bregnano.html"><span class="dm-icon">📍</span> Centro Love Sun Beauty Bregnano</a>
+        <a href="sede-carugate.html"><span class="dm-icon">📍</span> Centro Love Sun Beauty Carugate</a>
+      </div>
+    </div>
+    <span><a href="chi-siamo.html" style="color:inherit;text-decoration:none;">Chi Siamo</a></span>
+    <span><a href="faq.html" style="color:inherit;text-decoration:none;">FAQ</a></span>
+    <span><a href="contatti.html" style="color:inherit;text-decoration:none;">Contatti</a></span>
+  </nav>
+  <div class="header-actions">
+    <button class="btn-ghost">📞 Chiama</button>
+    <button class="btn-ghost">💬 WhatsApp</button>
+    <a href="contatti.html" style="text-decoration:none;"><button class="btn-primary">Prenota Ora</button></a>
+  </div>
+</header>
+<div class="section-divider">SEZIONE 1 — HERO</div>
+
+<!-- ════════════════════════════════════════ HERO ════════════════════════════════════════ -->
+<div class="hero hero-fullbleed" style="padding:0; margin:0;">
+  <div style="width:100%; min-height:100vh; display:flex; align-items:center; position:relative;">
+    <img src="img/home/homehero.webp" alt="Love Sun Beauty — il tuo centro estetico di fiducia" class="hero-bg-img">
+    <div style="position:absolute; inset:0; background:rgba(0,0,0,.45); z-index:1;"></div>
+    <div class="hero-overlay" style="margin:60px; position:relative; z-index:2;">
+      <div style="display:inline-block; background:rgba(255,255,255,.22); border:1.5px solid rgba(255,255,255,.6); border-radius:20px; padding:5px 16px; font-size:12px; font-weight:700; color:#fff; letter-spacing:.08em; text-transform:uppercase; margin-bottom:20px; backdrop-filter:blur(4px);">✨ Consulenza su misura per te</div>
+      <h1 class="wf" style="color:#fff;">Bellezza, benessere e risultati concreti.<br>Nel tuo centro estetico di fiducia.</h1>
+      <p class="wf" style="color:rgba(255,255,255,.85);">Tecnologie avanzate, professionisti qualificati e percorsi personalizzati per prenderti cura di te. Due centri in Lombardia: Bregnano e Carugate.</p>
+      <div class="cta-group">
+        <a href="contatti.html" style="text-decoration:none;"><button class="btn-lg-primary">📅 Prenota Ora</button></a>
+      </div>
+      <div class="hero-badge">⭐ 4,9/5 &nbsp;·&nbsp; 419 recensioni</div>
+    </div>
+  </div>
+</div>
+<div class="section-divider">SEZIONE 2 — TRUST BAR</div>
+
+<!-- ════════════════════════════════════════ TRUST BAR ════════════════════════════════════════ -->
+<div class="trust-bar">
+  <div class="trust-bar-inner">
+    <div class="trust-item">
+      <div class="trust-icon">⭐</div>
+      <div class="trust-title">4,9/5 · Valutazione media</div>
+      <div class="trust-sub">419 recensioni verificate</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">🏆</div>
+      <div class="trust-title">FDA Approved</div>
+      <div class="trust-sub">T-Shape 2 certificato FDA</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">👥</div>
+      <div class="trust-title">Team Specializzato</div>
+      <div class="trust-sub">Professioniste qualificate</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">📍</div>
+      <div class="trust-title">2 Sedi in Lombardia</div>
+      <div class="trust-sub">Bregnano (CO) · Carugate (MI)</div>
+    </div>
+  </div>
+</div>
+<div class="section-divider">SEZIONE 3 — SERVIZI PRINCIPALI</div>
+
+<!-- ════════════════════════════════════════ SERVIZI ════════════════════════════════════════ -->
+<section>
+  <div class="section-tag">Servizi</div>
+  <h2 class="wf">I nostri trattamenti</h2>
+  <p class="wf">Dall'epilazione definitiva al rimodellamento corpo, dal solarium professionale al nail center: tutto quello di cui hai bisogno, in un unico posto.</p>
+
+  <div class="cards-grid">
+    <!-- Card 1 -->
+    <div class="card">
+      <div class="card-img ls-photo"><img src="img/home/homeepillaser.webp" alt="Epilazione laser"></div>
+      <div class="card-body">
+        <h3 class="wf">Epilazione Laser</h3>
+        <p class="wf" style="font-size:13px;">Risultati duraturi su tutti i fototipi, anche su pelle abbronzata. Tecnologia EPILED 818.</p>
+        <a href="epilazione-laser.html" class="card-cta" style="text-decoration:none;">Scopri il trattamento →</a>
+      </div>
+    </div>
+    <!-- Card 2 -->
+    <div class="card">
+      <div class="card-img ls-photo"><img src="img/home/hometshape.webp" alt="Trattamenti T-Shape"></div>
+      <div class="card-body">
+        <h3 class="wf">Trattamenti T-Shape</h3>
+        <p class="wf" style="font-size:13px;">T-Shape 2, radiofrequenza, lipolaser e mesoporazione. Rimodella, rassoda, ringiovanisci.</p>
+        <a href="trattamenti-corpo.html" class="card-cta" style="text-decoration:none;">Scopri il trattamento →</a>
+      </div>
+    </div>
+    <!-- Card 3 -->
+    <div class="card">
+      <div class="card-img ls-photo"><img src="img/home/homenailscenter.webp" alt="Nail Center"></div>
+      <div class="card-body">
+        <h3 class="wf">Nail Center</h3>
+        <p class="wf" style="font-size:13px;">Manicure, pedicure e nail art con le ultime tendenze. Un team di nail technician specializzate.</p>
+        <a href="nail-center.html" class="card-cta" style="text-decoration:none;">Scopri il trattamento →</a>
+      </div>
+    </div>
+    <!-- Card 4 -->
+    <div class="card">
+      <div class="card-img ls-photo"><img src="img/home/homesolarium.webp" alt="Solarium"></div>
+      <div class="card-body">
+        <h3 class="wf">Solarium</h3>
+        <p class="wf" style="font-size:13px;">Abbronzatura professionale con collagene solare. Lettini alta/bassa pressione, docce solari, lampade viso.</p>
+        <a href="solarium.html" class="card-cta" style="text-decoration:none;">Scopri il trattamento →</a>
+      </div>
+    </div>
+    <!-- Card 5 — Estetica Base: Cerette -->
+    <div class="card">
+      <div class="card-img ls-photo"><img src="img/home/homecerette.webp" alt="Cerette"></div>
+      <div class="card-body">
+        <h3 class="wf">Cerette</h3>
+        <p class="wf" style="font-size:13px;">Epilazione professionale su tutto il corpo. Ceretta Total Body, Classica & Delicata, Brasiliana (solo Bregnano).</p>
+        <a href="cerette.html" class="card-cta" style="text-decoration:none;">Scopri il trattamento →</a>
+      </div>
+    </div>
+    <!-- Card 6 — Estetica Base: Massaggi -->
+    <div class="card">
+      <div class="card-img ls-photo"><img src="img/home/homemassaggi.webp" alt="Massaggi"></div>
+      <div class="card-body">
+        <h3 class="wf">Massaggi</h3>
+        <p class="wf" style="font-size:13px;">Rilassanti, decontratturanti, linfodrenanti, Balinese, Ayurvedico, Hot Stone, Candle Massage e Scrub corpo.</p>
+        <a href="massaggi.html" class="card-cta" style="text-decoration:none;">Scopri il trattamento →</a>
+      </div>
+    </div>
+    <!-- Card 7 — Estetica Base: Pulizia Viso -->
+    <div class="card">
+      <div class="card-img ls-photo"><img src="img/home/homepuliziaviso.webp" alt="Pulizia viso"></div>
+      <div class="card-body">
+        <h3 class="wf">Pulizia Viso</h3>
+        <p class="wf" style="font-size:13px;">Trattamenti avanzati per ogni tipo di pelle: pulizia classica, protocolli specifici, anti-age al collagene e vitamina C.</p>
+        <a href="pulizia-viso.html" class="card-cta" style="text-decoration:none;">Scopri il trattamento →</a>
+      </div>
+    </div>
+    <!-- Card 8 — Estetica Base: Pedicure -->
+    <div class="card">
+      <div class="card-img ls-photo"><img src="img/home/homepedicure.webp" alt="Pedicure"></div>
+      <div class="card-body">
+        <h3 class="wf">Pedicure</h3>
+        <p class="wf" style="font-size:13px;">Pedicure estetica e curativa, semipermanente, Spa con scrub, rimozione calli e trattamento unghia incarnita.</p>
+        <a href="pedicure.html" class="card-cta" style="text-decoration:none;">Scopri il trattamento →</a>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="section-divider">SEZIONE 4 — PERCHÉ SCEGLIERCI + OFFERTE</div>
+
+<!-- ════════════════════════════════════════ PERCHÉ + OFFERTE ════════════════════════════════════════ -->
+<div style="background:#fafafa; border-top:1px solid #e8e8e8; border-bottom:1px solid #e8e8e8; padding:44px 40px;">
+  <div style="max-width:1200px; margin:0 auto;">
+
+    <!-- Trust strip compatta -->
+    <div style="display:flex; justify-content:center; align-items:stretch; flex-wrap:wrap; gap:20px 40px; padding:32px 34px; background:#ffffff; border:1.5px solid #FFD9DD; border-radius:22px; margin:0 auto 44px; max-width:1000px;">
+      <div style="text-align:center; flex:1; min-width:120px;">
+        <div style="font-size:26px; margin-bottom:6px;">🔬</div>
+        <div style="font-size:13px; font-weight:700; color:#222;">Tecnologie certificate</div>
+        <div style="font-size:11px; color:#888; margin-top:2px;">EPILED 818 · T-Shape 2 FDA</div>
+      </div>
+      <div style="text-align:center; flex:1; min-width:120px;">
+        <div style="font-size:26px; margin-bottom:6px;">🎓</div>
+        <div style="font-size:13px; font-weight:700; color:#222;">Professioniste qualificate</div>
+        <div style="font-size:11px; color:#888; margin-top:2px;">Aggiornamento continuo</div>
+      </div>
+      <div style="text-align:center; flex:1; min-width:120px;">
+        <div style="font-size:26px; margin-bottom:6px;">💬</div>
+        <div style="font-size:13px; font-weight:700; color:#222;">Consulenza dedicata</div>
+        <div style="font-size:11px; color:#888; margin-top:2px;">Gratuita per l'epilazione laser</div>
+      </div>
+      <div style="text-align:center; flex:1; min-width:120px;">
+        <div style="font-size:26px; margin-bottom:6px;">📍</div>
+        <div style="font-size:13px; font-weight:700; color:#222;">Due centri in Lombardia</div>
+        <div style="font-size:11px; color:#888; margin-top:2px;">Bregnano (CO) · Carugate (MI)</div>
+      </div>
+      <div style="text-align:center; flex:1; min-width:120px;">
+        <div style="font-size:26px; margin-bottom:6px;">⏰</div>
+        <div style="font-size:13px; font-weight:700; color:#222;">Orari flessibili</div>
+        <div style="font-size:11px; color:#888; margin-top:2px;">Aperto fino alle 21:00</div>
+      </div>
+      <div style="text-align:center; flex:1; min-width:120px; cursor:pointer;" onclick="document.getElementById('modal-fedelta').style.display='flex'">
+        <div style="font-size:26px; margin-bottom:6px;">🎁</div>
+        <div style="font-size:13px; font-weight:700; color:#222;">Programma fedeltà</div>
+        <div style="font-size:11px; color:#888; margin-top:2px;">Punti e vantaggi esclusivi</div>
+        <div style="font-size:11px; font-weight:700; color:#222; margin-top:4px; text-decoration:underline; text-underline-offset:2px;">Scopri →</div>
+      </div>
+
+      <!-- ══ MODALE PROGRAMMA FEDELTÀ ══ -->
+      <div id="modal-fedelta" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:1000; align-items:center; justify-content:center; padding:20px;">
+        <div style="background:#fff; border-radius:20px; max-width:520px; width:100%; padding:40px; position:relative; box-shadow:0 24px 80px rgba(0,0,0,.25);">
+          <!-- Chiudi -->
+          <button onclick="document.getElementById('modal-fedelta').style.display='none'" style="position:absolute; top:16px; right:16px; background:none; border:none; font-size:22px; color:#aaa; cursor:pointer; line-height:1;">✕</button>
+          <!-- Header modale -->
+          <div style="font-size:32px; margin-bottom:12px;">🎁</div>
+          <div style="display:inline-block; background:#222; color:#fff; font-size:10px; font-weight:700; letter-spacing:.1em; padding:3px 10px; border-radius:3px; margin-bottom:14px;">PROGRAMMA FEDELTÀ</div>
+          <h3 style="font-size:22px; font-weight:800; color:#111; margin-bottom:8px;">Ogni trattamento conta.</h3>
+          <p style="font-size:14px; color:#666; line-height:1.7; margin-bottom:24px;">Con il programma fedeltà Love Sun Beauty accumuli punti ad ogni visita e accedi a vantaggi esclusivi riservati alle nostre clienti più affezionate.</p>
+          <!-- Come funziona -->
+          <div style="background:#f8f8f8; border-radius:12px; padding:20px; margin-bottom:20px;">
+            <div style="font-size:11px; font-weight:700; letter-spacing:.1em; color:#999; text-transform:uppercase; margin-bottom:14px;">Come funziona</div>
+            <div style="display:flex; flex-direction:column; gap:12px;">
+              <div style="display:flex; align-items:flex-start; gap:12px;">
+                <div style="background:#222; color:#fff; border-radius:50%; width:24px; height:24px; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; flex-shrink:0;">1</div>
+                <div style="font-size:13px; color:#444; line-height:1.5;"><strong>Prenota e vieni in salone</strong> — ogni trattamento ti fa guadagnare punti fedeltà.</div>
+              </div>
+              <div style="display:flex; align-items:flex-start; gap:12px;">
+                <div style="background:#222; color:#fff; border-radius:50%; width:24px; height:24px; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; flex-shrink:0;">2</div>
+                <div style="font-size:13px; color:#444; line-height:1.5;"><strong>Accumula punti</strong> — i punti si sommano ad ogni visita, per tutti i servizi.</div>
+              </div>
+              <div style="display:flex; align-items:flex-start; gap:12px;">
+                <div style="background:#222; color:#fff; border-radius:50%; width:24px; height:24px; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; flex-shrink:0;">3</div>
+                <div style="font-size:13px; color:#444; line-height:1.5;"><strong>Accedi ai vantaggi</strong> — sconti, trattamenti omaggio e offerte riservate alle clienti fedeli.</div>
+              </div>
+            </div>
+          </div>
+          <div class="wf-note" style="margin-bottom:20px;">Dettagli e regolamento del programma da definire con il centro</div>
+          <!-- CTA -->
+          <div style="display:flex; gap:10px;">
+            <a href="contatti.html" style="flex:1; text-decoration:none;"><button style="width:100%; padding:13px; background:#222; color:#fff; border:none; border-radius:8px; font-size:14px; font-weight:700; cursor:pointer;">Iscriviti ora</button></a>
+            <button onclick="document.getElementById('modal-fedelta').style.display='none'" style="padding:13px 20px; background:transparent; color:#555; border:1.5px solid #ddd; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer;">Chiudi</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Offerte del mese -->
+    <div>
+      <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:16px;">
+        <div class="section-tag">Offerte del mese</div>
+        <a href="offerte.html" style="font-size:13px; font-weight:700; color:#222; text-decoration:underline; text-underline-offset:3px; white-space:nowrap;">Vedi tutte le offerte →</a>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+
+        <!-- Offerta 1 -->
+        <div style="background:#fff; border:1.5px solid #e0e0e0; border-radius:12px; overflow:hidden; display:flex; flex-direction:column;">
+          <div style="height:300px; overflow:hidden;"><img src="img/home/homeepillaser.webp" alt="Offerta epilazione laser gambe complete" style="width:100%;height:100%;object-fit:cover;"></div>
+          <div style="padding:18px; display:flex; flex-direction:column; flex:1;">
+            <div style="display:inline-block; background:#111; color:#fff; font-size:10px; font-weight:700; letter-spacing:.08em; padding:3px 10px; border-radius:20px; margin-bottom:10px;">Offerta del Mese</div>
+            <div style="font-size:15px; font-weight:700; color:#111; margin-bottom:6px;">Epilazione Laser — Gambe Complete</div>
+            <div style="font-size:12px; color:#666; line-height:1.5; margin-bottom:12px;">Epilazione laser gambe intere con tecnologia EPILED 818. Risultati duraturi, nessun dolore.</div>
+            
+            <a href="contatti.html" style="text-decoration:none;"><button style="width:100%; padding:11px; background:#222; color:#fff; border:none; border-radius:8px; font-size:13px; font-weight:700; cursor:pointer;">Prenota ora →</button></a>
+          </div>
+        </div>
+
+        <!-- Offerta 2 -->
+        <div style="background:#fff; border:1.5px solid #e0e0e0; border-radius:12px; overflow:hidden; display:flex; flex-direction:column;">
+          <div style="height:300px; overflow:hidden;"><img src="img/home/hometshape.webp" alt="Offerta T-Shape pacchetto 5 sedute" style="width:100%;height:100%;object-fit:cover;"></div>
+          <div style="padding:18px; display:flex; flex-direction:column; flex:1;">
+            <div style="display:inline-block; background:#111; color:#fff; font-size:10px; font-weight:700; letter-spacing:.08em; padding:3px 10px; border-radius:20px; margin-bottom:10px;">Offerta del Mese</div>
+            <div style="font-size:15px; font-weight:700; color:#111; margin-bottom:6px;">T-Shape Corpo — Pacchetto 5 Sedute</div>
+            <div style="font-size:12px; color:#666; line-height:1.5; margin-bottom:12px;">5 sedute T-Shape su area a scelta. Rassodamento e rimodellamento visibili già dalle prime sedute.</div>
+            
+            <a href="contatti.html" style="text-decoration:none;"><button style="width:100%; padding:11px; background:#222; color:#fff; border:none; border-radius:8px; font-size:13px; font-weight:700; cursor:pointer;">Prenota ora →</button></a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+<div class="section-divider">SEZIONE 6 — RECENSIONI</div>
+
+<!-- ════════════════════════════════════════ RECENSIONI ════════════════════════════════════════ -->
+<div class="recensioni-bg section-full">
+  <div style="max-width:1200px; margin:0 auto;">
+    <section style="padding:60px 0;">
+      <div class="section-tag">Social Proof</div>
+      <h2 class="wf">Cosa dicono le nostre clienti</h2>
+
+      <div class="rating-header">
+        <div class="rating-big">4,9</div>
+        <div class="rating-info">
+          <div class="stars">★★★★★</div>
+          <div style="font-size:14px; font-weight:700; color:#111; margin-top:4px;">verificate</div>
+          <div class="rating-sub">Oltre 419 recensioni verificate</div>
+        </div>
+      </div>
+
+      <div class="recensioni-grid">
+        <div class="recensione-card">
+          <div class="rec-stars">★★★★★</div>
+          <p class="rec-text">"È la prima volta che vengo da Lovesun, ma penso di aver trovato il mio centro estetico per sempre! Grazie Michelle, le tue mani delicate mi hanno conquistata!"</p>
+          <div class="rec-source">✓ Cliente verificata</div>
+        </div>
+        <div class="recensione-card">
+          <div class="rec-stars">★★★★★</div>
+          <p class="rec-text">"Un'accoglienza pazzesca e davvero una grande gentilezza e professionalità, le persone sono socievoli e le ragazze simpaticissime."</p>
+          <div class="rec-source">✓ Cliente verificata</div>
+        </div>
+        <div class="recensione-card">
+          <div class="rec-stars">★★★★★</div>
+          <p class="rec-text">"Staff gentilissimo, si lavora con entusiasmo. Accoglienza ottima, con grande gentilezza e professionalità."</p>
+          <div class="rec-source">✓ Cliente verificata</div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+<div class="section-divider">SEZIONE 7 — PARTNER</div>
+
+<!-- ════════════════════════════════════════ PARTNER ════════════════════════════════════════ -->
+<div style="background:var(--pink-light); border-top:1px solid #FFD9DD; border-bottom:1px solid #FFD9DD; padding:40px;">
+  <div style="max-width:1200px; margin:0 auto;">
+    <div class="section-tag">Partner & Certificazioni</div>
+    <div style="font-size:13px; color:#999; margin-bottom:28px;">I brand e le piattaforme con cui collaboriamo</div>
+    <div style="display:flex; flex-wrap:wrap; gap:18px;">
+      <div style="width:190px; height:92px; background:#fff; border:1.5px dashed var(--pink); border-radius:14px; display:flex; align-items:center; justify-content:center; text-align:center; padding:12px; font-family:'Bakbak One',sans-serif; font-size:15px; color:var(--purple); line-height:1.2;">EPILED 818</div>
+      <div style="width:190px; height:92px; background:#fff; border:1.5px dashed var(--pink); border-radius:14px; display:flex; align-items:center; justify-content:center; text-align:center; padding:12px; font-family:'Bakbak One',sans-serif; font-size:15px; color:var(--purple); line-height:1.2;">T-Shape 2 · FDA</div>
+      <div style="width:190px; height:92px; background:#fff; border:1.5px dashed var(--pink); border-radius:14px; display:flex; align-items:center; justify-content:center; text-align:center; padding:12px; font-family:'Bakbak One',sans-serif; font-size:15px; color:var(--purple); line-height:1.2;">Compagnia del Sole</div>
+      <div style="width:190px; height:92px; background:#fff; border:1.5px dashed var(--pink); border-radius:14px; display:flex; align-items:center; justify-content:center; text-align:center; padding:12px; font-family:'Bakbak One',sans-serif; font-size:15px; color:var(--purple); line-height:1.2;">Australian Gold</div>
+      <div style="width:190px; height:92px; background:#fff; border:1.5px dashed var(--pink); border-radius:14px; display:flex; align-items:center; justify-content:center; text-align:center; padding:12px; font-family:'Bakbak One',sans-serif; font-size:15px; color:var(--purple); line-height:1.2;">Treatwell</div>
+    </div>
+    <div class="wf-note" style="margin-top:20px;">Box pronti per i loghi dei partner — inserire immagine (SVG/PNG su fondo trasparente), dimensioni consigliate 160×72px</div>
+  </div>
+</div>
+<div class="section-divider">SEZIONE 8 — FAQ</div>
+
+<!-- ════════════════════════════════════════ FAQ ════════════════════════════════════════ -->
+<div class="faq-bg section-full" style="margin-bottom:-40px;">
+  <div style="max-width:1200px; margin:0 auto;">
+    <section style="padding:60px 0; margin-top:-20px; margin-bottom:-20px;">
+      <div class="section-tag">FAQ</div>
+      <h2 class="wf">Domande frequenti</h2>
+      <p class="wf">Tutto quello che vuoi sapere prima di prenotare. Non trovi la risposta? <strong>Scrivici su WhatsApp.</strong></p>
+
+      <div class="faq-list">
+
+        <div class="faq-item open">
+          <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+            Quante sedute servono per l'epilazione laser?
+            <span class="faq-arrow">▼</span>
+          </div>
+          <div class="faq-answer">
+            Il numero di sedute varia in base al fototipo, al colore del pelo e all'area trattata. In media si consigliano 6–8 sedute per risultati duraturi. Durante la consulenza dedicata il nostro team definirà un programma personalizzato per te.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+            Il T-Shape funziona per la cellulite?
+            <span class="faq-arrow">▼</span>
+          </div>
+          <div class="faq-answer">
+            Sì. Il T-Shape 2 combina radiofrequenza, aspirazione vacuum e laser LLLT per agire sulla cellulite, migliorare la microcircolazione e levigare la pelle. È riconosciuto dalla FDA per sicurezza ed efficacia.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+            La consulenza dedicata è davvero senza impegno?
+            <span class="faq-arrow">▼</span>
+          </div>
+          <div class="faq-answer">
+            La consulenza per l'epilazione laser è gratuita e senza impegno. Per i trattamenti T-Shape e per la consulenza estetica il costo è di 30 €, che viene scalato — o non applicato — in caso di acquisto di un pacchetto. Durante gli Open Day la consulenza è invece completamente gratuita per tutti i servizi.
+          </div>
+        </div>
+
+      </div><!-- /faq-list -->
+
+      <div style="margin-top:28px; display:flex; align-items:center; gap:20px; flex-wrap:wrap;">
+        <a href="faq.html" style="font-size:15px; font-weight:700; color:#111; border-bottom:2px solid #111; text-decoration:none;">Leggi tutte le domande frequenti →</a>
+        <span style="font-size:13px; color:#aaa;">oppure</span>
+        <button class="btn-lg-secondary" style="font-size:13px; padding:10px 20px;">💬 Scrivici su WhatsApp</button>
+      </div>
+
+    </section>
+  </div>
+</div>
+<div class="section-divider">SEZIONE 9 — SEDI</div>
+
+<!-- ════════════════════════════════════════ SEDI ════════════════════════════════════════ -->
+<section>
+  <div class="section-tag">Sedi</div>
+  <h2 class="wf">Dove siamo</h2>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:28px;">
+
+    <!-- Bregnano -->
+    <div style="background:#fff; border:1.5px solid #e0e0e0; border-radius:14px; overflow:hidden;">
+      <div class="sede-map" style="height:160px; overflow:hidden; border:none;"><iframe src="https://maps.google.com/maps?q=Via%20per%20Lazzate%207%20Bregnano%20CO&z=15&output=embed" width="100%" height="160" style="border:0; display:block;" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Mappa Love Sun Beauty Bregnano"></iframe></div>
+      <div style="padding:20px;">
+        <div style="font-size:15px; font-weight:700; color:#111; margin-bottom:10px;">📍 Love Sun Beauty Bregnano</div>
+        <div style="font-size:13px; color:#555; line-height:1.8;">
+          Via per Lazzate 7, 22070 Bregnano (CO)<br>
+          ☎ 031 4682567 · 💬 +39 347 3983337<br>
+          <span style="color:#888;">Lun–Sab: 9:00–21:00 · Dom: 9:00–17:00</span>
+        </div>
+        <div style="display:flex; gap:10px; margin-top:16px;">
+          <a href="contatti.html" style="flex:1; text-decoration:none;"><button style="width:100%; padding:10px; background:#222; color:#fff; border:none; border-radius:8px; font-size:13px; font-weight:700; cursor:pointer;">Prenota</button></a>
+          <a href="sede-bregnano.html" style="flex:1; text-decoration:none;"><button style="width:100%; padding:10px; background:transparent; color:#222; border:1.5px solid #222; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer;">Scopri la sede →</button></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carugate -->
+    <div style="background:#fff; border:1.5px solid #e0e0e0; border-radius:14px; overflow:hidden;">
+      <div class="sede-map" style="height:160px; overflow:hidden; border:none;"><iframe src="https://maps.google.com/maps?q=Via%20del%20Ginestrino%2016%20Carugate%20MI&z=15&output=embed" width="100%" height="160" style="border:0; display:block;" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Mappa Love Sun Beauty Carugate"></iframe></div>
+      <div style="padding:20px;">
+        <div style="font-size:15px; font-weight:700; color:#111; margin-bottom:10px;">📍 Love Sun Beauty Carugate</div>
+        <div style="font-size:13px; color:#555; line-height:1.8;">
+          Via del Ginestrino 16, 20061 Carugate (MI)<br>
+          ☎ 031 4682567 · 💬 +39 347 3983337<br>
+          <span style="color:#888;">Mar/Mer/Ven/Sab: 9–20 · Gio: 9–21 · Lun/Dom: Chiuso</span>
+        </div>
+        <div style="display:flex; gap:10px; margin-top:16px;">
+          <a href="contatti.html" style="flex:1; text-decoration:none;"><button style="width:100%; padding:10px; background:#222; color:#fff; border:none; border-radius:8px; font-size:13px; font-weight:700; cursor:pointer;">Prenota</button></a>
+          <a href="sede-carugate.html" style="flex:1; text-decoration:none;"><button style="width:100%; padding:10px; background:transparent; color:#222; border:1.5px solid #222; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer;">Scopri la sede →</button></a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+<div class="section-divider">SEZIONE 10 — CTA FINALE</div>
+
+<!-- ════════════════════════════════════════ CTA FINALE ════════════════════════════════════════ -->
+<div class="cta-finale-bg">
+  <h2 class="wf">Pronta a prenderti cura di te?</h2>
+  <p class="wf">Prenota il trattamento più adatto o richiedi una consulenza dedicata. Il nostro team è a tua disposizione.</p>
+  <div class="cta-finale-actions">
+    <a href="contatti.html" style="text-decoration:none;"><button class="btn-finale-primary">📅 Prenota Online</button></a>
+    <button class="btn-finale-secondary">💬 Scrivici su WhatsApp</button>
+    <button class="btn-finale-secondary">📞 Chiama Ora</button>
+  </div>
+</div>
+<div class="section-divider">FOOTER</div>
+
+<!-- ════════════════════════════════════════ FOOTER ════════════════════════════════════════ -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <img src="img/logo-bianco-rosa.webp" alt="Love Sun Beauty" class="footer-logo-img">
+      <p class="footer-tagline">Beauty Center. Bellezza e benessere in Lombardia.</p>
+      <div class="footer-social">
+        <a href="https://www.facebook.com/lovesunsolarium/" target="_blank" rel="noopener" class="social-icon" title="Facebook" style="text-decoration:none; display:flex; align-items:center; justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5H16.7V3.7c-.3-.04-1.3-.12-2.4-.12-2.4 0-4 1.46-4 4.14v2.31H7.5V13h2.8v8h3.2z"/></svg></a>
+        <a href="https://www.instagram.com/lovesun.beauty?igsh=MW90b3pvNXBhYWFtNA==" target="_blank" rel="noopener" class="social-icon" title="Instagram" style="text-decoration:none; display:flex; align-items:center; justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="3.8"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg></a>
+        <a href="#" target="_blank" rel="noopener" class="social-icon" title="TikTok — link da inserire" style="text-decoration:none; display:flex; align-items:center; justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 3c.3 2.2 1.5 3.5 3.6 3.7v2.5c-1.2.1-2.4-.3-3.6-1v5.7c0 3.2-2.3 5.4-5.3 5.4-2.7 0-4.9-2-4.9-4.8 0-2.9 2.4-4.9 5.4-4.6v2.6c-.4-.1-.8-.2-1.2-.2-1.2 0-2.2.9-2.2 2.1s1 2.2 2.3 2.2c1.3 0 2.1-1 2.1-2.4V3h3.5z"/></svg></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Servizi</div>
+      <a href="epilazione-laser.html">Epilazione Laser</a>
+      <a href="trattamenti-corpo.html">Trattamenti T-Shape</a>
+      <a href="pressoterapia.html">Pressoterapia</a>
+      <a href="solarium.html">Solarium</a>
+      <a href="nail-center.html">Nail Center</a>
+      <a href="cerette.html">Cerette</a>
+      <a href="pedicure.html">Pedicure</a>
+      <a href="pulizia-viso.html">Pulizia Viso</a>
+      <a href="massaggi.html">Massaggi</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Love Sun Beauty Bregnano</div>
+      <p>Via per Lazzate 7<br>22070 Bregnano (CO)</p>
+      <p>031 4682567<br>WhatsApp +39 347 3983337<br>info@lovesun.it</p>
+      <p>Lun–Sab 9:00–21:00<br>Dom 9:00–17:00</p>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Love Sun Beauty Carugate</div>
+      <p>Via del Ginestrino 16<br>20061 Carugate (MI)</p>
+      <p>031 4682567<br>WhatsApp +39 347 3983337<br>info@lovesun.it</p>
+      <p>Mar/Mer/Ven/Sab 9:00–20:00<br>Gio 9:00–21:00<br>Lun e Dom: Chiuso</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Love Sun Beauty &nbsp;·&nbsp; Privacy Policy &nbsp;·&nbsp; Cookie Policy</span>
+    <span>P.IVA: 03959640131</span>
+  </div>
+</footer>
+
+<!-- ════════════════════════════════════════ FLOATING WA ════════════════════════════════════════ -->
+<div class="wa-float" title="WhatsApp">💬</div>
+
+<script src="site.js"></script>
+
+</body>
+</html>

@@ -90,6 +90,31 @@ body { background: var(--cream) !important; }
   .hero-parallax { background-attachment: scroll; }
 }
 
+/* ── HERO FULL-BLEED (breaks out of any centered container) ── */
+.hero-fullbleed {
+  position: relative;
+  width: 100vw;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw !important;
+  margin-right: -50vw !important;
+  max-width: none !important;
+  padding: 0 !important;
+  overflow: hidden;
+}
+.hero-fullbleed > div { min-height: 100vh; }
+.hero-bg-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
+  max-width: none !important;
+}
+
 /* ── Fuchsia eyebrow labels → uppercase ─────────────── */
 .section-tag { text-transform: uppercase !important; }
 
@@ -228,37 +253,129 @@ nav span { border-bottom-color: transparent !important; }
 .cta-finale-bg { background: var(--purple) !important; }
 footer { background: #1a1220 !important; }
 
-/* ═══════════════ RESPONSIVE ═══════════════ */
-@media (max-width: 1080px) {
+/* ═══════════════ RESPONSIVE (mobile-first logic) ═══════════════ */
+
+/* Kill any horizontal overflow, site-wide */
+html, body { max-width: 100%; overflow-x: hidden; }
+img, iframe, video, svg { max-width: 100%; }
+
+/* Hamburger button is injected by site.js — hidden on desktop */
+.nav-toggle { display: none; }
+
+/* ---------- TABLET (≤1024px): max 2 columns, never forced 3 ---------- */
+@media (max-width: 1024px) {
   section, .section-full { padding-left: 28px !important; padding-right: 28px !important; }
-  .cards-grid { grid-template-columns: repeat(3, 1fr) !important; }
-}
-@media (max-width: 900px) {
-  header { flex-wrap: wrap !important; padding: 12px 20px !important; gap: 12px !important; }
-  nav { order: 3; width: 100%; overflow-x: auto; gap: 16px !important;
-        padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
-  nav::-webkit-scrollbar { height: 0; }
-  .header-actions { margin-left: auto; }
-  .cards-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .cards-grid,
   .benefits-grid, .recensioni-grid { grid-template-columns: repeat(2, 1fr) !important; }
   .trust-bar-inner { grid-template-columns: repeat(2, 1fr) !important; }
   .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 28px !important; }
-  h1.wf, h1 { font-size: 30px !important; }
+  h1.wf, h1 { font-size: 32px !important; }
+
+  /* Internal service-page hero: text over booking card → single column */
+  .hero-booking { grid-template-columns: 1fr !important; gap: 28px !important; padding: 96px 28px 44px !important; }
+  .hero-booking-card { max-width: 460px; }
 }
-@media (max-width: 620px) {
+
+/* ---------- HAMBURGER NAV (≤960px) ---------- */
+@media (max-width: 960px) {
+  header {
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    padding: 12px 20px !important;
+    gap: 12px !important;
+    row-gap: 0 !important;
+  }
+  .nav-toggle {
+    display: flex; flex-direction: column; justify-content: center; gap: 5px;
+    width: 44px; height: 44px; padding: 11px 9px; margin-left: auto;
+    background: transparent; border: none; cursor: pointer;
+    order: 1; flex-shrink: 0; color: #fff;
+  }
+  .nav-toggle span { display: block; width: 100%; height: 2.5px; border-radius: 2px; background: currentColor; transition: transform .25s ease, opacity .2s ease; }
+  header.scrolled .nav-toggle, header.nav-open .nav-toggle { color: var(--purple); }
+  header.nav-open .nav-toggle span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+  header.nav-open .nav-toggle span:nth-child(2) { opacity: 0; }
+  header.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+
+  /* Solid, readable header while the drawer is open */
+  header.nav-open {
+    background: #fff !important;
+    box-shadow: 0 6px 24px rgba(237,30,136,.12);
+    border-bottom: 1px solid var(--pink-light) !important;
+  }
+
+  /* nav + actions become a full-width drawer that wraps below logo/toggle.
+     The drawer carries its own solid background so it's always legible. */
+  header nav, header .header-actions { order: 3; width: 100%; }
+  header nav {
+    flex-direction: column; align-items: stretch; gap: 0 !important; font-size: 15px;
+    background: #fff; padding: 4px 4px 0 !important;
+  }
+  header .header-actions { background: #fff; }
+  header nav, header .header-actions { display: none; }
+  header.nav-open nav { display: flex; }
+  header.nav-open .header-actions {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    order: 4; padding: 14px 2px 6px;
+  }
+  header.nav-open .header-actions .btn-ghost,
+  header.nav-open .header-actions .btn-primary,
+  header.nav-open .header-actions > a { flex: 1 1 140px; }
+  header.nav-open .header-actions .btn-ghost,
+  header.nav-open .header-actions .btn-primary { width: 100%; padding-top: 12px; padding-bottom: 12px; }
+
+  /* nav rows */
+  header nav > span,
+  header .nav-dropdown > span {
+    padding: 15px 6px !important;
+    border-bottom: 1px solid var(--pink-light) !important;
+    width: 100%;
+  }
+  header .nav-dropdown { position: static; width: 100%; }
+  header .nav-dropdown > span { display: flex; justify-content: space-between; align-items: center; }
+
+  /* dropdowns expand inline instead of floating over content */
+  header .dropdown-menu {
+    position: static; display: none;
+    box-shadow: none; border: none; min-width: 0; padding: 2px 0 6px;
+    background: #fff !important;
+  }
+  header .nav-dropdown.open .dropdown-menu { display: block; }
+  header .dropdown-menu a { padding: 12px 18px !important; }
+  header .dropdown-submenu > a { justify-content: flex-start !important; }
+  header .dropdown-submenu .submenu {
+    position: static; display: block !important;
+    box-shadow: none; border: none; min-width: 0; padding: 0 0 4px 16px;
+  }
+  header .dropdown-divider { display: none; }
+
+  /* Legible text in the open drawer (overrides transparent-header white) */
+  header.nav-open nav a,
+  header.nav-open nav span,
+  header.nav-open .nav-dropdown > span { color: #3a2138 !important; }
+  header.nav-open .dropdown-menu a, header.nav-open .submenu a { color: var(--magenta) !important; }
+  header.nav-open .btn-ghost { border-color: var(--magenta) !important; color: var(--magenta) !important; }
+}
+
+/* ---------- MOBILE (≤640px): single column ---------- */
+@media (max-width: 640px) {
   section, .section-full, .trust-bar, .cta-finale-bg { padding-left: 18px !important; padding-right: 18px !important; }
   section { padding-top: 40px !important; padding-bottom: 40px !important; }
   .cards-grid, .benefits-grid, .recensioni-grid,
   .offerte-grid, .sedi-grid,
-  .cards-grid, [style*="grid-template-columns:1fr 1fr"],
-  [style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
+  [style*="grid-template-columns:1fr 1fr"],
+  [style*="grid-template-columns: 1fr 1fr"],
+  [style*="grid-template-columns:1fr 360px"],
+  [style*="grid-template-columns:1fr 380px"] { grid-template-columns: 1fr !important; }
   .trust-bar-inner { grid-template-columns: 1fr 1fr !important; gap: 12px !important; }
   .footer-grid { grid-template-columns: 1fr !important; gap: 22px !important; }
-  .footer-bottom { flex-direction: column; gap: 6px; }
+  .footer-bottom { flex-direction: column; gap: 6px; text-align: center; }
   .rating-big { font-size: 40px !important; }
   h1.wf, h1 { font-size: 26px !important; }
-  .hero-overlay { margin: 32px 22px !important; }
-  .header-actions .btn-ghost { display: none; }
+  .hero-overlay { margin: 24px 20px !important; max-width: 100% !important; }
+  .hero-booking { padding: 90px 20px 40px !important; }
+  .cta-finale-actions .btn-finale-primary,
+  .cta-finale-actions .btn-finale-secondary { flex: 1 1 100%; }
 }
 
 /* ═══════════════ BRAND HARMONY PASS ═══════════════ */
@@ -399,3 +516,225 @@ header.scrolled nav span.active { color: var(--magenta) !important; }
 .btn-social:hover { background: var(--magenta-dark) !important; }
 .social-card .icon { color: var(--magenta); }
 .social-card .icon svg { display: inline-block; }
+
+/* ═══════════════ MOBILE MENU — CLEAN DRAWER (≤960px) ═══════════════
+   Remove leftover dashed underlines from page <style> blocks, keep tidy
+   spacing, and guarantee the drawer + its CTAs stay inside the viewport. */
+@media (max-width: 960px) {
+  /* No dashed/odd borders on any nav element inside the open drawer */
+  header nav span, header nav a, header .nav-dropdown > span {
+    border-bottom-style: solid !important;
+  }
+  header.nav-open nav > span,
+  header.nav-open .nav-dropdown > span {
+    border-bottom: 1px solid var(--pink-light) !important;
+    padding: 15px 8px !important;
+  }
+  header.nav-open nav > span:last-child,
+  header.nav-open .nav-dropdown:last-child > span { border-bottom: none !important; }
+
+  /* Drawer scrolls if it's taller than the screen — never clipped */
+  header.nav-open {
+    max-height: 100vh; overflow-y: auto; -webkit-overflow-scrolling: touch;
+  }
+  header.nav-open nav { max-height: none; }
+
+  /* Dropdown items: consistent indent + spacing, magenta text */
+  header.nav-open .dropdown-menu a,
+  header.nav-open .submenu a {
+    padding: 12px 18px !important;
+    border-bottom: 1px solid rgba(237,30,136,.08) !important;
+    display: flex; align-items: center; gap: 10px;
+  }
+  header .dm-icon { flex-shrink: 0; width: 20px; text-align: center; }
+
+  /* CTA row: Chiama / WhatsApp / Prenota — always inside viewport,
+     wrap to full-width stacked buttons when they don't fit side by side */
+  header.nav-open .header-actions {
+    flex-wrap: wrap !important; gap: 10px !important;
+    padding: 14px 4px 10px !important;
+  }
+  header.nav-open .header-actions > *,
+  header.nav-open .header-actions .btn-ghost,
+  header.nav-open .header-actions .btn-primary {
+    flex: 1 1 100% !important; width: 100% !important;
+    min-width: 0 !important; text-align: center;
+    padding-top: 13px !important; padding-bottom: 13px !important;
+  }
+}
+
+/* ═══════════════ RESPONSIVE HARDENING (site-wide, all pages) ═══════════════
+   Rule: desktop = affiancati · tablet (≤1024) = max 2 col · mobile (≤768) = 1 col.
+   Nothing may overflow the viewport; grids collapse instead of clipping.        */
+
+/* Every card grid can never be narrower than its content → no clip, no h-scroll */
+.benefici-grid, .aree-grid, .pacchetti-grid, .gallery-grid, .channels-grid,
+.social-grid, .numeri-inner, .valori-grid, .team-grid, .recensioni-grid,
+.offers-grid, .abbo-grid, .steps-grid, .tech-grid, .servizi-grid,
+.prob-sol-grid, .tech-box, .prima-dopo, .prenota-grid, .contact-grid,
+.sedi-grid, .form-section-inner, .storia-grid, .form-wrap, .form-row,
+.cards-grid, .benefits-grid { min-width: 0 !important; }
+.benefici-grid > *, .aree-grid > *, .pacchetti-grid > *, .gallery-grid > *,
+.channels-grid > *, .social-grid > *, .valori-grid > *, .team-grid > *,
+.recensioni-grid > *, .offers-grid > *, .abbo-grid > *, .steps-grid > *,
+.tech-grid > *, .servizi-grid > *, .cards-grid > * { min-width: 0 !important; }
+
+/* ---------- TABLET (≤1024px): 3- & 4-column grids drop to 2 ---------- */
+@media (max-width: 1024px) {
+  .benefici-grid, .pacchetti-grid, .gallery-grid, .channels-grid,
+  .social-grid, .numeri-inner, .valori-grid, .team-grid, .recensioni-grid,
+  .offers-grid, .abbo-grid, .steps-grid, .aree-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+  /* Inline (style-attr) 3/4-col grids drop to 2 as well */
+  [style*="grid-template-columns:repeat(4"],
+  [style*="grid-template-columns: repeat(4"],
+  [style*="grid-template-columns:repeat(3"],
+  [style*="grid-template-columns: repeat(3"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+/* ---------- MOBILE (≤768px): single column everywhere ---------- */
+@media (max-width: 768px) {
+  .benefici-grid, .pacchetti-grid, .channels-grid, .social-grid,
+  .numeri-inner, .valori-grid, .team-grid, .recensioni-grid, .offers-grid,
+  .abbo-grid, .steps-grid, .tech-grid, .servizi-grid, .prob-sol-grid,
+  .tech-box, .prima-dopo, .prenota-grid, .contact-grid, .sedi-grid,
+  .form-section-inner, .storia-grid, .form-wrap, .form-row, .page-body {
+    grid-template-columns: 1fr !important;
+  }
+  /* small tiles/thumbnails stay 2-up so they don't look oversized */
+  .aree-grid, .gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  /* asymmetric text+form / text+image layouts stack */
+  .storia-grid, .hero-booking { padding-left: 20px !important; padding-right: 20px !important; }
+  .hero-booking-card { max-width: 100% !important; }
+  .page-body { padding-left: 20px !important; padding-right: 20px !important; }
+}
+
+/* ---------- STEPS ("Come funziona") — flex row → stacked ---------- */
+@media (max-width: 900px) {
+  .steps {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 28px 20px !important;
+  }
+  .steps::before { display: none !important; }
+  .steps .step { flex: none !important; padding: 0 !important; }
+}
+@media (max-width: 560px) {
+  .steps { grid-template-columns: 1fr !important; }
+}
+
+/* ---------- Flex rows of buttons/badges must wrap, never overflow ---------- */
+@media (max-width: 768px) {
+  .cta-group, .header-actions, .sede-ctas, .cta-finale-actions, .footer-social,
+  .hero-actions, .hbc-channels, .channels-grid, .cta-finale-actions {
+    flex-wrap: wrap !important;
+  }
+  /* Booking-card channel buttons: stack cleanly */
+  .hbc-channels > * { flex: 1 1 100% !important; }
+}
+
+/* ---------- Inline 2-col / divider grids collapse on mobile ---------- */
+@media (max-width: 768px) {
+  [style*="grid-template-columns:repeat(4"],
+  [style*="grid-template-columns: repeat(4"],
+  [style*="grid-template-columns:repeat(3"],
+  [style*="grid-template-columns: repeat(3"],
+  [style*="grid-template-columns:1fr 1px 1fr"],
+  [style*="grid-template-columns: 1fr 1px 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+  [style*="grid-template-columns:1fr 1px 1fr"] > [style*="background"],
+  [style*="grid-template-columns: 1fr 1px 1fr"] > [style*="background"] { display: none; }
+}
+
+/* ---------- Fixed-width guards: nothing wider than the screen ---------- */
+@media (max-width: 768px) {
+  .card, .offerta-card, .sede-card, .benefit-item, .recensione-card,
+  .servizio-card, .pacchetto-card, .beneficio-card, .valore-card,
+  .team-card, .channel-card, .social-card, .form-box, .form-card,
+  .hero-booking-card { min-width: 0 !important; max-width: 100% !important; }
+  [style*="width:190px"] { width: 100% !important; max-width: 260px; }
+  /* Any element with a fixed px width that could exceed the viewport */
+  img, iframe, video, table { max-width: 100% !important; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CLIENT REVISIONS — 03/07
+   =══════════════════════════════════════════════════════════ */
+
+:root { --brand-gradient: linear-gradient(160deg, #ED1E88 0%, #FF9AB8 100%); }
+
+/* ── 1 · Contatti "Come vuoi contattarci?" — canali fucsia ── */
+.channel-card {
+  background: var(--magenta) !important;
+  border: none !important;
+}
+.channel-card h3,
+.channel-card .channel-info { color: #fff !important; }
+.channel-card p { color: rgba(255,255,255,.9) !important; }
+.channel-card .btn-channel,
+.channel-card .btn-channel-outline,
+.channel-card .btn-channel-wa,
+.channel-card a.btn-channel {
+  background: #fff !important;
+  color: var(--magenta) !important;
+  border: none !important;
+}
+.channel-card .wf-note { background: rgba(255,255,255,.14) !important; color: #fff !important; border-color: rgba(255,255,255,.4) !important; }
+
+/* ── 2 · Trust bar — box fucsia su tutte le pagine ── */
+.trust-bar { background: transparent !important; border-top: none !important; border-bottom: none !important; }
+.trust-bar-inner > div {
+  background: var(--magenta) !important;
+  border-radius: 16px !important;
+  padding: 24px 18px !important;
+  box-shadow: 0 8px 24px rgba(237,30,136,.15);
+}
+.trust-bar-inner .trust-title { color: #fff !important; }
+.trust-bar-inner .trust-sub { color: rgba(255,255,255,.85) !important; }
+
+/* ── 3 · Orari — intestazione "Orario" allineata a destra come gli orari ── */
+.orari-table th:last-child { text-align: right !important; }
+
+/* ── 4 · Box & form con il gradient come sfondo ── */
+.form-card, .form-box, .hero-booking-card, .treatwell-box,
+.form-section-bg .form-card {
+  background: var(--brand-gradient) !important;
+  border: none !important;
+  box-shadow: 0 12px 34px rgba(237,30,136,.18) !important;
+}
+/* testi interni → bianco per leggibilità sul gradient */
+.form-card label, .form-box label, .form-field label, .form-row label,
+.hbc-field label,
+.hbc-title, .hbc-sub, .form-title, .form-sub, .form-privacy, .form-note,
+.treatwell-box .tw-desc, .treatwell-box .tw-rating,
+.treatwell-box .tw-rating div, .hbc-divider, .tw-divider {
+  color: #fff !important;
+}
+.form-privacy, .form-note, .hbc-sub, .form-sub { color: rgba(255,255,255,.82) !important; }
+.form-privacy u { color: #fff !important; }
+.treatwell-box .tw-stars { color: #fff !important; }
+.hbc-divider::before, .hbc-divider::after,
+.tw-divider::before, .tw-divider::after { background: rgba(255,255,255,.4) !important; }
+/* campi input restano chiari e leggibili */
+.form-card input, .form-card select, .form-card textarea,
+.form-box input, .form-box select, .form-box textarea,
+.form-field input, .form-field select, .form-field textarea,
+.form-row input, .form-row select, .form-row textarea,
+.hbc-field input, .hbc-field select {
+  background: #fff !important;
+  border: 1.5px solid rgba(255,255,255,.6) !important;
+  color: #3a2138 !important;
+}
+/* pulsanti scuri dentro i box → bianco su gradient */
+.btn-form, .btn-submit, .hbc-btn-primary, .btn-tel {
+  background: #fff !important;
+  color: var(--magenta) !important;
+  border: none !important;
+}
+
+/* ── 5 · Benefici servizi — tutti i box dello stesso colore ── */
+.benefici-grid .beneficio-card:nth-child(n) { background: var(--pink-light) !important; }
